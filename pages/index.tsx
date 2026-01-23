@@ -4,26 +4,26 @@ import { Trash2 } from 'lucide-react'
 import { ValueOrientationMatrix, type Person } from '../components/ValueOrientationMatrix'
 
 export default function Home() {
-  const [people, setPeople] = useState<Person[]>([])
+  const [personList, setPersonList] = useState<Person[]>([])
 
   const addPerson = () => {
     const newPerson: Person = {
       id: Date.now().toString(),
       displayName: "",
       structuralLogic: 0,
-      commitment: 0,
-      person: 0,
-      resultRationality: 0,
+      process: 0,
+      interpersonal: 0,
+      socialAdaptation: 0,
     }
-    setPeople([...people, newPerson])
+    setPersonList([...personList, newPerson])
   }
 
   const updatePerson = (id: string, field: keyof Person, value: string | number) => {
-    setPeople(people.map((p) => (p.id === id ? { ...p, [field]: value } : p)))
+    setPersonList(personList.map((p) => (p.id === id ? { ...p, [field]: value } : p)))
   }
 
   const deletePerson = (id: string) => {
-    setPeople(people.filter((p) => p.id !== id))
+    setPersonList(personList.filter((p) => p.id !== id))
   }
 
   const isPersonComplete = (person: Person): boolean => {
@@ -31,16 +31,16 @@ export default function Home() {
       person.displayName.trim() !== "" &&
       person.structuralLogic >= 0 &&
       person.structuralLogic <= 50 &&
-      person.commitment >= 0 &&
-      person.commitment <= 50 &&
-      person.person >= 0 &&
-      person.person <= 50 &&
-      person.resultRationality >= 0 &&
-      person.resultRationality <= 50
+      person.process >= 0 &&
+      person.process <= 50 &&
+      person.interpersonal >= 0 &&
+      person.interpersonal <= 50 &&
+      person.socialAdaptation >= 0 &&
+      person.socialAdaptation <= 50
     )
   }
 
-  const completePeople = people.filter(isPersonComplete)
+  const completePersonList = personList.filter(isPersonComplete)
 
   return (
     <>
@@ -59,14 +59,22 @@ export default function Home() {
               価値志向モデル
             </h1>
             <p className="text-body text-gray-paragraph">
-              自分がどのような判断の引き受け方・関係の持ち方をすると心地良いかを可視化し、選択的にそうしている自分を把握することを目的とした志向プロファイルです。
+              価値志向モデルは、自分がどのような判断の引き受け方・関係の持ち方をすると心地良いかを可視化し、
+              選択的にそうしている自分を把握することを目的とした志向プロファイルです。
+            </p>
+            <p className="text-body text-gray-paragraph">
+              自己理解や心理的リソースを運用の補助ツールとして利用できます。
+              他者の志向も可視化し相関図にすると、集団の志向や棲み分けを構造的に捉える参考資料にもなります。
+            </p>
+            <p className="text-body text-gray-paragraph">
+              なお、このモデルは評価の正しさ・能力・成果の大小を測るものではありません。
             </p>
           </div>
 
           {/* Matrix Display Section */}
           <section className="mb-20 lg:mb-35">
             <div className="max-w-[500px] mx-auto mb-12">
-              <ValueOrientationMatrix people={completePeople} />
+              <ValueOrientationMatrix personList={completePersonList} />
             </div>
 
             {/* Input Table */}
@@ -87,21 +95,21 @@ export default function Home() {
                     <tr className="border-b border-gray-border">
                       <th className="py-4 px-2 text-label text-gray-paragraph">表示名</th>
                       <th className="py-4 px-2 text-label text-gray-paragraph">構造論理</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">コミットメント</th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">プロセス</th>
                       <th className="py-4 px-2 text-label text-gray-paragraph">人物</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">結果合理性</th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">社会的調和</th>
                       <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {people.length === 0 ? (
+                    {personList.length === 0 ? (
                       <tr>
                         <td colSpan={6} className="py-12 text-center text-body text-gray-placeholder">
                           「人物を追加」ボタンをクリックしてデータを入力してください
                         </td>
                       </tr>
                     ) : (
-                      people.map((person) => (
+                      personList.map((person) => (
                         <tr key={person.id} className="border-b border-gray-border">
                           <td className="py-4 px-2">
                             <input
@@ -133,11 +141,11 @@ export default function Home() {
                                 min="0"
                                 max="50"
                                 step="1"
-                                value={person.commitment}
-                                onChange={(e) => updatePerson(person.id, "commitment", parseInt(e.target.value))}
+                                value={person.process}
+                                onChange={(e) => updatePerson(person.id, "process", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.commitment}</span>
+                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.process}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -147,11 +155,11 @@ export default function Home() {
                                 min="0"
                                 max="50"
                                 step="1"
-                                value={person.person}
-                                onChange={(e) => updatePerson(person.id, "person", parseInt(e.target.value))}
+                                value={person.interpersonal}
+                                onChange={(e) => updatePerson(person.id, "interpersonal", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.person}</span>
+                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.interpersonal}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -161,11 +169,11 @@ export default function Home() {
                                 min="0"
                                 max="50"
                                 step="1"
-                                value={person.resultRationality}
-                                onChange={(e) => updatePerson(person.id, "resultRationality", parseInt(e.target.value))}
+                                value={person.socialAdaptation}
+                                onChange={(e) => updatePerson(person.id, "socialAdaptation", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.resultRationality}</span>
+                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.socialAdaptation}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2 text-center">
