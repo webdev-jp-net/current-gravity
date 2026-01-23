@@ -40,6 +40,8 @@ npm run typecheck
 
 ```
 /
+├── _llm-docs/
+│   └── dictionary.md         # 開発用ネーミング辞書
 ├── pages/
 │   ├── _app.tsx              # アプリケーションエントリー
 │   ├── _document.tsx         # HTML ドキュメント
@@ -106,8 +108,11 @@ npm run typecheck
 
 - Components in `/components`
 - Pages in `/pages` (Next.js convention)
-- Data files in `/data` (JSON format)
 - Global styles in `/styles/globals.css`
+
+### Naming
+
+- すべての命名は `_llm-docs/dictionary.md` の定義に準拠
 
 ## Important Notes
 
