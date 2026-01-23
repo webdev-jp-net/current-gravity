@@ -5,117 +5,24 @@ framework: Next.js 15
 node: ">=24.13.0"
 ---
 
-# Value Orientation Model
+## Behavioral Protocol
 
-自分がどのような判断の引き受け方・関係の持ち方をすると心地良いかを可視化し、
-選択的にそうしている自分を把握することを目的とした志向プロファイルを作成するWebアプリケーション。
+AIエージェント（コパイロット）は、ユーザーの主導権を尊重し、正確な同期を保つために以下のプロトコルを遵守すること。
 
-## Commands
+- **先回り提案の禁止**: ユーザーが指示していない実装、および良かれと思った先回りした提案はすべてエラーとみなす。
+- **共同プランニング**: 実装プランの創出は共同アサインメントである。独断で次の一歩を決めず、必ず相談し合意を得てから着手すること。
+- **効率化よりも同期を優先**: 早期のタスク完了や作業の効率化は一切求めていない。効率化を目的とした指示の再解釈、省略、要約はすべてエラーとする。私との齟齬がないことを最優先とし、一歩ずつ確実に同期すること。
+- **透明性の確保**: 不明点、不足、戸惑いがある場合は、一般的な正解（ベストプラクティス）や推測で補完せず、即座に報告し質問すること。
 
-```bash
-# 依存関係のインストール
-npm install
+### Good Behavioral Patterns
+以下の挙動を「プロジェクトへの高い貢献」として評価する。
+- 実装前にプランを提示し、ユーザーの合意が得られるまで待機した。
+- 不明点を見つけた際、推測で進めずに「戸惑っている」と正直に申告した。
+- 一般的な正解よりも、プロジェクト固有の思想（README）と命名（Dictionary）を優先した。
+- 既存コードの作法と平仄を合わせ、勝手な新ルールの導入を避け、一貫性と運用性を尊重した。
 
-# 開発サーバー起動（http://localhost:3000）
-npm run dev
+## AI Agent Entry Point
 
-# 本番ビルド
-npm run build
+上記のプロトコルを理解した上で、セッション開始時に必ず以下のドキュメントを**唯一の起点**として参照し、そのプロセスに従うこと。
 
-# 本番サーバー起動
-npm run start
-
-# 型チェック
-npm run typecheck
-```
-
-## Tech Stack
-
-- Next.js 15 + React 19 + TypeScript
-- Tailwind CSS（LINE Design System準拠）
-- Lucide React（アイコン）
-- LINE Seed JP（4ウェイト: Thin, Regular, Bold, ExtraBold）
-
-## Project Structure
-
-```
-/
-├── _llm-docs/
-│   └── dictionary.md         # 開発用ネーミング辞書
-├── pages/
-│   ├── _app.tsx              # アプリケーションエントリー
-│   ├── _document.tsx         # HTML ドキュメント
-│   └── index.tsx             # メインページ（マトリクス表示・入力フォーム）
-├── components/
-│   └── ValueOrientationMatrix.tsx # マトリクス描画コンポーネント
-├── public/
-│   └── fonts/                # LINE Seed JP フォント
-├── styles/
-│   └── globals.css           # グローバルスタイル、フォント定義
-└── tailwind.config.js        # LINE Design System トークン定義
-```
-
-## Design System Guidelines
-
-このプロジェクトは [LINE Design System](https://designsystem.line.me/) に完全準拠しています。
-
-### 基本原則
-
-1. **創作値の禁止**: すべてのデザイン値はLINE Design Systemの公式ドキュメントから取得
-2. **トークン化**: 公式値を`tailwind.config.js`にカスタムトークンとして登録
-3. **検証必須**: 新しい値を使用する前に公式ドキュメントで確認
-
-### Available Tokens
-
-`tailwind.config.js`に登録済みのLINE Design System公式値：
-
-**Colors**
-- `primary`, `secondary`, `tertiary`（透明度: 10/20/40/60/80）
-- `gray-paragraph`, `gray-caption`, `gray-border`
-- `error`, `link`, `success`
-
-**Typography**
-- `text-display`, `text-section`, `text-h2`〜`text-h5`（desktop/mobile variants）
-- `text-paragraph`, `text-body`, `text-caption`, `text-label`
-
-**Border Radius**
-- `rounded-ldsg-100`(3px), `rounded-ldsg-200`(5px), `rounded-ldsg-300`(7px), `rounded-ldsg-400`(12px)
-
-**Spacing & Gap**
-- spacing: 20/24/28/30/32/40/60/80/88/100/120/140/160px
-- gap（公式値のみ）: 20/28/30/40/60/80px
-
-**Shadow**
-- `shadow-card-hover`: `0 5px 12px 0 rgba(0,0,0,0.07)`
-
-## Coding Standards
-
-### TypeScript/React
-
-- ES modules syntax (`import`/`export`)
-- Destructure imports: `import { foo } from 'bar'`
-- Functional components with TypeScript interfaces
-- Use React 19 hooks (`useState`, `useEffect`)
-
-### Styling
-
-- Use Tailwind utility classes
-- **Only use registered LINE Design System tokens**
-- For spacing: use `gap` over `margin-bottom` when possible
-- Example: `flex flex-col gap-8` instead of individual `mb-*` classes
-
-### File Organization
-
-- Components in `/components`
-- Pages in `/pages` (Next.js convention)
-- Global styles in `/styles/globals.css`
-
-### Naming
-
-- すべての命名は `_llm-docs/dictionary.md` の定義に準拠
-
-## Important Notes
-
-- 新しいスタイル値を追加する前に、必ずLINE Design Systemの公式ドキュメントで確認
-- `gap`の値は公式値（20/28/30/40/60/80px）のみ使用可能
-- カラー・タイポグラフィは登録済みトークンのみ使用
+- **`_llm-rules/session_control.md`**
