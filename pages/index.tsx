@@ -73,7 +73,7 @@ export default function Home() {
 
           {/* Matrix Display Section */}
           <section className="mb-20 lg:mb-35">
-            <div className="max-w-[500px] mx-auto mb-12">
+            <div className="max-w-lg mx-auto mb-12">
               <ValueOrientationMatrix personList={completePersonList} />
             </div>
 
@@ -94,10 +94,26 @@ export default function Home() {
                   <thead>
                     <tr className="border-b border-gray-border">
                       <th className="py-4 px-2 text-label text-gray-paragraph">表示名</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">構造論理</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">プロセス</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">人物</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">社会的調和</th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">帰属</small>
+                        <br />
+                        構造論理
+                      </th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">帰属</small>
+                        <br />
+                        プロセス
+                      </th> 
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">関係性</small>
+                        <br />
+                        人物
+                      </th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">関係性</small>
+                        <br />
+                        社会的調和
+                      </th>
                       <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
                     </tr>
                   </thead>
@@ -131,7 +147,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "structuralLogic", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.structuralLogic}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.structuralLogic}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -145,7 +161,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "process", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.process}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.process}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -159,7 +175,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "interpersonal", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.interpersonal}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.interpersonal}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -173,7 +189,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "socialAdaptation", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.socialAdaptation}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.socialAdaptation}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2 text-center">
