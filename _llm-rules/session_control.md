@@ -19,7 +19,7 @@ alwaysApply: true
    - `_llm-rules/core_rules.md` - 不明点確認・承認取得の原則
    - `_llm-rules/implementation_principles.md` - 実装の基本原則
 3. **LOAD PROJECT REQUIREMENTS** - プロジェクト要件定義（このファイルを完全に読み込む）
-   - `_llm-docs/requirements_definition.md` - プロジェクト全体の要件定義
+   - `_llm-docs/project.md` - プロジェクト全体の要件定義
    - 全タスクで必須確認（技術基盤、サイト構成、ドキュメント構成を理解）
 4. **ANALYZE** the user's request and task context (ユーザーのリクエストとタスクの文脈を分析）
 5. **SELECT** appropriate specialized rule(s) (適切な専門ルールを選択）
@@ -91,7 +91,7 @@ alwaysApply: true
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/implementation_principles.md`（実装関連・確認済み）
 - `_llm-rules/test_rule.md`（メイン）
-- プロジェクト固有のテスト設定は[プロジェクト要件定義](../../_llm-docs/requirements_definition.md)から参照
+- プロジェクト固有のテスト設定は[プロジェクト要件定義](../../_llm-docs/project.md)から参照
 
 ### GitHub実行・運用作業
 **conditions:**
@@ -211,7 +211,7 @@ alwaysApply: true
 **技術仕様参照:**
 - `_llm-rules/issue/format.md`（Issue形式技術仕様）
 - `_llm-rules/issue/projects_integration.md`（GitHub Projects連携ルール）
-- Issue管理・GitHub Projects固有設定は[プロジェクト要件定義](../../_llm-docs/requirements_definition.md)を参照
+- Issue管理・GitHub Projects固有設定は[プロジェクト要件定義](../../_llm-docs/project.md)を参照
 
 **作業内容:**
 - プロジェクトの要件定義・詳細設計を分析

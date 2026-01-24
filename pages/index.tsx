@@ -1,13 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Trash2 } from 'lucide-react'
-import { ValueOrientationMatrix, type Person } from '../components/ValueOrientationMatrix'
+import { useAtom } from 'jotai'
+import { ValueOrientationMatrix, type PersonalPlot } from '../components/ValueOrientationMatrix'
+import { Guide } from '../components/Guide'
+import { GroupEditor } from '../components/GroupEditor'
+import { groupAtom } from '../data/store'
 
 export default function Home() {
-  const [personList, setPersonList] = useState<Person[]>([])
+  const [group, setGroup] = useAtom(groupAtom)
+  const [isMounted, setIsMounted] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+
+  // ハイドレーションエラー対策
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // マウント完了（DOM出現）後に、ハッシュがあればスクロール
+  useEffect(() => {
+    if (isMounted && window.location.hash === '#group-editor') {
+      const el = document.getElementById('group-editor')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [isMounted])
+
+  const handleSave = () => {
+    setIsSaving(true)
+    // atomWithStorage を使用しているため、setGroup を呼ぶだけで localStorage に保存される
+    // 明示的な保存ボタンの役割として、現在の値を再セットすることで保存を確定させる
+    setGroup({ ...group })
+    setTimeout(() => {
+      setIsSaving(false)
+    }, 300)
+  }
 
   const addPerson = () => {
-    const newPerson: Person = {
+    const newPerson: PersonalPlot = {
       id: Date.now().toString(),
       displayName: "",
       structuralLogic: 0,
@@ -15,32 +45,63 @@ export default function Home() {
       interpersonal: 0,
       socialAdaptation: 0,
     }
-    setPersonList([...personList, newPerson])
+    setGroup({
+      ...group,
+      personalPlotList: [...group.personalPlotList, newPerson]
+    })
   }
 
-  const updatePerson = (id: string, field: keyof Person, value: string | number) => {
-    setPersonList(personList.map((p) => (p.id === id ? { ...p, [field]: value } : p)))
+  const updatePerson = (id: string, field: keyof PersonalPlot, value: string | number) => {
+    setGroup({
+      ...group,
+      personalPlotList: group.personalPlotList.map((p) => 
+        p.id === id ? { ...p, [field]: value } : p
+      )
+    })
+  }
+
+  const handleImport = (id: string, csvValue: string) => {
+    const values = csvValue.split(',').map(v => parseInt(v.trim()))
+    if (values.length === 4 && values.every(v => !isNaN(v))) {
+      setGroup({
+        ...group,
+        personalPlotList: group.personalPlotList.map(p => 
+          p.id === id ? {
+            ...p,
+            structuralLogic: values[0],
+            process: values[1],
+            interpersonal: values[2],
+            socialAdaptation: values[3]
+          } : p
+        )
+      })
+    }
   }
 
   const deletePerson = (id: string) => {
-    setPersonList(personList.filter((p) => p.id !== id))
+    setGroup({
+      ...group,
+      personalPlotList: group.personalPlotList.filter((p) => p.id !== id)
+    })
   }
 
-  const isPersonComplete = (person: Person): boolean => {
+  const isPersonComplete = (person: PersonalPlot): boolean => {
     return (
       person.displayName.trim() !== "" &&
-      person.structuralLogic >= 0 &&
-      person.structuralLogic <= 50 &&
-      person.process >= 0 &&
-      person.process <= 50 &&
-      person.interpersonal >= 0 &&
-      person.interpersonal <= 50 &&
-      person.socialAdaptation >= 0 &&
-      person.socialAdaptation <= 50
+      person.structuralLogic >= -10 &&
+      person.structuralLogic <= 10 &&
+      person.process >= -10 &&
+      person.process <= 10 &&
+      person.interpersonal >= -10 &&
+      person.interpersonal <= 10 &&
+      person.socialAdaptation >= -10 &&
+      person.socialAdaptation <= 10
     )
   }
 
-  const completePersonList = personList.filter(isPersonComplete)
+  const completePersonList = group.personalPlotList.filter(isPersonComplete)
+
+  if (!isMounted) return null
 
   return (
     <>
@@ -52,10 +113,10 @@ export default function Home() {
       </Head>
 
       <main className="min-h-screen py-20 lg:py-22 px-8 lg:px-15 bg-tertiary">
-        <div className="max-w-container mx-auto">
+        <div className="max-w-container mx-auto flex flex-col gap-20 lg:gap-35">
           {/* Page Header */}
-          <div className="mb-20 lg:mb-35">
-            <h1 className="text-section-mobile lg:text-section text-dark mb-4">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-section-mobile lg:text-section text-dark">
               価値志向モデル
             </h1>
             <p className="text-body text-gray-paragraph">
@@ -71,128 +132,31 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Matrix Display Section */}
-          <section className="mb-20 lg:mb-35">
-            <div className="max-w-[500px] mx-auto mb-12">
-              <ValueOrientationMatrix personList={completePersonList} />
-            </div>
-
-            {/* Input Table */}
-            <div className="bg-white rounded-ldsg-400 border border-gray-border p-8">
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-h3 text-dark">データ入力</h3>
-                <button 
-                  onClick={addPerson}
-                  className="bg-primary text-white px-6 py-2 rounded-ldsg-200 font-bold hover:opacity-80 transition-opacity"
-                >
-                  人物を追加
-                </button>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-border">
-                      <th className="py-4 px-2 text-label text-gray-paragraph">表示名</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">構造論理</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">プロセス</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">人物</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">社会的調和</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {personList.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="py-12 text-center text-body text-gray-placeholder">
-                          「人物を追加」ボタンをクリックしてデータを入力してください
-                        </td>
-                      </tr>
-                    ) : (
-                      personList.map((person) => (
-                        <tr key={person.id} className="border-b border-gray-border">
-                          <td className="py-4 px-2">
-                            <input
-                              type="text"
-                              value={person.displayName}
-                              onChange={(e) => updatePerson(person.id, "displayName", e.target.value)}
-                              placeholder="名前を入力"
-                              className="w-full border border-gray-border rounded-ldsg-100 px-3 py-2 text-body focus:outline-none focus:border-primary"
-                            />
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.structuralLogic}
-                                onChange={(e) => updatePerson(person.id, "structuralLogic", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.structuralLogic}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.process}
-                                onChange={(e) => updatePerson(person.id, "process", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.process}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.interpersonal}
-                                onChange={(e) => updatePerson(person.id, "interpersonal", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.interpersonal}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.socialAdaptation}
-                                onChange={(e) => updatePerson(person.id, "socialAdaptation", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.socialAdaptation}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2 text-center">
-                            <button
-                              onClick={() => deletePerson(person.id)}
-                              className="text-gray-placeholder hover:text-error transition-colors"
-                              aria-label="削除"
-                            >
-                              <Trash2 size={20} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+          {/* Matrix and Form Section */}
+          <section className="flex flex-col gap-20 lg:gap-35">
+            <div className="flex flex-col gap-8 items-center">
+              <div className="max-w-lg w-full">
+                <ValueOrientationMatrix personalPlotList={completePersonList} />
               </div>
             </div>
+
+            {/* Input Group Editor */}
+            <GroupEditor 
+              groupName={group.name}
+              personalPlotList={group.personalPlotList}
+              onGroupNameChange={(name) => setGroup({ ...group, name })}
+              onAddPerson={addPerson}
+              onUpdatePerson={updatePerson}
+              onDeletePerson={deletePerson}
+              onImport={handleImport}
+              onSave={handleSave}
+              isSaveDisabled={group.name.trim() === "" || completePersonList.length === 0}
+              isSaving={isSaving}
+            />
           </section>
+
+          {/* 解説セクション */}
+          <Guide />
         </div>
       </main>
     </>

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "structuralLogic-1",
+    "text": "質問1: 構造論理に関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "structuralLogic",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "structuralLogic-2",
+    "text": "質問2: 構造論理に関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "structuralLogic",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "structuralLogic-3",
+    "text": "質問3: 構造論理に関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "structuralLogic",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "structuralLogic-4",
+    "text": "質問4: 構造論理に関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "structuralLogic",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "structuralLogic-5",
+    "text": "質問5: 構造論理に関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "structuralLogic",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "process-1",
+    "text": "質問6: プロセスに関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "process",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "process-2",
+    "text": "質問7: プロセスに関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "process",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "process-3",
+    "text": "質問8: プロセスに関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "process",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "process-4",
+    "text": "質問9: プロセスに関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "process",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "process-5",
+    "text": "質問10: プロセスに関する設問（仮）",
+    "axis": "valueLocus",
+    "metric": "process",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "interpersonal-1",
+    "text": "質問11: 人物に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "interpersonal",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "interpersonal-2",
+    "text": "質問12: 人物に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "interpersonal",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "interpersonal-3",
+    "text": "質問13: 人物に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "interpersonal",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "interpersonal-4",
+    "text": "質問14: 人物に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "interpersonal",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "interpersonal-5",
+    "text": "質問15: 人物に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "interpersonal",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "socialAdaptation-1",
+    "text": "質問16: 社会的調和に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "socialAdaptation",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "socialAdaptation-2",
+    "text": "質問17: 社会的調和に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "socialAdaptation",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "socialAdaptation-3",
+    "text": "質問18: 社会的調和に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "socialAdaptation",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "socialAdaptation-4",
+    "text": "質問19: 社会的調和に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "socialAdaptation",
+    "label": { "min": "否定", "max": "肯定" }
+  },
+  {
+    "id": "socialAdaptation-5",
+    "text": "質問20: 社会的調和に関する設問（仮）",
+    "axis": "boundary",
+    "metric": "socialAdaptation",
+    "label": { "min": "否定", "max": "肯定" }
+  }
+]
