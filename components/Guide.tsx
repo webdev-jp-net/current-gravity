@@ -8,7 +8,7 @@ export const Guide: React.FC = () => {
           マトリクスの見方
         </h2>
         <p className="text-body text-gray-paragraph">
-          このモデルは、価値判断における志向を縦軸・横軸からなる2次元構造として定義する。
+          このモデルでは、価値を決めるときの志向をマトリクス上のプロットとして表現しています。
         </p>
       </header>
       <div className="flex flex-col md:flex-row md:gap-20">
@@ -36,9 +36,13 @@ export const Guide: React.FC = () => {
                 <p className="text-label text-gray-caption mb-2">端点に近づくと顕在化する傾向：</p>
                 <ul className="list-disc pl-5 text-caption text-gray-paragraph flex flex-col gap-1">
                   <li>責任関与が深く主体的ですが、対ストレスリソースは高燃費で消耗しやすい傾向があります。</li>
-                  <li>クリエイトをやりきること、決定責任を持つこと、両方ともオーナーシップと連結した行動傾向です。</li>
-                  <li>― 責任関与が深い延長で設計や過程にもタッチする場面があるため、過程も価値対象としてキャッチアップしやすい傾向があります。</li>
-                  <li>過程の段階から能動的に関与するモチベーション傾向がありますが、自発的要素のない状況へのモチベーションを維持しにくい傾向があります。</li>
+                  <li>決定責任のみに限定した概念ではありません。内在化した価値を創出すること、決定責任を持つこと、いずれもオーナーシップ志向と連結しています。</li>
+                  <li>責任関与が深い延長で設計や過程にもタッチする場面があるため、過程も価値対象としてキャッチアップしやすい傾向があります。
+                    <ul className="list-disc pl-5 mt-1 flex flex-col gap-1">
+                      <li>端点へ極端に近いと、こだわりすぎて効率化を犠牲にする場合があります。</li>
+                    </ul>
+                  </li>
+                  <li>0→1の価値創出と親和性が高い特性です。一方で、自発的要素のないタスクへモチベーションを見い出しにくい傾向があります。</li>
                 </ul>
               </div>
             </section>
@@ -54,8 +58,12 @@ export const Guide: React.FC = () => {
                 <ul className="list-disc pl-5 text-caption text-gray-paragraph flex flex-col gap-1">
                   <li>責任関与が浅く依存的ですが、対ストレスリソースは低燃費で高頻度・広範囲へ関与しやすい特性でもあります。</li>
                   <li>詳細把握や品質管理は専門家に委ね、接続や連携に重心を置く行動傾向があります。</li>
-                  <li>合意形成はすりあわせ対象があることで成り立つため、結論やアウトプットなど外在化した成果にアンテナ感度が高い傾向があります。</li>
-                  <li>結論へ導くモチベーションが高くでやすい傾向があります。補助的関与にもモチベーションの波を持ち込まず対処できる傾向があります。</li>
+                  <li>合意形成はすりあわせ対象があることで成り立つため、結論やアウトプットなど外在化した成果にアンテナ感度が高い傾向があります。
+                    <ul className="list-disc pl-5 mt-1 flex flex-col gap-1">
+                      <li>端点へ極端に近いと、過程に関与する概念そのものを忘れてしまう場合もあります。</li>
+                    </ul>
+                  </li>
+                  <li>0→1の価値創出は苦手ですが、補助的関与にもモチベーションの波を持ち込まず対処できる傾向があります。</li>
                 </ul>
               </div>
             </section>
@@ -106,7 +114,7 @@ export const Guide: React.FC = () => {
                 <ul className="list-disc pl-5 text-caption text-gray-paragraph flex flex-col gap-1">
                   <li>状態や嗜好が同質に近づく一体感を望み、拒否や異質にストレスを感じます。
                     <ul className="list-disc pl-5 mt-1 flex flex-col gap-1">
-                      <li>状態を収束させるための変化を望み調整へ積極的に働きかけます、ストレス時は異質を遠ざけたりもします。</li>
+                      <li>状態を収束させるための変化を望み調整へ働きかけます、ストレス時は異質を遠ざけたりもします。</li>
                       <li>収束のための変化は、自分で対応する場合と外部へ求める場合の両方があります。</li>
                     </ul>
                   </li>
