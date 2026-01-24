@@ -1,5 +1,6 @@
 import React from 'react'
-import { Trash2, Loader2 } from 'lucide-react'
+import { Trash2, Loader2, ClipboardList } from 'lucide-react'
+import Link from 'next/link'
 import { type PersonalPlot } from './ValueOrientationMatrix'
 
 interface GroupEditorProps {
@@ -28,7 +29,7 @@ export const GroupEditor: React.FC<GroupEditorProps> = ({
   isSaving = false,
 }) => {
   return (
-    <div className="bg-white rounded-ldsg-400 border border-gray-border p-8 flex flex-col gap-8">
+    <div id="group-editor" className="bg-white rounded-ldsg-400 border border-gray-border p-8 flex flex-col gap-8">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <h3 className="text-h3 text-dark">データ入力</h3>
@@ -47,11 +48,11 @@ export const GroupEditor: React.FC<GroupEditorProps> = ({
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-gray-border">
-              <th className="py-4 px-2 text-label text-gray-paragraph">ラベル</th>
+              <th className="py-4 px-2 text-label text-gray-paragraph w-1/4">ラベル</th>
               <th className="py-4 px-2 text-label text-gray-paragraph">
                 指標データ（カンマ区切り）
               </th>
-              <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
+              <th className="py-4 px-2 text-label text-gray-paragraph text-right whitespace-nowrap">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -84,14 +85,25 @@ export const GroupEditor: React.FC<GroupEditorProps> = ({
                       className="w-full border border-gray-border rounded-ldsg-100 px-3 py-2 text-body focus:outline-none focus:border-primary"
                     />
                   </td>
-                  <td className="py-4 px-2 text-center">
-                    <button
-                      onClick={() => onDeletePerson(person.id)}
-                      className="text-gray-placeholder hover:text-error transition-colors"
-                      aria-label="削除"
-                    >
-                      <Trash2 size={20} />
-                    </button>
+                  <td className="py-4 px-2 text-right whitespace-nowrap">
+                    <div className="flex items-center justify-end gap-4 lg:gap-6">
+                      <Link
+                        href={`/personalPlot?targetId=${person.id}`}
+                        className="inline-flex items-center gap-2 text-primary hover:opacity-80 transition-opacity text-label"
+                        title="設問から入力"
+                      >
+                        <ClipboardList size={16} className="flex-shrink-0" />
+                        <span className="hidden sm:inline">設問から入力</span>
+                      </Link>
+                      <button
+                        onClick={() => onDeletePerson(person.id)}
+                        className="inline-flex items-center gap-2 text-gray-placeholder hover:text-error transition-colors text-label"
+                        title="削除"
+                      >
+                        <Trash2 size={16} className="flex-shrink-0" />
+                        <span className="hidden sm:inline">削除</span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -100,21 +112,23 @@ export const GroupEditor: React.FC<GroupEditorProps> = ({
         </table>
       </div>
       
-      <div className="flex justify-end gap-4 pt-4 border-t border-gray-border">
+      <div className="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t border-gray-border">
           <input
             id="group-name"
             type="text"
             value={groupName}
             onChange={(e) => onGroupNameChange(e.target.value)}
             placeholder="グループ名を入力"
-            className="max-w-md border border-gray-border rounded-ldsg-100 px-3 py-2 text-body focus:outline-none focus:border-primary"
+            className="w-full sm:max-w-md border border-gray-border rounded-ldsg-100 px-3 py-2 text-body focus:outline-none focus:border-primary"
           />
         <button 
           onClick={onSave}
           disabled={isSaveDisabled || isSaving}
-          className="bg-primary text-white px-8 py-2 rounded-ldsg-200 font-bold hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center min-w-[160px]"
+          className="w-full sm:w-auto bg-primary text-white px-8 py-2 rounded-ldsg-200 font-bold hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
         >
-          {isSaving ? <Loader2 className="animate-spin" size={20} /> : "このグループを保存"}
+          <div className="flex items-center justify-center h-5">
+            {isSaving ? <Loader2 className="animate-spin" size={20} /> : "このグループを保存"}
+          </div>
         </button>
       </div>
     </div>

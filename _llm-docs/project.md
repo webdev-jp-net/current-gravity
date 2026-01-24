@@ -17,13 +17,21 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 ```
 /
 ├── _llm-docs/
-│   └── dictionary.md         # 開発用ネーミング辞書
+│   ├── dictionary.md         # 開発用ネーミング辞書
+│   └── project.md            # 本ドキュメント
+├── data/
+│   ├── questionList.json     # 設問マスター（20件）
+│   └── store.ts              # Jotai Atoms（グローバルステート定義）
 ├── pages/
 │   ├── _app.tsx              # アプリケーションエントリー
 │   ├── _document.tsx         # HTML ドキュメント
-│   └── index.tsx             # メインページ（マトリクス表示・入力フォーム）
+│   ├── index.tsx             # メインページ（マトリクス表示・グループ編集）
+│   └── personalPlot.tsx      # 設問回答ページ（5段階回答によるスコア算出）
 ├── components/
-│   └── ValueOrientationMatrix.tsx # マトリクス描画コンポーネント
+│   ├── ValueOrientationMatrix.tsx # マトリクス描画コンポーネント
+│   ├── GroupEditor.tsx       # グループ編集コンポーネント
+│   ├── Guide.tsx             # 概念解説コンポーネント
+│   └── PersonalPlotTable.tsx # （※現状はGroupEditorに内包、将来的に分離の可能性）
 ├── public/
 │   └── fonts/                # LINE Seed JP フォント
 ├── styles/
@@ -37,9 +45,10 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 
 ### 基本原則
 
-1. **創作値の禁止**: すべてのデザイン値はLINE Design Systemの公式ドキュメントから取得
-2. **トークン化**: 公式値を`tailwind.config.js`にカスタムトークンとして登録
-3. **検証必須**: 新しい値を使用する前に公式ドキュメントで確認
+- **創作値の禁止**: すべてのデザイン値はLINE Design Systemの公式ドキュメントから取得。
+  - `tailwind.config.js` に未登録の値を使用する場合も、公式ドキュメントを確認しトークンとして追加することを優先。
+- **トークン化**: 公式値を`tailwind.config.js`にカスタムトークンとして登録。
+- **検証必須**: 新しい値を使用する前に公式ドキュメントで確認。
 
 ### Available Tokens
 
@@ -47,19 +56,19 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 
 **Colors**
 - `primary`, `secondary`, `tertiary`（透明度: 10/20/40/60/80）
-- `gray-paragraph`, `gray-caption`, `gray-border`
+- `gray-paragraph`, `gray-caption`, `gray-border`, `gray-placeholder`
 - `error`, `link`, `success`
 
 **Typography**
 - `text-display`, `text-section`, `text-h2`〜`text-h5`（desktop/mobile variants）
-- `text-paragraph`, `text-body`, `text-caption`, `text-label`
+- `text-body`, `text-paragraph`, `text-caption`, `text-label`, `text-xs`
 
 **Border Radius**
 - `rounded-ldsg-100`(3px), `rounded-ldsg-200`(5px), `rounded-ldsg-300`(7px), `rounded-ldsg-400`(12px)
 
 **Spacing & Gap**
-- spacing: 20/24/28/30/32/40/60/80/88/100/120/140/160px
-- gap（公式値のみ）: 20/28/30/40/60/80px
+- インデックス指定（例: `gap-2` = 8px, `gap-15` = 40px）
+- 主要な値: 4, 8, 11, 15, 16, 19, 20, 24, 27, 28, 30, 32, 33, 39, 40, 60, 80, 88, 100, 120, 140, 160px
 
 **Shadow**
 - `shadow-card-hover`: `0 5px 12px 0 rgba(0,0,0,0.07)`
@@ -71,43 +80,50 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 - ES modules syntax (`import`/`export`)
 - Destructure imports: `import { foo } from 'bar'`
 - Functional components with TypeScript interfaces
-- Use React 19 hooks (`useState`, `useEffect`)
+- Use React 19 hooks (useState, useEffect)
+- Global State: Jotaiを使用。atomWithStorageによるlocalStorage永続化を標準とする。
 
 ### Styling
 
 - Use Tailwind utility classes
 - **Only use registered LINE Design System tokens**
 - For spacing: use `gap` over `margin-bottom` when possible
-- Example: `flex flex-col gap-8` instead of individual `mb-*` classes
+- レスポンシブ設計: `lg` ブレイクポイント（829px）を基準に調整。
 
 ### File Organization
 
 - Components in `/components`
 - Pages in `/pages` (Next.js convention)
 - Global styles in `/styles/globals.css`
+- Store/Atoms in `/data/store.ts`
 
 ## Important Notes
 
-- 新しいスタイル値を追加する前に、必ずLINE Design Systemの公式ドキュメントで確認
-- `gap`の値は公式値（20/28/30/40/60/80px）のみ使用可能
-- カラー・タイポグラフィは登録済みトークンのみ使用
+- 新しいスタイル値を追加する前に、必ずLINE Design Systemの公式ドキュメントで確認。
+- ピクセル値（`px`）による固定サイズ指定（マジックナンバー）を避け、可能な限りトークンまたは相対値を使用する。
+- ページ遷移を伴う状態共有が必要な場合は、localStorageを直接叩かずJotaiアトムを経由する。
 
 ## Commands
 
 ```bash
+# 依存関係のインストール
+pnpm install
+
 # 開発サーバー起動
-npm run dev
+pnpm dev
 
 # 本番ビルド
-npm run build
+pnpm build
 
 # 型チェック
-npm run typecheck
+pnpm typecheck
 ```
 
 ## Tech Stack
 
 - Next.js 15 + React 19 + TypeScript
+- Jotai (Global State Management)
 - Tailwind CSS（LINE Design System準拠）
 - Lucide React（アイコン）
 - LINE Seed JP（フォント）
+- pnpm (Package Manager)

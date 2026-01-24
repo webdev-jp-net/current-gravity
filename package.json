@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jotai": "^2.16.2",
+    "lucide-react": "^0.408.0",
     "next": "^15.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "lucide-react": "^0.408.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
