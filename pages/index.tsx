@@ -30,14 +30,14 @@ export default function Home() {
   const isPersonComplete = (person: Person): boolean => {
     return (
       person.displayName.trim() !== "" &&
-      person.structuralLogic >= 0 &&
-      person.structuralLogic <= 50 &&
-      person.process >= 0 &&
-      person.process <= 50 &&
-      person.interpersonal >= 0 &&
-      person.interpersonal <= 50 &&
-      person.socialAdaptation >= 0 &&
-      person.socialAdaptation <= 50
+      person.structuralLogic >= -10 &&
+      person.structuralLogic <= 10 &&
+      person.process >= -10 &&
+      person.process <= 10 &&
+      person.interpersonal >= -10 &&
+      person.interpersonal <= 10 &&
+      person.socialAdaptation >= -10 &&
+      person.socialAdaptation <= 10
     )
   }
 
@@ -96,24 +96,7 @@ export default function Home() {
                     <tr className="border-b border-gray-border">
                       <th className="py-4 px-2 text-label text-gray-paragraph">表示名</th>
                       <th className="py-4 px-2 text-label text-gray-paragraph">
-                        <small className="text-label">帰属</small>
-                        <br />
-                        構造論理
-                      </th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">
-                        <small className="text-label">帰属</small>
-                        <br />
-                        プロセス
-                      </th> 
-                      <th className="py-4 px-2 text-label text-gray-paragraph">
-                        <small className="text-label">関係性</small>
-                        <br />
-                        人物
-                      </th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">
-                        <small className="text-label">関係性</small>
-                        <br />
-                        社会的調和
+                        インポート（構造, プロセス, 人物, 社会的調和）
                       </th>
                       <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
                     </tr>
@@ -121,7 +104,7 @@ export default function Home() {
                   <tbody>
                     {personList.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="py-12 text-center text-body text-gray-placeholder">
+                        <td colSpan={3} className="py-12 text-center text-body text-gray-placeholder">
                           「人物を追加」ボタンをクリックしてデータを入力してください
                         </td>
                       </tr>
@@ -138,60 +121,24 @@ export default function Home() {
                             />
                           </td>
                           <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.structuralLogic}
-                                onChange={(e) => updatePerson(person.id, "structuralLogic", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-8">{person.structuralLogic}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.process}
-                                onChange={(e) => updatePerson(person.id, "process", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-8">{person.process}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.interpersonal}
-                                onChange={(e) => updatePerson(person.id, "interpersonal", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-8">{person.interpersonal}</span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-2">
-                            <div className="flex items-center gap-3">
-                              <input
-                                type="range"
-                                min="0"
-                                max="50"
-                                step="1"
-                                value={person.socialAdaptation}
-                                onChange={(e) => updatePerson(person.id, "socialAdaptation", parseInt(e.target.value))}
-                                className="w-full accent-primary"
-                              />
-                              <span className="text-label text-gray-paragraph min-w-8">{person.socialAdaptation}</span>
-                            </div>
+                            <input
+                              type="text"
+                              value={`${person.structuralLogic}, ${person.process}, ${person.interpersonal}, ${person.socialAdaptation}`}
+                              onChange={(e) => {
+                                const values = e.target.value.split(',').map(v => parseInt(v.trim()))
+                                if (values.length === 4) {
+                                  setPersonList(personList.map(p => p.id === person.id ? {
+                                    ...p,
+                                    structuralLogic: isNaN(values[0]) ? p.structuralLogic : values[0],
+                                    process: isNaN(values[1]) ? p.process : values[1],
+                                    interpersonal: isNaN(values[2]) ? p.interpersonal : values[2],
+                                    socialAdaptation: isNaN(values[3]) ? p.socialAdaptation : values[3]
+                                  } : p))
+                                }
+                              }}
+                              placeholder="0, 0, 0, 0"
+                              className="w-full border border-gray-border rounded-ldsg-100 px-3 py-2 text-body focus:outline-none focus:border-primary"
+                            />
                           </td>
                           <td className="py-4 px-2 text-center">
                             <button
