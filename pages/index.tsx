@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import { Trash2 } from 'lucide-react'
 import { ValueOrientationMatrix, type Person } from '../components/ValueOrientationMatrix'
+import { Guide } from '../components/Guide'
 
 export default function Home() {
   const [personList, setPersonList] = useState<Person[]>([])
@@ -52,10 +53,10 @@ export default function Home() {
       </Head>
 
       <main className="min-h-screen py-20 lg:py-22 px-8 lg:px-15 bg-tertiary">
-        <div className="max-w-container mx-auto">
+        <div className="max-w-container mx-auto flex flex-col gap-20 lg:gap-35">
           {/* Page Header */}
-          <div className="mb-20 lg:mb-35">
-            <h1 className="text-section-mobile lg:text-section text-dark mb-4">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-section-mobile lg:text-section text-dark">
               価値志向モデル
             </h1>
             <p className="text-body text-gray-paragraph">
@@ -71,15 +72,15 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Matrix Display Section */}
-          <section className="mb-20 lg:mb-35">
-            <div className="max-w-lg mx-auto mb-12">
+          {/* Matrix and Form Section */}
+          <section className="flex flex-col gap-20 lg:gap-35">
+            <div className="max-w-lg mx-auto w-full">
               <ValueOrientationMatrix personList={completePersonList} />
             </div>
 
             {/* Input Table */}
-            <div className="bg-white rounded-ldsg-400 border border-gray-border p-8">
-              <div className="flex justify-between items-center mb-8">
+            <div className="bg-white rounded-ldsg-400 border border-gray-border p-8 flex flex-col gap-8">
+              <div className="flex justify-between items-center">
                 <h3 className="text-h3 text-dark">データ入力</h3>
                 <button 
                   onClick={addPerson}
@@ -209,6 +210,9 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* 解説セクション */}
+          <Guide />
         </div>
       </main>
     </>
