@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import { Trash2 } from 'lucide-react'
 import { ValueOrientationMatrix, type Person } from '../components/ValueOrientationMatrix'
+import { Guide } from '../components/Guide'
 
 export default function Home() {
   const [personList, setPersonList] = useState<Person[]>([])
@@ -52,10 +53,10 @@ export default function Home() {
       </Head>
 
       <main className="min-h-screen py-20 lg:py-22 px-8 lg:px-15 bg-tertiary">
-        <div className="max-w-container mx-auto">
+        <div className="max-w-container mx-auto flex flex-col gap-20 lg:gap-35">
           {/* Page Header */}
-          <div className="mb-20 lg:mb-35">
-            <h1 className="text-section-mobile lg:text-section text-dark mb-4">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-section-mobile lg:text-section text-dark">
               価値志向モデル
             </h1>
             <p className="text-body text-gray-paragraph">
@@ -71,15 +72,15 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Matrix Display Section */}
-          <section className="mb-20 lg:mb-35">
-            <div className="max-w-[500px] mx-auto mb-12">
+          {/* Matrix and Form Section */}
+          <section className="flex flex-col gap-20 lg:gap-35">
+            <div className="max-w-lg mx-auto w-full">
               <ValueOrientationMatrix personList={completePersonList} />
             </div>
 
             {/* Input Table */}
-            <div className="bg-white rounded-ldsg-400 border border-gray-border p-8">
-              <div className="flex justify-between items-center mb-8">
+            <div className="bg-white rounded-ldsg-400 border border-gray-border p-8 flex flex-col gap-8">
+              <div className="flex justify-between items-center">
                 <h3 className="text-h3 text-dark">データ入力</h3>
                 <button 
                   onClick={addPerson}
@@ -94,10 +95,26 @@ export default function Home() {
                   <thead>
                     <tr className="border-b border-gray-border">
                       <th className="py-4 px-2 text-label text-gray-paragraph">表示名</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">構造論理</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">プロセス</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">人物</th>
-                      <th className="py-4 px-2 text-label text-gray-paragraph">社会的調和</th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">帰属</small>
+                        <br />
+                        構造論理
+                      </th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">帰属</small>
+                        <br />
+                        プロセス
+                      </th> 
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">関係性</small>
+                        <br />
+                        人物
+                      </th>
+                      <th className="py-4 px-2 text-label text-gray-paragraph">
+                        <small className="text-label">関係性</small>
+                        <br />
+                        社会的調和
+                      </th>
                       <th className="py-4 px-2 text-label text-gray-paragraph text-center">操作</th>
                     </tr>
                   </thead>
@@ -131,7 +148,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "structuralLogic", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.structuralLogic}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.structuralLogic}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -145,7 +162,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "process", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.process}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.process}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -159,7 +176,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "interpersonal", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.interpersonal}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.interpersonal}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2">
@@ -173,7 +190,7 @@ export default function Home() {
                                 onChange={(e) => updatePerson(person.id, "socialAdaptation", parseInt(e.target.value))}
                                 className="w-full accent-primary"
                               />
-                              <span className="text-label text-gray-paragraph min-w-[20px]">{person.socialAdaptation}</span>
+                              <span className="text-label text-gray-paragraph min-w-8">{person.socialAdaptation}</span>
                             </div>
                           </td>
                           <td className="py-4 px-2 text-center">
@@ -193,6 +210,9 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* 解説セクション */}
+          <Guide />
         </div>
       </main>
     </>
