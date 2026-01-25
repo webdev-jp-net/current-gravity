@@ -1,142 +1,142 @@
 [
   {
-    "id": "structuralLogic-1",
-    "text": "質問1: 構造論理に関する設問（仮）",
+    "id": "valueLocus-1",
+    "question": "思想や設計、モノやコトに魅力を感じ、勉強したり洗練させたくなってしまう。",
     "axis": "valueLocus",
-    "metric": "structuralLogic",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "ownership",
+    "label": { "min": "最低限が適切", "max": "つい没頭する" }
   },
   {
-    "id": "structuralLogic-2",
-    "text": "質問2: 構造論理に関する設問（仮）",
+    "id": "valueLocus-2",
+    "question": "どこに出すか、どう伝えるか、どう根回ししておくかで価値を動かすことに関心がある。",
     "axis": "valueLocus",
-    "metric": "structuralLogic",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "consensus",
+    "label": { "min": "それほど関心がない", "max": "とても意義を感じる" }
   },
   {
-    "id": "structuralLogic-3",
-    "text": "質問3: 構造論理に関する設問（仮）",
+    "id": "valueLocus-3",
+    "question": "責任感があり、ついつい関与が深くなって疲れてしまうことがある。",
     "axis": "valueLocus",
-    "metric": "structuralLogic",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "ownership",
+    "label": { "min": "疲れない運用をしている", "max": "そうなりがち" }
   },
   {
-    "id": "structuralLogic-4",
-    "text": "質問4: 構造論理に関する設問（仮）",
+    "id": "valueLocus-4",
+    "question": "評価に接続しているところをていねいにキャッチアップできる。一方で、そこに至るまでのタスクへモチベーションを見いだしにくい側面もある。",
     "axis": "valueLocus",
-    "metric": "structuralLogic",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "consensus",
+    "label": { "min": "自分はそうではない", "max": "自分は近いと思う" }
   },
   {
-    "id": "structuralLogic-5",
-    "text": "質問5: 構造論理に関する設問（仮）",
+    "id": "valueLocus-5",
+    "question": "結果が喜ばれるとしても、モノの品質に疑問がある完結には違和感を感じる。",
     "axis": "valueLocus",
-    "metric": "structuralLogic",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "ownership",
+    "label": { "min": "そうは思わない", "max": "引っかかりがある" }
   },
   {
-    "id": "process-1",
-    "text": "質問6: プロセスに関する設問（仮）",
+    "id": "valueLocus-6",
+    "question": "自分の働きかけにより、成果が喜ばれたり反響を呼んだり報酬が高くできたときの手応えは格別だ。",
     "axis": "valueLocus",
-    "metric": "process",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "consensus",
+    "label": { "min": "特に気にしなかった", "max": "そのとおり！" }
   },
   {
-    "id": "process-2",
-    "text": "質問7: プロセスに関する設問（仮）",
+    "id": "valueLocus-7",
+    "question": "0→1が得意。形のないものを形にする過程は自分が本領を発揮できるフェーズだ。",
     "axis": "valueLocus",
-    "metric": "process",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "ownership",
+    "label": { "min": "苦手です", "max": "まかせろ" }
   },
   {
-    "id": "process-3",
-    "text": "質問8: プロセスに関する設問（仮）",
+    "id": "valueLocus-8",
+    "question": "好きなタスクもそうではないタスクも、一定のペースでコンスタントに進行できる。",
     "axis": "valueLocus",
-    "metric": "process",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "consensus",
+    "label": { "min": "嫌いな事は遅い", "max": "できる" }
   },
   {
-    "id": "process-4",
-    "text": "質問9: プロセスに関する設問（仮）",
+    "id": "valueLocus-9",
+    "question": "決定案から自分の関与やアイデアが全てなくなってしまうと、内心ざんねんだ。",
     "axis": "valueLocus",
-    "metric": "process",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "ownership",
+    "label": { "min": "気にならない", "max": "内心そうだ" }
   },
   {
-    "id": "process-5",
-    "text": "質問10: プロセスに関する設問（仮）",
+    "id": "valueLocus-10",
+    "question": "勉強していることをシェアして応援や関心のリアクションがあると、意味や納得感の裏付けになり安心するところがある。",
     "axis": "valueLocus",
-    "metric": "process",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "consensus",
+    "label": { "min": "1人で気にせず勉強する", "max": "そういう時がある" }
   },
   {
-    "id": "interpersonal-1",
-    "text": "質問11: 人物に関する設問（仮）",
+    "id": "boundary-1",
+    "question": "「話題だから美味しい」「有名だからおしゃれ」という評価のしかたは違和感がある。",
     "axis": "boundary",
-    "metric": "interpersonal",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "diversity",
+    "label": { "min": "どこに違和感？", "max": "違和感を感じる" }
   },
   {
-    "id": "interpersonal-2",
-    "text": "質問12: 人物に関する設問（仮）",
+    "id": "boundary-2",
+    "question": "おすすめやトレンドを知ると、素直にふれてみたくなる。",
     "axis": "boundary",
-    "metric": "interpersonal",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "そうは思わない", "max": "気になる" }
   },
   {
-    "id": "interpersonal-3",
-    "text": "質問13: 人物に関する設問（仮）",
+    "id": "boundary-3",
+    "question": "自分がおすすめしたものへ相手は興味がなくてもかまわない。",
     "axis": "boundary",
-    "metric": "interpersonal",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "diversity",
+    "label": { "min": "ややさみしい", "max": "かまわない" }
   },
   {
-    "id": "interpersonal-4",
-    "text": "質問14: 人物に関する設問（仮）",
+    "id": "boundary-4",
+    "question": "人間関係で話をまとめるほうが自分には合っている。",
     "axis": "boundary",
-    "metric": "interpersonal",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "違和感がある", "max": "そうだと思う" }
   },
   {
-    "id": "interpersonal-5",
-    "text": "質問15: 人物に関する設問（仮）",
+    "id": "boundary-5",
+    "question": "状況に応じた立ち回りが求められる交流会や懇親会では、消耗を感じやすい。",
     "axis": "boundary",
-    "metric": "interpersonal",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "diversity",
+    "label": { "min": "自然に立ち回れる", "max": "辛い" }
   },
   {
-    "id": "socialAdaptation-1",
-    "text": "質問16: 社会的調和に関する設問（仮）",
+    "id": "boundary-6",
+    "question": "「Aさんはすごいよね」と切り出されると、とりあえず「すごいよね」と同意する。",
     "axis": "boundary",
-    "metric": "socialAdaptation",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "「すごいんだ、ふーん」", "max": "すぐ言いそう" }
   },
   {
-    "id": "socialAdaptation-2",
-    "text": "質問17: 社会的調和に関する設問（仮）",
+    "id": "boundary-7",
+    "question": "買い物のときは、商品スペックよりも製造元やレビュー、知人やインフルエンサーの推薦が気になる。",
     "axis": "boundary",
-    "metric": "socialAdaptation",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "場合による", "max": "そうだと思う" }
   },
   {
-    "id": "socialAdaptation-3",
-    "text": "質問18: 社会的調和に関する設問（仮）",
+    "id": "boundary-8",
+    "question": "チームで動くときは、代表者をきめてリードする体制がわかりやすくて安心できる。",
     "axis": "boundary",
-    "metric": "socialAdaptation",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "場合による", "max": "そうだと思う" }
   },
   {
-    "id": "socialAdaptation-4",
-    "text": "質問19: 社会的調和に関する設問（仮）",
+    "id": "boundary-9",
+    "question": "結論が出ても、反対した人との関係が気になってしまう。",
     "axis": "boundary",
-    "metric": "socialAdaptation",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "割り切れる", "max": "うずく" }
   },
   {
-    "id": "socialAdaptation-5",
-    "text": "質問20: 社会的調和に関する設問（仮）",
+    "id": "boundary-10",
+    "question": "空気を悪くする正論には消耗してしまう。",
     "axis": "boundary",
-    "metric": "socialAdaptation",
-    "label": { "min": "否定", "max": "肯定" }
+    "orientation": "identityFusion",
+    "label": { "min": "割り切れる", "max": "つかれる" }
   }
 ]

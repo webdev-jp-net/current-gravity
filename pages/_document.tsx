@@ -5,8 +5,8 @@ export default function Document() {
     <Html lang="ja">
       <Head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="/book-marked-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
-        <link rel="icon" href="/book-marked-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" href="/land-plot-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/land-plot-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
       </Head>
       <body>
         <Main />

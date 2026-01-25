@@ -40,10 +40,10 @@ export default function Home() {
     const newPerson: PersonalPlot = {
       id: Date.now().toString(),
       displayName: "",
-      structuralLogic: 0,
-      process: 0,
-      interpersonal: 0,
-      socialAdaptation: 0,
+      ownership: 0,
+      consensus: 0,
+      diversity: 0,
+      identityFusion: 0,
     }
     setGroup({
       ...group,
@@ -68,10 +68,10 @@ export default function Home() {
         personalPlotList: group.personalPlotList.map(p => 
           p.id === id ? {
             ...p,
-            structuralLogic: values[0],
-            process: values[1],
-            interpersonal: values[2],
-            socialAdaptation: values[3]
+            ownership: values[0],
+            consensus: values[1],
+            diversity: values[2],
+            identityFusion: values[3],
           } : p
         )
       })
@@ -88,14 +88,10 @@ export default function Home() {
   const isPersonComplete = (person: PersonalPlot): boolean => {
     return (
       person.displayName.trim() !== "" &&
-      person.structuralLogic >= -10 &&
-      person.structuralLogic <= 10 &&
-      person.process >= -10 &&
-      person.process <= 10 &&
-      person.interpersonal >= -10 &&
-      person.interpersonal <= 10 &&
-      person.socialAdaptation >= -10 &&
-      person.socialAdaptation <= 10
+      person.ownership >= -10 && person.ownership <= 10 &&
+      person.consensus >= -10 && person.consensus <= 10 &&
+      person.diversity >= -6 && person.diversity <= 6 &&
+      person.identityFusion >= -14 && person.identityFusion <= 14
     )
   }
 
