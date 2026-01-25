@@ -10,19 +10,36 @@ export default function PersonalPlotInput() {
   const router = useRouter()
   const [group, setGroup] = useAtom(groupAtom)
   const [answers, setAnswers] = useState<Record<string, number>>({})
+  const [shuffledQuestions, setShuffledQuestions] = useState<any[]>([])
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    // 設問を軸ごとにシャッフル
+    const shuffleArray = (array: any[]) => {
+      const shuffled = [...array]
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+      }
+      return shuffled
+    }
+
+    const valueLocusQuestions = questionListData.filter(q => q.axis === 'valueLocus')
+    const boundaryQuestions = questionListData.filter(q => q.axis === 'boundary')
+
+    setShuffledQuestions([
+      ...shuffleArray(valueLocusQuestions),
+      ...shuffleArray(boundaryQuestions)
+    ])
+    
     setIsMounted(true)
   }, [])
-
-  const questions = questionListData
 
   const handleAnswerChange = (questionId: string, value: number) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }))
   }
 
-  const isAllAnswered = questions.every((q) => answers[q.id] !== undefined)
+  const isAllAnswered = questionListData.every((q) => answers[q.id] !== undefined)
 
   const handleSubmit = () => {
     if (!isAllAnswered) return
@@ -31,15 +48,17 @@ export default function PersonalPlotInput() {
 
     // 指標の計算
     const metrics = {
-      structuralLogic: 0,
-      process: 0,
-      interpersonal: 0,
-      socialAdaptation: 0,
+      valueLocus: 0,
+      boundary: 0,
     }
 
-    questions.forEach((q) => {
+    questionListData.forEach((q: any) => {
       const val = answers[q.id] || 0
-      metrics[q.metric as keyof typeof metrics] += val
+      // orientation に基づく加減算
+      // ownership, interpersonal は正の方向
+      // consensus, socialAdaptation は負の方向
+      const isPositive = q.orientation === 'ownership' || q.orientation === 'interpersonal'
+      metrics[q.axis as keyof typeof metrics] += isPositive ? val : -val
     })
 
     if (targetId && typeof targetId === 'string') {
@@ -49,10 +68,8 @@ export default function PersonalPlotInput() {
         personalPlotList: group.personalPlotList.map(p => 
           p.id === targetId ? {
             ...p,
-            structuralLogic: metrics.structuralLogic,
-            process: metrics.process,
-            interpersonal: metrics.interpersonal,
-            socialAdaptation: metrics.socialAdaptation,
+            valueLocus: metrics.valueLocus,
+            boundary: metrics.boundary,
           } : p
         )
       })
@@ -61,10 +78,8 @@ export default function PersonalPlotInput() {
       const newPlot: PersonalPlot = {
         id: Date.now().toString(),
         displayName: '',
-        structuralLogic: metrics.structuralLogic,
-        process: metrics.process,
-        interpersonal: metrics.interpersonal,
-        socialAdaptation: metrics.socialAdaptation,
+        valueLocus: metrics.valueLocus,
+        boundary: metrics.boundary,
       }
       setGroup({
         ...group,
@@ -76,9 +91,9 @@ export default function PersonalPlotInput() {
     router.push('/#group-editor')
   }
 
-  const renderQuestion = (q: typeof questions[0]) => (
+  const renderQuestion = (q: any) => (
     <div key={q.id} className="flex flex-col gap-6 p-8 bg-white rounded-ldsg-400 border border-gray-border">
-      <h3 className="text-body text-dark">{q.text}</h3>
+      <h3 className="text-body text-dark">{q.question}</h3>
       <div className="flex flex-col gap-4">
         {/* 回答エリア: SPでは2段（ラベル左右分かち + 下段ラジオ）、LGでは1段 */}
         <div className="flex flex-wrap lg:flex-nowrap lg:items-center gap-y-4 lg:gap-15 max-w-md lg:max-w-4xl mx-auto w-full">
@@ -150,7 +165,7 @@ export default function PersonalPlotInput() {
               </p>
             </div>
             <div className="flex flex-col gap-8">
-              {questions
+              {shuffledQuestions
                 .filter(q => q.axis === 'valueLocus')
                 .map((q) => renderQuestion(q))}
             </div>
@@ -165,7 +180,7 @@ export default function PersonalPlotInput() {
               </p>
             </div>
             <div className="flex flex-col gap-8">
-              {questions
+              {shuffledQuestions
                 .filter(q => q.axis === 'boundary')
                 .map((q) => renderQuestion(q))}
             </div>

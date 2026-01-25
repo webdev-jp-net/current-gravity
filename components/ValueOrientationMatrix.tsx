@@ -3,10 +3,8 @@ import React from 'react'
 export type PersonalPlot = {
   id: string
   displayName: string
-  structuralLogic: number
-  process: number
-  interpersonal: number
-  socialAdaptation: number
+  valueLocus: number
+  boundary: number
 }
 
 interface ValueOrientationMatrixProps {
@@ -59,8 +57,8 @@ export const ValueOrientationMatrix: React.FC<ValueOrientationMatrixProps> = ({ 
 
         {/* Data points */}
         {personalPlotList.map((person) => {
-          const x = 250 + ((person.interpersonal + person.socialAdaptation) / 40) * 320
-          const y = 250 - ((person.structuralLogic + person.process) / 40) * 320
+          const x = 250 + (person.boundary / 20) * 160
+          const y = 250 - (person.valueLocus / 20) * 160
           return (
             <g key={person.id}>
               <circle cx={x} cy={y} r="8" className="fill-primary" />
