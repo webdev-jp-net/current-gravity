@@ -11,9 +11,6 @@ importers:
       '@visx/group':
         specifier: ^3.12.0
         version: 3.12.0(react@19.2.3)
-      '@visx/marker':
-        specifier: ^3.12.0
-        version: 3.12.0(react@19.2.3)
       '@visx/responsive':
         specifier: ^3.12.0
         version: 3.12.0(react@19.2.3)
@@ -341,11 +338,6 @@ packages:
 
   '@visx/group@3.12.0':
     resolution: {integrity: sha512-Dye8iS1alVXPv7nj/7M37gJe6sSKqJLH7x6sEWAsRQ9clI0kFvjbKcKgF+U3aAVQr0NCohheFV+DtR8trfK/Ag==}
-    peerDependencies:
-      react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
-
-  '@visx/marker@3.12.0':
-    resolution: {integrity: sha512-11aCWC13+PqbAatNgMVcm33J8PRNdyGiDbfMfwUXt5/FS2XLs2e1fjfhIwAxmCCLZ13FYlabrc1qnjnhwXbTVQ==}
     peerDependencies:
       react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
 
@@ -1063,15 +1055,6 @@ snapshots:
   '@visx/group@3.12.0(react@19.2.3)':
     dependencies:
       '@types/react': 19.2.9
-      classnames: 2.5.1
-      prop-types: 15.8.1
-      react: 19.2.3
-
-  '@visx/marker@3.12.0(react@19.2.3)':
-    dependencies:
-      '@types/react': 19.2.9
-      '@visx/group': 3.12.0(react@19.2.3)
-      '@visx/shape': 3.12.0(react@19.2.3)
       classnames: 2.5.1
       prop-types: 15.8.1
       react: 19.2.3

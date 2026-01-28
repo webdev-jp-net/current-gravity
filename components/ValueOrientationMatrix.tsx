@@ -3,7 +3,6 @@ import { Group } from '@visx/group'
 import { Line } from '@visx/shape'
 import { scaleLinear } from '@visx/scale'
 import { ParentSize } from '@visx/responsive'
-import { MarkerArrow } from '@visx/marker'
 import questionListData from '../data/questionList.json'
 
 export type PersonalPlot = {
@@ -172,14 +171,25 @@ const MatrixContent: React.FC<ValueOrientationMatrixProps & { width: number; hei
   return (
     <svg width={width} height={height}>
       <Group left={margin.left} top={margin.top}>
-        <MarkerArrow id="marker-arrow" fill="#D1D1D1" size={4} />
-
         {/* 軸 */}
         <g>
-          <Line from={{ x: center.x, y: innerHeight }} to={{ x: center.x, y: 0 }} stroke="#D1D1D1" strokeWidth={1} markerEnd="url(#marker-arrow)" />
-          <Line from={{ x: center.x, y: 0 }} to={{ x: center.x, y: innerHeight }} stroke="#D1D1D1" strokeWidth={1} markerEnd="url(#marker-arrow)" />
-          <Line from={{ x: 0, y: center.y }} to={{ x: innerWidth, y: center.y }} stroke="#D1D1D1" strokeWidth={1} markerEnd="url(#marker-arrow)" />
-          <Line from={{ x: innerWidth, y: center.y }} to={{ x: 0, y: center.y }} stroke="#D1D1D1" strokeWidth={1} markerEnd="url(#marker-arrow)" />
+          {/* 縦軸線 */}
+          <Line from={{ x: center.x, y: 0 }} to={{ x: center.x, y: innerHeight }} stroke="#D1D1D1" strokeWidth={1} />
+          {/* 上向き矢印 */}
+          <Line from={{ x: center.x, y: 0 }} to={{ x: center.x - 10, y: 12 }} stroke="#D1D1D1" strokeWidth={1} />
+          <Line from={{ x: center.x, y: 0 }} to={{ x: center.x + 10, y: 12 }} stroke="#D1D1D1" strokeWidth={1} />
+          {/* 下向き矢印 */}
+          <Line from={{ x: center.x, y: innerHeight }} to={{ x: center.x - 10, y: innerHeight - 12 }} stroke="#D1D1D1" strokeWidth={1} />
+          <Line from={{ x: center.x, y: innerHeight }} to={{ x: center.x + 10, y: innerHeight - 12 }} stroke="#D1D1D1" strokeWidth={1} />
+
+          {/* 横軸線 */}
+          <Line from={{ x: 0, y: center.y }} to={{ x: innerWidth, y: center.y }} stroke="#D1D1D1" strokeWidth={1} />
+          {/* 左向き矢印 */}
+          <Line from={{ x: 0, y: center.y }} to={{ x: 12, y: center.y - 10 }} stroke="#D1D1D1" strokeWidth={1} />
+          <Line from={{ x: 0, y: center.y }} to={{ x: 12, y: center.y + 10 }} stroke="#D1D1D1" strokeWidth={1} />
+          {/* 右向き矢印 */}
+          <Line from={{ x: innerWidth, y: center.y }} to={{ x: innerWidth - 12, y: center.y - 10 }} stroke="#D1D1D1" strokeWidth={1} />
+          <Line from={{ x: innerWidth, y: center.y }} to={{ x: innerWidth - 12, y: center.y + 10 }} stroke="#D1D1D1" strokeWidth={1} />
         </g>
 
         {/* 軸ラベル */}
