@@ -18,7 +18,9 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 /
 ├── _llm-docs/
 │   ├── dictionary.md         # 開発用ネーミング辞書
-│   └── project.md            # 本ドキュメント
+│   ├── project.md            # 本ドキュメント
+│   └── spec/                 # 技術詳細仕様書
+│       └── matrix_drawing.md # マトリクス描画仕様
 ├── data/
 │   ├── questionList.json     # 設問マスター（20件）
 │   └── store.ts              # Jotai Atoms（グローバルステート定義）
@@ -103,6 +105,7 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 - ピクセル値（`px`）による固定サイズ指定（マジックナンバー）を避け、可能な限りトークンまたは相対値を使用する。
 - ページ遷移を伴う状態共有が必要な場合は、localStorageを直接叩かずJotaiアトムを経由する。
 - スコア算出ロジック: 各軸の端点（ownership, consensus, diversity, identityFusion）ごとの合算値を保持し、設問数の不均衡を解消するため平均値ベースで座標を算出する。
+- マトリクス描画仕様: VisXを採用し、リキッドレイアウトに対応。ラベル被りへの対処等、詳細は [matrix_drawing.md](./spec/matrix_drawing.md) を参照。
 
 ## Commands
 
