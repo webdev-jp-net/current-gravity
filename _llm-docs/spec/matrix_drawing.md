@@ -16,13 +16,13 @@
   - **ライブラリ**: VisX（Airbnb製Reactビジュアライゼーションライブラリ）
     - 使用パッケージ: `@visx/group`, `@visx/shape`, `@visx/scale`, `@visx/responsive`
   - **描画方式**: SVG（Scalable Vector Graphics）
-- **データソース**: `data/questionList.json`（設問数に基づく平均値算出に使用）
+- **データソース**: `PersonalPlot` データ（詳細は [model_definition.md](./model_definition.md) を参照）
 
 ## 描画ロジック
 
 ### 座標系
 - **中心点**: マトリクスの幾何学的な中心を原点（0, 0）とする。
-- **スケール**: 各指標의平均値（-2〜2）の差分に基づき、±4の範囲をマトリクスの表示領域にマッピングする。
+- **スケール**: `model_definition.md` に定義された2軸の合計値（-20 〜 20）をマトリクスの表示領域に線形マッピングする。
 - **反転**: Y軸（帰属志向）は、数学的な正負とSVGの座標系（上が0）を合わせるため、描画時に反転処理を行う。
 
 ### 意匠（デザイン要素）

@@ -4,11 +4,10 @@
 
 ## Implementation Protocol
 
-AIエージェントは、あらゆる実装・提案の前に必ず以下のステップを遵守すること。
+AIエージェントは、あらゆる実装・提案の前に、プロジェクト固有の「絶対正解」として以下を同期すること。
 
-1. **README.md (思想の源泉)**: 実装対象の概念的な定義・背景・目的を正解として再読し、意図を把握する。
-2. **_llm-docs/dictionary.md (翻訳機)**: 把握した概念に対応する、プロジェクトで定義された正式な英語名称・命名規則を取得する。
-3. **実装への適用**: 勝手な再解釈や一般的なベストプラクティスを優先せず、上記2つのドキュメントを絶対正解として扱う。
+- **README.md (思想の源泉)**: 具現化すべき概念の定義、背景、目的。
+- **_llm-docs/dictionary.md (唯一の翻訳機)**: 概念に対応する、正式な英語名称と命名規則。
 
 ---
 
@@ -16,30 +15,29 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 
 ```
 /
-├── _llm-docs/
-│   ├── dictionary.md         # 開発用ネーミング辞書
-│   ├── project.md            # 本ドキュメント
-│   └── spec/                 # 技術詳細仕様書
-│       └── matrix_drawing.md # マトリクス描画仕様
-├── data/
-│   ├── questionList.json     # 設問マスター（20件）
-│   └── store.ts              # Jotai Atoms（グローバルステート定義）
-├── pages/
-│   ├── _app.tsx              # アプリケーションエントリー
-│   ├── _document.tsx         # HTML ドキュメント
-│   ├── index.tsx             # メインページ（マトリクス表示・グループ編集）
-│   └── personalPlot.tsx      # 設問回答ページ（5段階回答によるスコア算出）
-├── components/
-│   ├── ValueOrientationMatrix.tsx # マトリクス描画コンポーネント
-│   ├── GroupEditor.tsx       # グループ編集コンポーネント
-│   ├── Guide.tsx             # 概念解説コンポーネント
-│   └── PersonalPlotTable.tsx # （※現状はGroupEditorに内包、将来的に分離の可能性）
-├── public/
-│   └── fonts/                # LINE Seed JP フォント
-├── styles/
-│   └── globals.css           # グローバルスタイル、フォント定義
-└── tailwind.config.js        # LINE Design System トークン定義
+├── AGENTS.md           # AIエージェントの行動プロトコルとエントリーポイント
+├── _llm-rules/         # [開発作法] セッション制御、GitHub運用、基本原則
+├── _llm-docs/          # [正本] プロジェクト専門知識・仕様定義
+│   ├── spec/           # 各機能の詳細な技術仕様書（Scoring, Drawing等）
+│   └── *.md            # 共通定義（dictionary, question_concepts等）
+├── data/               # [静的データ・状態定義] questionList.json, store.ts等
+├── pages/              # [ルーティング] Next.jsの規約に基づく画面定義
+├── components/         # [構成要素] 再利用可能なReactコンポーネント
+├── styles/             # [グローバルスタイル] LDS準拠のCSS・フォント定義
+├── public/             # [静的資産] 画像、SVG、Webフォント
+└── tailwind.config.js  # [意匠定義] LINE Design Systemトークンの正本
 ```
+
+## Documentation Index
+
+各領域の詳細な専門知識は、以下の仕様書に定義されている。
+
+- **[model_definition.md](./spec/model_definition.md)**: 軸の定義およびスコア算出ロジック。
+- **[personal_plot.md](./spec/personal_plot.md)**: データ構造および入力・インポート仕様。
+- **[matrix_drawing.md](./spec/matrix_drawing.md)**: マトリクス描画および表示制御仕様。
+- **[question_concepts.md](./question_concepts.md)**: 設問ごとの背景意図および詳細コンセプト。
+
+---
 
 ## Design System Guidelines
 
@@ -104,8 +102,7 @@ AIエージェントは、あらゆる実装・提案の前に必ず以下のス
 - 新しいスタイル値を追加する前に、必ずLINE Design Systemの公式ドキュメントで確認。
 - ピクセル値（`px`）による固定サイズ指定（マジックナンバー）を避け、可能な限りトークンまたは相対値を使用する。
 - ページ遷移を伴う状態共有が必要な場合は、localStorageを直接叩かずJotaiアトムを経由する。
-- スコア算出ロジック: 各軸の端点（ownership, consensus, diversity, identityFusion）ごとの合算値を保持し、設問数の不均衡を解消するため平均値ベースで座標を算出する。
-- マトリクス描画仕様: VisXを採用し、リキッドレイアウトに対応。ラベル被りへの対処等、詳細は [matrix_drawing.md](./spec/matrix_drawing.md) を参照。
+- ビジネスロジックや描画仕様の詳細は、上記 `Documentation Index` の各ファイルを参照すること。
 
 ## Commands
 
