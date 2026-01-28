@@ -3,7 +3,6 @@ import { Group } from '@visx/group'
 import { Line } from '@visx/shape'
 import { scaleLinear } from '@visx/scale'
 import { ParentSize } from '@visx/responsive'
-import questionListData from '../data/questionList.json'
 
 export type PersonalPlot = {
   id: string
@@ -35,24 +34,17 @@ const MatrixContent: React.FC<ValueOrientationMatrixProps & { width: number; hei
 }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
-  const counts = useMemo(() => ({
-    ownership: questionListData.filter(q => q.orientation === 'ownership').length,
-    consensus: questionListData.filter(q => q.orientation === 'consensus').length,
-    diversity: questionListData.filter(q => q.orientation === 'diversity').length,
-    identityFusion: questionListData.filter(q => q.orientation === 'identityFusion').length,
-  }), [])
-
   const margin = { top: 60, right: 60, bottom: 60, left: 60 }
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
 
   const xScale = useMemo(() => scaleLinear<number>({
-    domain: [-4, 4],
+    domain: [-20, 20],
     range: [0, innerWidth],
   }), [innerWidth])
 
   const yScale = useMemo(() => scaleLinear<number>({
-    domain: [-4, 4],
+    domain: [-20, 20],
     range: [innerHeight, 0],
   }), [innerHeight])
 
@@ -70,13 +62,8 @@ const MatrixContent: React.FC<ValueOrientationMatrixProps & { width: number; hei
 
     // 1. 各プロットの基本位置とラベル矩形（推定）を初期化
     let layouts: LabelRect[] = personalPlotList.map(person => {
-      const avgOwnership = counts.ownership > 0 ? person.ownership / counts.ownership : 0
-      const avgConsensus = counts.consensus > 0 ? person.consensus / counts.consensus : 0
-      const avgDiversity = counts.diversity > 0 ? person.diversity / counts.diversity : 0
-      const avgIdentityFusion = counts.identityFusion > 0 ? person.identityFusion / counts.identityFusion : 0
-
-      const valueLocus = avgOwnership - avgConsensus
-      const boundary = avgIdentityFusion - avgDiversity
+      const valueLocus = person.ownership - person.consensus
+      const boundary = person.identityFusion - person.diversity
 
       const x = xScale(boundary)
       const y = yScale(valueLocus)
@@ -166,7 +153,7 @@ const MatrixContent: React.FC<ValueOrientationMatrixProps & { width: number; hei
       ...layout,
       textAnchor: (searchPatterns.find(p => p.ox === layout.offsetX && p.oy === layout.offsetY)?.align || 'middle') as "middle" | "start" | "end"
     }))
-  }, [personalPlotList, counts, xScale, yScale])
+  }, [personalPlotList, xScale, yScale])
 
   return (
     <svg width={width} height={height}>
