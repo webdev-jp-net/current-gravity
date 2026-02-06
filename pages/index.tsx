@@ -157,7 +157,6 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>価値志向モデル（Value Orientation Model）</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="robots" content="noindex, nofollow" />
@@ -168,15 +167,18 @@ export default function Home() {
           {/* Page Header */}
           <div className="flex flex-col gap-4">
             <h1 className="text-section-mobile lg:text-section text-dark">
-              価値志向モデル
+              <img
+                src="/logo_large.svg"
+                alt="CURRENT GRAVITY（カレントグラビティ）"
+                className="w-full h-auto max-w-[540px] mx-auto"
+              />
             </h1>
             <p className="text-body text-gray-paragraph">
-              価値志向モデルは、自分がどのような判断の引き受け方・関係の持ち方をすると心地良いかを可視化し、
-              選択的にそうしている自分を把握することを目的とした志向プロファイルです。
+            <strong>CURRENT GRAVITY</strong>（カレントグラビティ）は、あなたが<strong>判断の引き受け方</strong>と<strong>関係の持ち方</strong>を決める時、いま重心を置いている場所を可視化するプロファイリングモデルです。
             </p>
             <p className="text-body text-gray-paragraph">
-              自己理解や心理的リソースを運用の補助ツールとして利用できます。
-              他者の志向も可視化し相関図にすると、集団の志向や棲み分けを構造的に捉える参考資料にもなります。
+              自分の特長を俯瞰して、選択的にそうしていることを知れば、自己理解や心理的リソースを運用の補助ツールとして利用できます。
+              そして、仲間の志向も可視化し地図にしてみると、チーム全体の志向やメンバーどうしの棲み分けを構造的に捉える地図にもなります。これはチームダイナミクスのヒントになるかもしれません。
             </p>
             <p className="text-body text-gray-paragraph">
               なお、このモデルは評価の正しさ・能力・成果の大小を測るものではありません。
