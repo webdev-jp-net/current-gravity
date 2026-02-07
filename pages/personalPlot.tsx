@@ -139,14 +139,14 @@ export default function PersonalPlotInput() {
   return (
     <>
       <Head>
-        <title>あなたの価値志向を測定 | 価値志向モデル</title>
+        <title>あなたのいまの重心を測定 | CURRENT GRAVITY</title>
       </Head>
 
       <main className="min-h-screen py-20 lg:py-22 px-8 lg:px-15 bg-tertiary">
         <div className="max-w-guide-compressed mx-auto flex flex-col gap-15 lg:gap-20">
           <div className="flex flex-col gap-4">
             <h1 className="text-section-mobile lg:text-section text-dark">
-              あなたの価値志向を測定
+              あなたのいまの重心を測定
             </h1>
             <p className="text-body text-gray-paragraph">
               設問のシチュエーションについて、直感であなたに近いフィーリングを選択してください。

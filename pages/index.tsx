@@ -165,7 +165,7 @@ export default function Home() {
       <main className="min-h-screen py-20 lg:py-22 px-8 lg:px-15 bg-tertiary">
         <div className="max-w-container mx-auto flex flex-col gap-20 lg:gap-35">
           {/* Page Header */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 max-w-guide-compressed mx-auto">
             <h1 className="text-section-mobile lg:text-section text-dark">
               <img
                 src="/logo_large.svg"
@@ -174,11 +174,13 @@ export default function Home() {
               />
             </h1>
             <p className="text-body text-gray-paragraph">
-            <strong>CURRENT GRAVITY</strong>（カレントグラビティ）は、あなたが<strong>判断の引き受け方</strong>と<strong>関係の持ち方</strong>を決める時、いま重心を置いている場所を可視化するプロファイリングモデルです。
+              <strong>CURRENT GRAVITY</strong>（カレントグラビティ）は、自分がどのような<strong>判断の引き受け方</strong>や<strong>関係の持ち方</strong>をすると心地良いか「いま重心がある場所」を可視化するプロファイリングモデルです。
             </p>
             <p className="text-body text-gray-paragraph">
-              自分の特長を俯瞰して、選択的にそうしていることを知れば、自己理解や心理的リソースを運用の補助ツールとして利用できます。
-              そして、仲間の志向も可視化し地図にしてみると、チーム全体の志向やメンバーどうしの棲み分けを構造的に捉える地図にもなります。これはチームダイナミクスのヒントになるかもしれません。
+              自分が判断や関係性を選択的にそう運用していると受容すれば心理的リソースを最適化でき、志向の理解はキャリアプランの見通しを助けます。
+            </p>
+            <p className="text-body text-gray-paragraph">
+              そして、他の人の「いまの重心」も可視化し同じ地図に置いてみると、チーム全体の特長やメンバーどうしの棲み分けを知る手がかりにもなります。これはチームダイナミクスを考える材料になるでしょう。
             </p>
             <p className="text-body text-gray-paragraph">
               なお、このモデルは評価の正しさ・能力・成果の大小を測るものではありません。

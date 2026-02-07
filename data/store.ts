@@ -7,7 +7,7 @@ export type PersonalPlotGroup = {
   personalPlotList: PersonalPlot[]
 }
 
-const STORAGE_KEY = 'value-orientation-model-data'
+const STORAGE_KEY = 'current-gravity-data'
 
 // 永続化用のアトム
 export const groupAtom = atomWithStorage<PersonalPlotGroup>(STORAGE_KEY, {

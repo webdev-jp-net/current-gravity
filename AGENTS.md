@@ -1,5 +1,5 @@
 ---
-name: Value Orientation Model
+name: CURRENT GRAVITY
 type: web-application
 framework: Next.js 15
 node: ">=24.13.0"

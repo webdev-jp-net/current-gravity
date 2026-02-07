@@ -1,6 +1,6 @@
 # Project Definition
 
-このドキュメントは、価値志向モデル（Value Orientation Model）プロジェクト固有の定義および設計情報をまとめたものです。
+このドキュメントは、CURRENT GRAVITY（カレントグラビティ）プロジェクト固有の定義および設計情報をまとめたものです。
 
 ## Implementation Protocol
 
