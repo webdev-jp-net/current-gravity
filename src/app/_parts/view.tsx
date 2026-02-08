@@ -3,7 +3,7 @@
 import type { FC } from 'react'
 
 import { ValueOrientationMatrix } from '@/components/ValueOrientationMatrix'
-import { Guide } from '@/components/Guide'
+import { Guide } from './Guide'
 import { GroupEditor } from './GroupEditor'
 import { useHome } from './useHome'
 import styles from './page.module.scss'
