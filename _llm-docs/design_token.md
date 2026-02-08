@@ -16,9 +16,9 @@
 
 ### Colors
 
-- `primary`, `secondary`, `tertiary`
+- `primary`, `secondary`, `tertiary`, `dark`
   - 透明度: 0（DEFAULT）/10/20/40/60/80
-- `gray-paragraph`, `gray-caption`, `gray-border`, `gray-placeholder`
+- `gray-paragraph`, `gray-caption`, `gray-border`, `gray-border-medium`, `gray-placeholder`
 - `error`, `link`, `success`
 
 ### Typography
@@ -36,8 +36,8 @@
 
 ### Spacing & Gap
 
-- インデックス指定（例: `gap-2` = 8px, `gap-15` = 40px）
-- 主要な値: 4, 8, 11, 15, 16, 19, 20, 24, 27, 28, 30, 32, 33, 39, 40, 60, 80, 88, 100, 120, 140, 160px
+- 1 = 4px の 4 倍数スケール（n → n×4px）。インデックス指定（例: `gap-2` = 8px, `gap-15` = 60px）
+- 拡張で使用する主要な値: 4.5(18), 6.5(26), 7(28), 7.5(30), 8(32), 9(36), 10(40), 10.5(42), 11(44), 12(48), 13(52), 14(56), 15(60), 17(68), 20(80), 22(88), 25(100), 27(108), 35(140), 40(160) px
 
 ### Shadow
 
