@@ -102,7 +102,7 @@ export const GroupEditor: React.FC<GroupEditorProps> = ({
                   <td className="py-4 px-2 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end gap-4 lg:gap-6">
                       <Link
-                        href={`/personalPlot?targetId=${person.id}`}
+                        href={`/personal-plot?targetId=${person.id}`}
                         className="inline-flex items-center gap-2 text-primary hover:opacity-80 transition-opacity text-label"
                         title="設問から入力"
                       >
