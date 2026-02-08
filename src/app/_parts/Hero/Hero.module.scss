@@ -10,7 +10,7 @@
   background-color: var(--bg-primary);
 
   @include mq($from: wide) {
-    height: min(40svh, var(--container-narrow));
+    height: min(40svh, rem(640));
   }
 }
 

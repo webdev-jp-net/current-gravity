@@ -30,20 +30,18 @@ export const HomeView: FC = () => {
     <main className={styles.home} data-testid="home">
       <Hero />
       <Matrix personalPlotList={completePersonList} />
-      <div id="group-editor">
-        <GroupEditor
-          groupName={group.name}
-          personalPlotList={group.personalPlotList}
-          onGroupNameChange={name => setGroup({ ...group, name })}
-          onAddPerson={addPerson}
-          onUpdatePerson={updatePerson}
-          onDeletePerson={deletePerson}
-          onImport={handleImport}
-          onSave={handleSave}
-          isSaveDisabled={group.name.trim() === '' || completePersonList.length === 0}
-          isSaving={isSaving}
-        />
-      </div>
+      <GroupEditor
+        groupName={group.name}
+        personalPlotList={group.personalPlotList}
+        onGroupNameChange={name => setGroup({ ...group, name })}
+        onAddPerson={addPerson}
+        onUpdatePerson={updatePerson}
+        onDeletePerson={deletePerson}
+        onImport={handleImport}
+        onSave={handleSave}
+        isSaveDisabled={group.name.trim() === '' || completePersonList.length === 0}
+        isSaving={isSaving}
+      />
       <Guide />
     </main>
   )
