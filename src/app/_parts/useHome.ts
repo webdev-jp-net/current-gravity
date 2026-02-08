@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
 import { usePathname } from 'next/navigation'
@@ -14,6 +14,7 @@ export const useHome = () => {
   const [group, setGroup] = useAtom(groupAtom)
   const [isMounted, setIsMounted] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const initialLoadHadParams = useRef(false)
 
   // ハイドレーションエラー対策および初期URLパラメータ解析
   useEffect(() => {
@@ -22,6 +23,7 @@ export const useHome = () => {
     const plotParams = urlParams.getAll('p')
 
     if (nameParam || plotParams.length > 0) {
+      initialLoadHadParams.current = true
       const personalPlotList: PersonalPlot[] = plotParams.map((p, index) => {
         const [displayName, ownership, consensus, diversity, identityFusion] =
           p.split(',')
@@ -74,10 +76,21 @@ export const useHome = () => {
     }
   }, [group, isMounted, pathname])
 
-  // マウント完了後にハッシュがあればスクロール
+  // マウント完了後にハッシュまたは p= に応じてスクロール
   useEffect(() => {
-    if (isMounted && window.location.hash === '#group-editor') {
+    if (!isMounted) return
+
+    if (window.location.hash === '#group-editor') {
       const el = document.getElementById('group-editor')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+      return
+    }
+
+    if (initialLoadHadParams.current) {
+      initialLoadHadParams.current = false
+      const el = document.getElementById('matrix')
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
       }
