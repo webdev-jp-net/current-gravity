@@ -18,10 +18,11 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 ├── _llm-docs/          # [正本] プロジェクト専門知識・仕様定義
 │   ├── spec/           # 各機能の詳細な技術仕様書（Scoring, Drawing等）
 │   └── *.md            # 共通定義（dictionary, question_concepts等）
-├── data/               # [静的データ・状態定義] questionList.json, store.ts等
-├── pages/              # [ルーティング] Next.jsの規約に基づく画面定義
-├── components/         # [構成要素] 再利用可能なReactコンポーネント
-├── styles/             # [グローバルスタイル] LDS準拠のCSS・フォント定義
+├── src/                # [開発系ソース]
+│   ├── data/           # 静的データ・状態定義（questionList.json, store.ts等）
+│   ├── pages/          # ルーティング（Next.jsの規約に基づく画面定義）
+│   ├── components/     # 再利用可能なReactコンポーネント
+│   └── styles/        # グローバルスタイル（LDS準拠のCSS・フォント定義）
 ├── public/             # [静的資産] 画像、SVG、Webフォント
 └── tailwind.config.js  # [意匠定義] LINE Design Systemトークンの正本
 ```
@@ -51,9 +52,9 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 
 ### File Organization
 
-- Components in `/components`
-- Pages in `/pages` (Next.js convention)
-- Store/Atoms in `/data/store.ts`
+- Components in `src/components`
+- Pages in `src/pages` (Next.js convention)
+- Store/Atoms in `src/data/store.ts`
 
 ## Important Notes
 

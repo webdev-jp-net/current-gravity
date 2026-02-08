@@ -48,7 +48,7 @@
 ### File Organization
 
 ```
-├── styles/             # [グローバルスタイル] globals.css、CSS・フォント定義
+├── src/styles/         # [グローバルスタイル] globals.css、CSS・フォント定義
 ├── public/             # [静的資産] 画像、SVG、Webフォント
 └── tailwind.config.js  # [意匠定義] デザイントークンの正本
 ```
