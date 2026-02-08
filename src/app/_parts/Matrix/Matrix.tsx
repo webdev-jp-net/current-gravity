@@ -157,7 +157,7 @@ const MatrixContent: FC<{
 
 export const Matrix: FC<MatrixProps> = ({ personalPlotList }) => {
   return (
-    <div className={styles.matrix} style={{ aspectRatio: 1 }}>
+    <div className={styles.matrix}>
       <ParentSize>
         {({ width, height }) => (
           <MatrixContent personalPlotList={personalPlotList} width={width} height={height} />

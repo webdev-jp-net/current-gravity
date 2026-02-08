@@ -1,10 +1,19 @@
 @use '@/style/_variable' as *;
 
 .matrix {
+  position: relative;
   width: calc(100% - #{rem(16 + 16)});
   max-width: rem(640);
-  aspect-ratio: 1;
+  height: 0;
+  padding-bottom: 100%;
   margin: 0 auto;
+
+  > div {
+    @include rect(100%);
+
+    position: absolute;
+    inset: 0;
+  }
 }
 
 .axisLine {
