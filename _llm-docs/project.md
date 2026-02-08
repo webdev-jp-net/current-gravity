@@ -23,8 +23,7 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 │   ├── pages/          # ルーティング（Next.jsの規約に基づく画面定義）
 │   ├── components/     # 再利用可能なReactコンポーネント
 │   └── style/         # グローバルスタイル（LDS準拠のCSS・フォント定義）
-├── public/             # [静的資産] 画像、SVG、Webフォント
-└── tailwind.config.js  # [意匠定義] LINE Design Systemトークンの正本
+└── public/             # [静的資産] 画像、SVG、Webフォント
 ```
 
 ## Documentation Index

@@ -18,7 +18,6 @@ export default tseslint.config(
       'next-env.d.ts',
       'next.config.js',
       'postcss.config.js',
-      'tailwind.config.js',
       '.scaffdog/**',
     ],
   },
