@@ -1,22 +1,8 @@
 # Design Token（意匠定義）
 
----
-
-## Project Structure
-
-```
-├── styles/             # [グローバルスタイル] LDS準拠のCSS・フォント定義
-├── public/             # [静的資産] 画像、SVG、Webフォント
-└── tailwind.config.js  # [意匠定義] LINE Design Systemトークンの正本
-```
-
----
-
-## Design System Guidelines
-
 このプロジェクトの意匠は、ここで指定しているデザイントークンへ完全準拠させます。
 
-### 基本原則
+## 基本原則
 
 - **創作値の禁止**: すべてのデザイン値はデザイントークンの値から取得します。
   - `tailwind.config.js` に未登録の値を使用する場合も、このファイルを確認しトークンとして追加することを優先します。
@@ -24,7 +10,7 @@
 - **検証必須**: 新しい値を使用する前にこのファイルで確認します。
 - **マジックナンバー禁止**: ピクセル値（`px`）による固定サイズ指定を避け、可能な限りトークンまたは相対値を使用します。
 
-### Available Tokens
+## Available Tokens
 
 `tailwind.config.js`に登録済みのLINE Design System公式値：
 
@@ -47,9 +33,15 @@
 **Shadow**
 - `shadow-card-hover`: `0 5px 12px 0 rgba(0,0,0,0.07)`
 
----
-
 ## Coding Standards
+
+### File Organization
+
+```
+├── styles/             # [グローバルスタイル] globals.css、CSS・フォント定義
+├── public/             # [静的資産] 画像、SVG、Webフォント
+└── tailwind.config.js  # [意匠定義] デザイントークンの正本
+```
 
 ### Styling
 
@@ -57,12 +49,6 @@
 - **Only use registered LINE Design System tokens**
 - For spacing: use `gap` over `margin-bottom` when possible
 - レスポンシブ設計: `lg` ブレイクポイント（829px）を基準に調整。
-
-### File Organization
-
-- Global styles in `/styles/globals.css`
-
----
 
 ## Tech Stack
 
