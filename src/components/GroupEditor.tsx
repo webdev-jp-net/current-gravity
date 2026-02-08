@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Trash2, Loader2, ClipboardList, Share2, Check } from 'lucide-react'
 import Link from 'next/link'
 
-import { type PersonalPlot } from './ValueOrientationMatrix'
+import type { PersonalPlot } from '@/type/personalPlot'
 
 interface GroupEditorProps {
   groupName: string

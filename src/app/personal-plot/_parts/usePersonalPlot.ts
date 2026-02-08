@@ -6,10 +6,10 @@ import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 
-import type { PersonalPlot } from '@/type/personalPlot'
-
 import questionListData from '@/data/questionList.json'
 import { groupAtom } from '@/data/store'
+
+import type { PersonalPlot } from '@/type/personalPlot'
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array]
@@ -53,7 +53,7 @@ export const usePersonalPlot = () => {
   )
 
   const handleSubmit = () => {
-    if (!isAllAnswered) return
+    if (!isAllAnswered || !searchParams) return
 
     const targetId = searchParams.get('targetId')
 

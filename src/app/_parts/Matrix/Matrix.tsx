@@ -6,11 +6,11 @@ import { Group } from '@visx/group'
 import { ParentSize } from '@visx/responsive'
 import { Line } from '@visx/shape'
 
-import type { PersonalPlot } from '@/type/personalPlot'
-
 import styles from './Matrix.module.scss'
 
 import { useMatrix } from './useMatrix'
+
+import type { PersonalPlot } from '@/type/personalPlot'
 
 interface MatrixProps {
   personalPlotList: PersonalPlot[]

@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { useRouter, usePathname } from 'next/navigation'
 
-import type { PersonalPlot } from '@/type/personalPlot'
-
 import { groupAtom } from '@/data/store'
+
+import type { PersonalPlot } from '@/type/personalPlot'
 
 export const useHome = () => {
   const router = useRouter()
@@ -69,7 +69,8 @@ export const useHome = () => {
     const currentQuery = window.location.search.replace(/^\?/, '')
 
     if (newQuery !== currentQuery) {
-      const url = newQuery ? `${pathname}?${newQuery}` : pathname
+      const base = pathname ?? ''
+      const url = newQuery ? `${base}?${newQuery}` : base
       router.replace(url)
     }
   }, [group, isMounted, pathname, router])
