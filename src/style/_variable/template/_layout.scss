@@ -1,0 +1,30 @@
+@use '../function/rem' as *;
+@use '../mixin/mq' as *;
+
+@mixin container {
+  width: 100%;
+  max-width: var(--container-wide);
+
+  @include mq(narrow) {
+    padding: 0 var(--spacing-lg);
+  }
+
+  @include mq($from: wide) {
+    padding: 0 var(--spacing-3xl);
+    margin: 0 auto;
+  }
+}
+
+@mixin container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+
+  @include mq(narrow) {
+    padding: 0 var(--spacing-lg);
+  }
+
+  @include mq($from: wide) {
+    padding: 0 var(--spacing-3xl);
+    margin: 0 auto;
+  }
+}

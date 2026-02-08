@@ -1,0 +1,115 @@
+/**
+ * ブレークポイントに基づいたメディアクエリを作成するためのミックスイン。
+ *
+ * @param {string} $preset - プリセットのブレークポイント名（オプション）。
+ * @param {string} $from - 開始するブレークポイント名（オプション）。
+ * @param {string} $until - 終了するブレークポイント名（オプション）。
+ *
+ * 利用可能なプリセット値:
+ * - narrow: 480px ... スマートフォン
+ * - middle: 900px ... タブレット
+ * - wide: 1440px ... ラップトップPC
+ * - maximum: 1680px ... デスクトップPC
+ *
+ * @example
+ *
+ * 1. $untilパラメータのみを使用する場合:
+ *    @include mq($until: 'middle') {
+ *      // タブレットを含めたそれ以下の狭さの画面に適用
+ *    }
+ *
+ * 2. $fromパラメータのみを使用する場合:
+ *    @include mq($from: 'middle') {
+ *      // タブレットよりも広い画面に適用
+ *    }
+ *
+ * 3. $fromと$untilの両方のパラメータを使用する場合:
+ *    @include mq($from: 'middle', $until: 'wide') {
+ *      // タブレットとラップトップPCに適用
+ *    }
+ *
+ * 4. プリセット値を使用する場合:
+ *    @include mq($preset: 'wide') {
+ *      // ラップトップPCのみに適用
+ *    }
+ */
+
+@mixin mq($preset: null, $from: null, $until: null) {
+  $narrow: 480px;
+  $middle: 900px;
+  $wide: 1440px;
+  $maximum: 1680px;
+
+  // untilの値がプリセットの命名であれば、値を変数に代入
+  $until_v: $until;
+
+  @if $until_v == narrow {
+    $until_v: $narrow;
+  } @else if $until_v == middle {
+    $until_v: $middle;
+  } @else if $until_v == wide {
+    $until_v: $wide;
+  } @else if $until_v == maximum {
+    $until_v: $maximum;
+  }
+
+  // fromの値がプリセットの命名であれば、値を変数に代入
+  $from_v: $from;
+
+  @if $from == narrow {
+    $from_v: 0;
+  } @else if $from == middle {
+    $from_v: $narrow;
+  } @else if $from == wide {
+    $from_v: $middle;
+  } @else if $from == maximum {
+    $from_v: $wide;
+  }
+
+  @if $preset == null and $from == null {
+    // untilのみ
+    @media screen and (width <= $until_v) {
+      @content;
+    }
+  } @else if $preset == null and $until == null {
+    // fromのみ
+    @media screen and (width > $from_v) {
+      @content;
+    }
+  } @else if $preset == null and $from != null and $until != null {
+    // untilもfromも
+    @media screen and (width > $from_v) and (width <= $until_v) {
+      @content;
+    }
+  } @else if $preset == narrow {
+    // smart phone portrait
+    @media screen and (width < $narrow) {
+      @content;
+    }
+  } @else if $preset == fromWide {
+    // tablet portrait
+    @media screen and (width >= $narrow) {
+      @content;
+    }
+  } @else if $preset == middle {
+    // tablet portrait
+    @media screen and (width >= $narrow) and (width < $wide) {
+      @content;
+    }
+  } @else if $preset == fromLaptop {
+    // laptop
+    @media screen and (width >= $wide) {
+      @content;
+    }
+  } @else if $preset == wide {
+    // laptop
+    @media screen and (width > $middle) and (width <= $wide) {
+      @content;
+    }
+  } @else if $preset == maximum {
+    // desktop
+    @media screen and (width > $wide) {
+      @content;
+    }
+  }
+}

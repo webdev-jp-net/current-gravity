@@ -1,0 +1,20 @@
+@use '../function/rem' as *;
+
+@mixin tmp-table-form {
+  th {
+    width: rem(200);
+    height: rem(64);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  td {
+    height: rem(64);
+  }
+}
+
+@mixin tmp-table-list {
+  th,
+  td {
+    height: rem(48);
+  }
+}

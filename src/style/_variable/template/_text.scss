@@ -1,0 +1,34 @@
+@use '../function/rem' as *;
+
+@mixin txt-paragraph {
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+}
+
+@mixin txt-lead {
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+}
+
+@mixin txt-description {
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+}
+
+@mixin hd-sm {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+}
+
+@mixin hd-md {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+}
+
+@mixin hd-lg {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+}

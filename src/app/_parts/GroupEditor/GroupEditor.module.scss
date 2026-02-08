@@ -1,0 +1,249 @@
+@use '@/style/_variable' as *;
+
+.groupEditor {
+  @include container;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+
+  @include mq(narrow) {
+    gap: var(--spacing-md);
+  }
+
+  @include mq($from: wide) {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: rem(12);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  @include hd-md;
+
+  color: var(--text-primary);
+}
+
+.addButton {
+  @include tmp-btn-primary;
+
+  border-radius: rem(5);
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.theadRow {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.th {
+  padding-block: var(--spacing-md);
+  padding-inline: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.8;
+  color: var(--text-secondary);
+
+  &:first-child {
+    width: 25%;
+  }
+
+  &:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
+.tbodyRow {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.td {
+  padding-block: var(--spacing-md);
+  padding-inline: var(--spacing-sm);
+}
+
+.emptyCell {
+  padding-block: var(--spacing-3xl);
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  padding-block: var(--spacing-sm);
+  padding-inline: rem(12);
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: rem(3);
+  transition: border-color var(--transition);
+
+  &::placeholder {
+    color: var(--text-secondary);
+  }
+
+  &:focus {
+    border-color: var(--link-color);
+    outline: none;
+  }
+}
+
+.cellActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+  justify-content: flex-end;
+
+  @include mq($preset: fromWide) {
+    gap: var(--spacing-lg);
+  }
+}
+
+.linkToForm {
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--link-color);
+  transition: opacity var(--transition);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.linkToFormLabel {
+  display: none;
+
+  @include mq($preset: fromWide) {
+    display: inline;
+  }
+}
+
+.deleteButton {
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--fg-error);
+  }
+}
+
+.deleteButtonLabel {
+  display: none;
+
+  @include mq($preset: fromWide) {
+    display: inline;
+  }
+}
+
+.footer {
+  gap: var(--spacing-md);
+
+  @include mq(narrow) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: none;
+  }
+
+  @include mq($from: wide) {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+  }
+}
+
+.groupNameInput {
+  width: 100%;
+}
+
+.footerActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  @include mq($preset: fromWide) {
+    flex-direction: row;
+  }
+}
+
+.shareButton {
+  @include tmp-btn-secondary;
+}
+
+.saveButton {
+  @include tmp-btn-primary;
+
+  transition: opacity var(--transition);
+
+  @include mq($preset: fromWide) {
+    width: auto;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 0.8;
+  }
+}
+
+.saveButtonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

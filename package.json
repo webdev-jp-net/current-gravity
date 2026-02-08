@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "scaffold": "scaffdog generate",
+    "lint:script": "eslint .",
+    "lint:style": "stylelint src/**/*.scss",
+    "lint:fix": "eslint . --fix && stylelint src/**/*.scss --fix",
+    "lint": "pnpm run lint:script && pnpm run lint:style"
   },
   "dependencies": {
     "@visx/group": "^3.12.0",
@@ -20,12 +24,28 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
     "@types/node": "^20.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.14",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.14.0",
+    "modern-css-reset": "^1.4.0",
     "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3"
+    "postcss-scss": "^4.0.0",
+    "prettier": "^3.4.2",
+    "sass": "^1.97.3",
+    "scaffdog": "^4.1.0",
+    "stylelint": "^16.15.0",
+    "stylelint-config-recess-order": "^5.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.0",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.18.0"
   }
 }

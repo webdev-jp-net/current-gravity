@@ -1,0 +1,167 @@
+@use 'modern-css-reset';
+@use 'sass:math';
+@use '_variable' as *;
+
+/* LINE Seed JP フォントの読み込み */
+@font-face {
+  font-family: 'LINE Seed JP';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/LINESeedJP_OTF_Th.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LINE Seed JP';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/LINESeedJP_OTF_Rg.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LINE Seed JP';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/LINESeedJP_OTF_Bd.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LINE Seed JP';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/LINESeedJP_OTF_Eb.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* CSS変数定義 */
+
+:root {
+  /* カラー */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666;
+  --bg-primary: #fff;
+  --bg-secondary: #f5f5f5;
+  --border-color: #e0e0e0;
+  --link-color: #06c;
+
+  /* セマンティックカラー - エラー */
+  --fg-error: #c53030;
+  --bg-error: #fff5f5;
+  --border-error: #fc8181;
+
+  /* セマンティックカラー - 警告 */
+  --fg-warning: #c05621;
+  --bg-warning: #fffaf0;
+  --border-warning: #f6ad55;
+
+  /* セマンティックカラー - 成功 */
+  --fg-success: #2f855a;
+  --bg-success: #f0fff4;
+  --border-success: #68d391;
+
+  /* セマンティックカラー - 情報 */
+  --fg-info: #2c5282;
+  --bg-info: #ebf8ff;
+  --border-info: #63b3ed;
+
+  /* プライマリカラー（ブルー） */
+  --blue-solid: #3182ce;
+  --blue-contrast: #fff;
+  --blue-emphasized: #2c5282;
+  --blue-fg: #3182ce;
+
+  /* その他のカラー */
+  --fg-muted: #718096;
+
+  /* スペーシング */
+  --spacing-xs: 0.25rem; // 4
+  --spacing-sm: 0.5rem; // 8
+  --spacing-md: 1rem; // 16
+  --spacing-lg: 1.5rem; // 24
+  --spacing-xl: 2rem; // 32
+  --spacing-2xl: 3rem; // 48
+  --spacing-3xl: 5rem; // 64
+
+  /* フォントサイズ */
+  --font-size-sm: 0.875rem; // 14
+  --font-size-base: 1rem; // 16
+  --font-size-lg: 1.125rem; // 18
+  --font-size-xl: 1.25rem; // 20
+  --font-size-2xl: 1.5rem; // 24
+  --font-size-3xl: 2rem; // 32
+  --font-size-4xl: 2.25rem; // 36
+
+  /* フォントウェイト */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* コンテナ幅 */
+  --container-wide: 80rem;
+  --container-narrow: 50rem;
+
+  /* その他 */
+  --border-radius: 0.25rem;
+  --transition: 0.2s ease;
+}
+
+html {
+  height: 100%;
+  min-height: 100%;
+  font-size: math.div(16, 375) * 100vw; // 幅375pxのアートボードで16px相当
+
+  // 画面幅430を超えたらリキッドを解除
+  @media screen and (width > 430px) {
+    margin: 0 auto;
+    margin-inline: auto;
+    font-size: 16px;
+
+    // font-size: 18.3467px; // シームレスにしたい場合
+    background-color: var(--bg-primary);
+  }
+
+  // スクロールを停止
+  &:has([data-stop-scrolling='true']) {
+    overflow: hidden;
+  }
+
+  // スクロールアニメーション
+  &:not([data-location-change='true']) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  margin: 0;
+  font-family:
+    'LINE Seed JP',
+    'Hiragino Kaku Gothic ProN',
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    sans-serif;
+  font-size: 1rem; // 幅375pxのアートボードで16px相当
+  font-kerning: normal;
+  line-height: 1.75;
+  color: var(--text-primary);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+[id='root'] {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100svh;
+  background-color: var(--bg-primary);
+}

@@ -1,0 +1,77 @@
+@use '@/style/_variable' as *;
+
+.guide {
+  @include container;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.title {
+  @include hd-lg;
+}
+
+.body {
+  @include mq($from: wide) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+  }
+
+  @include mq(narrow) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+  }
+}
+
+.axis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.axisHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.axisTitle {
+  @include hd-md;
+}
+
+.axisBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.pole {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.poleHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.poleTitle {
+  @include hd-sm;
+}
+
+.poleBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}

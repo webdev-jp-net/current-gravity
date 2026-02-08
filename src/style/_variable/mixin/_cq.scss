@@ -1,0 +1,9 @@
+/**
+ * Container query mixin
+ * @param {string} $width - Container query width
+*/
+@mixin cq($max-width: null) {
+  @container (max-width: $max-width) {
+    @content;
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-recess-order"],
+  "customSyntax": "postcss-scss",
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": ["/.*/"]
+      }
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "use",
+          "forward",
+          "include",
+          "mixin",
+          "function",
+          "return",
+          "for",
+          "each",
+          "if",
+          "else"
+        ]
+      }
+    ],
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["use", "forward"]
+      }
+    ],
+    "order/order": [
+      "custom-properties",
+      "dollar-variables",
+      {
+        "type": "at-rule",
+        "name": "include"
+      },
+      "declarations",
+      {
+        "type": "at-rule",
+        "name": "include",
+        "parameter": "^mq"
+      },
+      {
+        "type": "at-rule",
+        "name": "include",
+        "parameter": "^cq"
+      },
+      {
+        "type": "at-rule",
+        "name": "media"
+      },
+      "rules"
+    ],
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["background-clip"] }],
+    "no-invalid-position-at-import-rule": null,
+    "color-hex-length": "short",
+    "custom-property-pattern": null,
+    "function-no-unknown": null,
+    "keyframes-name-pattern": null,
+    "length-zero-no-unit": true,
+    "selector-class-pattern": null,
+    "scss/load-no-partial-leading-underscore": null
+  }
+}
