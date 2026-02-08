@@ -1,11 +1,15 @@
 'use client'
 
 import type { FC } from 'react'
+
 import { Trash2, Loader2, ClipboardList, Share2, Check } from 'lucide-react'
 import Link from 'next/link'
+
 import { type PersonalPlot } from '@/components/ValueOrientationMatrix'
-import { useGroupEditor } from './useGroupEditor'
+
 import styles from './GroupEditor.module.scss'
+
+import { useGroupEditor } from './useGroupEditor'
 
 export interface GroupEditorProps {
   groupName: string

@@ -1,6 +1,7 @@
 'use client'
 
 import type { FC } from 'react'
+
 import styles from './Guide.module.scss'
 
 export const Guide: FC = () => {

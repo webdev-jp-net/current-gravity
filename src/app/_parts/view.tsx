@@ -2,11 +2,13 @@
 
 import type { FC } from 'react'
 
-import { Matrix } from './Matrix'
-import { Guide } from './Guide'
-import { GroupEditor } from './GroupEditor'
-import { useHome } from './useHome'
 import styles from './page.module.scss'
+
+import { GroupEditor } from './GroupEditor'
+import { Guide } from './Guide'
+import { Matrix } from './Matrix'
+import { useHome } from './useHome'
+
 
 export const HomeView: FC = () => {
   const {

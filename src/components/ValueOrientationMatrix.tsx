@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react'
+
 import { Group } from '@visx/group'
-import { Line } from '@visx/shape'
-import { scaleLinear } from '@visx/scale'
 import { ParentSize } from '@visx/responsive'
+import { scaleLinear } from '@visx/scale'
+import { Line } from '@visx/shape'
 
 export type PersonalPlot = {
   id: string
@@ -61,7 +62,7 @@ const MatrixContent: React.FC<ValueOrientationMatrixProps & { width: number; hei
     const PADDING = 4
 
     // 1. 各プロットの基本位置とラベル矩形（推定）を初期化
-    let layouts: LabelRect[] = personalPlotList.map(person => {
+    const layouts: LabelRect[] = personalPlotList.map(person => {
       const valueLocus = person.ownership - person.consensus
       const boundary = person.identityFusion - person.diversity
 

@@ -1,5 +1,5 @@
-import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
+
 import { type PersonalPlot } from '../components/ValueOrientationMatrix'
 
 export type PersonalPlotGroup = {
@@ -9,10 +9,10 @@ export type PersonalPlotGroup = {
 
 const STORAGE_KEY = 'current-gravity-data'
 
-// 永続化用のアトム
+// 永続化用のatom
 export const groupAtom = atomWithStorage<PersonalPlotGroup>(STORAGE_KEY, {
   name: '新しいグループ',
   personalPlotList: [],
 })
 
-// ページ間共有のための派生アトムやアクションが必要な場合はここに追加
+// ページ間共有のための派生atomやactionが必要な場合はここに追加

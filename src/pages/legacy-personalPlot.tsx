@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+
+import { useAtom } from 'jotai'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useAtom } from 'jotai'
-import questionListData from '../data/questionList.json'
+
 import { type PersonalPlot } from '../components/ValueOrientationMatrix'
+import questionListData from '../data/questionList.json'
 import { groupAtom } from '../data/store'
 
 export default function PersonalPlotInput() {

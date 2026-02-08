@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+
 import { useAtom } from 'jotai'
+import { useRouter, usePathname } from 'next/navigation'
+
 import { type PersonalPlot } from '@/components/ValueOrientationMatrix'
+
 import { groupAtom } from '@/data/store'
 
 export const useHome = () => {

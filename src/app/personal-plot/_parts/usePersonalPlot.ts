@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
+import { useAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
-import { useAtom } from 'jotai'
-import questionListData from '@/data/questionList.json'
+
 import { type PersonalPlot } from '@/components/ValueOrientationMatrix'
+
+import questionListData from '@/data/questionList.json'
 import { groupAtom } from '@/data/store'
 
 const shuffleArray = <T,>(array: T[]): T[] => {

@@ -1,7 +1,9 @@
 'use client'
 
 import type { FC } from 'react'
+
 import styles from './page.module.scss'
+
 import { usePersonalPlot } from './usePersonalPlot'
 
 type QuestionItem = {

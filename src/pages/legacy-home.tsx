@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+
+import { useAtom } from 'jotai'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useAtom } from 'jotai'
-import { ValueOrientationMatrix, type PersonalPlot } from '../components/ValueOrientationMatrix'
-import { Guide } from '../components/Guide'
+
 import { GroupEditor } from '../components/GroupEditor'
+import { Guide } from '../components/Guide'
+import { ValueOrientationMatrix, type PersonalPlot } from '../components/ValueOrientationMatrix'
 import { groupAtom } from '../data/store'
 
 export default function Home() {

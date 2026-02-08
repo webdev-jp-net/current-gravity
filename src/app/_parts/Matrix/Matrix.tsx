@@ -1,12 +1,16 @@
 'use client'
 
 import type { FC } from 'react'
+
 import { Group } from '@visx/group'
-import { Line } from '@visx/shape'
 import { ParentSize } from '@visx/responsive'
+import { Line } from '@visx/shape'
+
 import type { PersonalPlot } from '@/components/ValueOrientationMatrix'
-import { useMatrix } from './useMatrix'
+
 import styles from './Matrix.module.scss'
+
+import { useMatrix } from './useMatrix'
 
 interface MatrixProps {
   personalPlotList: PersonalPlot[]

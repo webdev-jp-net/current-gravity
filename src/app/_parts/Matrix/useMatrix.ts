@@ -1,7 +1,9 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+
 import { scaleLinear } from '@visx/scale'
+
 import type { PersonalPlot } from '@/components/ValueOrientationMatrix'
 
 type LabelRect = {
