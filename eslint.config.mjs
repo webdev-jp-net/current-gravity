@@ -76,7 +76,6 @@ export default tseslint.config(
             { pattern: '@/app/**', group: 'internal', position: 'before' },
             { pattern: '@/components/**', group: 'internal', position: 'before' },
             { pattern: '@/data/**', group: 'internal', position: 'before' },
-            { pattern: '@/pages/**', group: 'internal', position: 'before' },
             { pattern: './**/*.*', group: 'sibling', position: 'before' },
             { pattern: 'types/**/*', group: 'type', position: 'before' },
           ],
@@ -84,10 +83,6 @@ export default tseslint.config(
         },
       ],
     },
-  },
-  {
-    files: ['src/pages/legacy-personalPlot.tsx'],
-    rules: { '@typescript-eslint/no-explicit-any': 0 },
   },
   prettier
 )

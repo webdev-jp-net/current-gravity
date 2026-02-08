@@ -1,0 +1,35 @@
+@use '@/style/_variable' as *;
+
+.hero {
+  position: relative;
+}
+
+.title {
+  display: flex;
+  place-items: center;
+  background-color: var(--bg-primary);
+
+  @include mq($from: wide) {
+    height: 50svh;
+    padding: var(--spacing-xl) 0;
+  }
+}
+
+.logo {
+  @include rect(100%);
+
+  object-fit: contain;
+}
+
+.introduction {
+  @include container;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-xl);
+
+  p {
+    @include txt-paragraph;
+  }
+}

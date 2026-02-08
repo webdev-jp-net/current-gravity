@@ -1,4 +1,17 @@
-@use "@/style/_variable" as *;
+@use '@/style/_variable' as *;
 
 .home {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+
+  @include mq(narrow) {
+    gap: var(--spacing-2xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+
+  @include mq($from: wide) {
+    gap: var(--spacing-3xl);
+    padding-bottom: var(--spacing-3xl);
+  }
 }
