@@ -6,15 +6,8 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
+import { Question } from './Question'
 import { usePersonalPlot } from './usePersonalPlot'
-
-type QuestionItem = {
-  id: string
-  question: string
-  axis: string
-  orientation: string
-  label: { min: string; max: string }
-}
 
 export const PersonalPlotView: FC = () => {
   const {
@@ -27,34 +20,6 @@ export const PersonalPlotView: FC = () => {
     handleSubmit,
     handleBack,
   } = usePersonalPlot()
-
-  const renderQuestion = (q: QuestionItem, index: number) => (
-    <div key={q.id} id={`question-${index}`} className={styles.question}>
-      <h3 className={styles.questionTitle}>{q.question}</h3>
-      <div className={styles.optionRow}>
-        <div className={styles.optionScale}>
-          <span className={styles.labelMin}>{q.label.min}</span>
-          <span className={styles.labelMax}>{q.label.max}</span>
-          <div className={styles.optionGroup}>
-            {[-2, -1, 0, 1, 2].map(val => (
-              <label key={val} className={styles.optionLabel}>
-                <input
-                  type="radio"
-                  name={q.id}
-                  value={val}
-                  checked={answers[q.id] === val}
-                  onChange={() => handleAnswerChangeWithScroll(q.id, val, index)}
-                  className={styles.screenReaderOnly}
-                  aria-hidden
-                />
-                <span className={styles.optionIndicator}></span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
 
   if (!isMounted) return null
 
@@ -75,7 +40,15 @@ export const PersonalPlotView: FC = () => {
           </p>
         </div>
         <div className={styles.sectionBody}>
-          {valueLocusQuestionList.map((q, i) => renderQuestion(q, i))}
+          {valueLocusQuestionList.map((q, i) => (
+            <Question
+              key={q.id}
+              item={q}
+              index={i}
+              value={answers[q.id]}
+              onAnswerChange={handleAnswerChangeWithScroll}
+            />
+          ))}
         </div>
       </section>
 
@@ -87,7 +60,15 @@ export const PersonalPlotView: FC = () => {
           </p>
         </div>
         <div className={styles.sectionBody}>
-          {boundaryQuestionList.map((q, i) => renderQuestion(q, valueLocusQuestionList.length + i))}
+          {boundaryQuestionList.map((q, i) => (
+            <Question
+              key={q.id}
+              item={q}
+              index={valueLocusQuestionList.length + i}
+              value={answers[q.id]}
+              onAnswerChange={handleAnswerChangeWithScroll}
+            />
+          ))}
         </div>
       </section>
 
@@ -102,7 +83,9 @@ export const PersonalPlotView: FC = () => {
           onClick={handleSubmit}
           disabled={!isAllAnswered}
         >
-          回答を完了してプロットを追加
+          回答を完了して
+          <br />
+          プロットを追加
         </Button>
       </footer>
     </main>
