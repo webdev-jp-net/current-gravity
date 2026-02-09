@@ -11,7 +11,7 @@
   }
 
   @include mq(fromWide) {
-    gap: var(--spacing-3xl);
-    padding-bottom: var(--spacing-3xl);
+    gap: var(--spacing-4xl);
+    padding-bottom: var(--spacing-4xl);
   }
 }
