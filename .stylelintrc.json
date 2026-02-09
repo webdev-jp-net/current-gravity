@@ -32,6 +32,7 @@
         "ignoreAtRules": ["use", "forward"]
       }
     ],
+    "scss/at-mixin-pattern": null,
     "order/order": [
       "custom-properties",
       "dollar-variables",
