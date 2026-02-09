@@ -7,7 +7,16 @@
 .title {
   display: flex;
   place-items: center;
-  background-color: var(--bg-primary);
+  background: var(--bg-primary)
+    linear-gradient(
+      to top,
+      #fff,
+      rgb(0 0 0 / 10%) 1px,
+      rgb(0 0 0 / 5%) rem(2),
+      rgb(0 0 0 / 2.5%) rem(8),
+      transparent rem(32)
+    );
+  border-bottom: 1px solid #fff6;
 
   @include mq(fromWide) {
     height: min(40svh, rem(420));
