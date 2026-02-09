@@ -38,11 +38,27 @@
 /* CSS変数定義 */
 
 :root {
+  /* text color */
+  --txt-basic: #0d0a0a;
+  --txt-description: #aaa;
+  --txt-accent: #0070b3;
+  --txt-on-fill: #fff;
+  --txt-link: #0070b3;
+  --txt-alert: #ff0051;
+  --txt-disabled: #777;
+
+  /* background color */
+  --bg-primary: #fff;
+  --bg-basic: #fff;
+  --bg-accent: #ffca36;
+  --bg-secondary: #0070b3;
+  --bg-conversion: #0d0a0a;
+  --bg-light: #f7f7f7;
+  --bg-disabled: #c4c4c4;
+
   /* カラー */
   --text-primary: #1a1a1a;
   --text-secondary: #666;
-  --bg-primary: #fff;
-  --bg-secondary: #f5f5f5;
   --border-color: #e0e0e0;
   --link-color: #06c;
 
@@ -85,6 +101,7 @@
   --spacing-3xl: 5rem; // 64
 
   /* フォントサイズ */
+  --font-size-xs: 0.75rem; // 12
   --font-size-sm: 0.875rem; // 14
   --font-size-base: 1rem; // 16
   --font-size-lg: 1.125rem; // 18
@@ -94,10 +111,10 @@
   --font-size-4xl: 2.25rem; // 36
 
   /* フォントウェイト */
+  --font-weight-thin: 100;
   --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
 
   /* コンテナ幅 */
   --container-wide: 80rem;

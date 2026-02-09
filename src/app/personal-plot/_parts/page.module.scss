@@ -15,7 +15,7 @@
 .personalPlot {
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-light);
 
   @include mq(narrow) {
     gap: var(--spacing-xl);

@@ -17,18 +17,18 @@
 
 @mixin hd-sm {
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   line-height: 1.5;
 }
 
 @mixin hd-md {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   line-height: 1.5;
 }
 
 @mixin hd-lg {
   font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   line-height: 1.5;
 }
