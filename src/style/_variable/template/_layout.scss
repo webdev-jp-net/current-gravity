@@ -28,3 +28,15 @@
     margin: 0 auto;
   }
 }
+
+@mixin panel {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: rem(12);
+  box-shadow:
+    0 0 rem(24) rgb(0 0 0 / 10%),
+    rem(-8) rem(-8) rem(16) #fff,
+    rem(1) rem(1) rem(2) rgb(0 0 0 / 5%),
+    inset rem(-1) rem(-1) 0 rgb(0 0 0 / 5%),
+    inset rem(1) rem(1) 0 rem(1) #fff;
+}

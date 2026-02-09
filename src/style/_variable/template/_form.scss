@@ -1,0 +1,95 @@
+@use '../function/rem' as *;
+@use '../mixin/rect' as *;
+@use '../mixin/mq' as *;
+@use './text' as *;
+
+@mixin emboss {
+  background-color: var(--bg-light);
+  box-shadow:
+    inset 0 0 rem(12) rgb(0 0 0 / 5%),
+    inset rem(-1) rem(-1) rem(2) #fff,
+    inset rem(1) rem(1) rem(2) rgb(0 0 0 / 10%),
+    rem(-1) rem(-1) 0 rgb(0 0 0 / 5%),
+    rem(1) rem(1) 0 #fff;
+  transition:
+    box-shadow var(--transition-ease),
+    background-color var(--transition-ease);
+
+  &:focus {
+    background-color: var(--bg-basic);
+    outline: none;
+    box-shadow:
+      inset 0 0 rem(12) rgb(0 0 0 / 5%),
+      inset rem(-1) rem(-1) rem(1) #fff,
+      inset rem(1) rem(1) rem(1) rgb(0 0 0 / 10%),
+      rem(-1) rem(-1) 0 rgb(0 0 0 / 0%),
+      rem(1) rem(1) 0 #fff0;
+  }
+}
+
+@mixin textbox {
+  @include emboss;
+
+  font-size: var(--font-size-base);
+  color: var(--txt-description);
+  border: 1px solid var(--border-color);
+  border-radius: rem(4);
+
+  &::placeholder {
+    color: var(--txt-disabled);
+  }
+}
+
+@mixin radio {
+  @include emboss;
+  @include rect(rem(36));
+
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+
+  &::before {
+    @include rect(rem(16));
+
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: auto;
+    pointer-events: none;
+    content: '';
+    user-select: none;
+    background-color: transparent;
+    border-radius: 50%;
+    transition:
+      width var(--transition-ease),
+      background-color var(--transition-ease),
+      height var(--transition-ease);
+  }
+
+  &:hover {
+    background-color: var(--bg-primary);
+
+    &::before {
+      @include rect(rem(18));
+
+      background-color: var(--txt-disabled);
+      transition:
+        width var(--transition-leave),
+        height var(--transition-leave),
+        background-color var(--transition-leave);
+    }
+  }
+
+  [type='radio']:checked ~ & {
+    background-color: var(--bg-primary);
+
+    &::before {
+      @include rect(rem(18));
+
+      background-color: currentColor;
+      transition:
+        width var(--transition-leave),
+        height var(--transition-leave),
+        background-color var(--transition-leave);
+    }
+  }
+}
