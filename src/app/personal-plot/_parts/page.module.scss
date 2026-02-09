@@ -188,10 +188,27 @@
 }
 
 .footer {
-  @include container;
-
+  position: sticky;
+  bottom: 0;
   display: flex;
   place-content: center;
+  justify-content: center;
+  background-color: #f7f7f733;
+  backdrop-filter: blur(rem(8));
+  border-top: 1px solid var(--border-color);
+  box-shadow:
+    inset 0 1px 0 #fff6,
+    0 0 rem(24) rgb(0 0 0 / 5%);
+
+  @include mq(narrow) {
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-lg);
+  }
 }
 
 [class].submitButton {

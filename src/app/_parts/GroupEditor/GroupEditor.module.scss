@@ -2,6 +2,14 @@
 
 .groupEditor {
   @include container;
+
+  @include mq(narrow) {
+    scroll-margin-top: var(--spacing-xl);
+  }
+
+  @include mq(fromWide) {
+    scroll-margin-top: var(--spacing-3xl);
+  }
 }
 
 .section {

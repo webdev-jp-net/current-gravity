@@ -110,6 +110,10 @@ export const usePersonalPlot = () => {
     router.push('/#group-editor')
   }
 
+  const handleBack = () => {
+    router.push('/#group-editor')
+  }
+
   return {
     isMounted,
     answers,
@@ -119,5 +123,6 @@ export const usePersonalPlot = () => {
     handleAnswerChangeWithScroll,
     isAllAnswered,
     handleSubmit,
+    handleBack,
   }
 }

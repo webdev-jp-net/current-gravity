@@ -41,8 +41,16 @@
 
     display: flex;
     width: 100%;
-    padding: rem(16) rem(24);
     font-size: var(--font-size-md);
+    line-height: 1.5;
+
+    @include mq(narrow) {
+      padding: rem(8);
+    }
+
+    @include mq(fromWide) {
+      padding: rem(16) rem(24);
+    }
   }
 
   &:not(:disabled) {

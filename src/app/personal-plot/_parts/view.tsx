@@ -25,6 +25,7 @@ export const PersonalPlotView: FC = () => {
     handleAnswerChangeWithScroll,
     isAllAnswered,
     handleSubmit,
+    handleBack,
   } = usePersonalPlot()
 
   const renderQuestion = (q: QuestionItem, index: number) => (
@@ -91,6 +92,9 @@ export const PersonalPlotView: FC = () => {
       </section>
 
       <footer className={styles.footer}>
+        <Button variant="basic" size="full" className={styles.submitButton} onClick={handleBack}>
+          測定をやめて戻る
+        </Button>
         <Button
           variant="basic"
           size="full"
