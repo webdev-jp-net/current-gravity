@@ -19,9 +19,20 @@
 - 利用のまとまり：`src/style/_variable/template/`配下のmixinを`@include`（一覧は実装を正とします）
 - ブレークポイント：`src/style/_variable/mixin/_mq.scss`のmq mixin（プリセット名・詳細は実装を参照します）
 
+## デザイン方針
+
+- **Neumorphism（ニューモーフィズム）**を採用しています。影・凹凸・ボーダー等の装飾は、この方針に沿った参照実装またはトークンに従います。
+
+### Neumorphism（ニューモーフィズム）パーツ
+
+- **panel**：パネル … mixin `panel`
+- **button**：ボタン … Button コンポーネント
+- **input**：入力フィールド … mixin `textbox`
+- **radio**：ラジオボタン … mixin `radio`
+
 ## レスポンシブ対応
 
-メディアクエリは**mq**mixinで指定します。プリセット名（narrow / middle / wide / maximum）を用いて、数値はmixin内に閉じます。
+メディアクエリは**mq**mixinで指定します。プリセット名（narrow / fromWide）を用いて、数値はmixin内に閉じます。
 
 ## 実装プロセス
 
