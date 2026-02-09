@@ -28,7 +28,7 @@ export const PersonalPlotView: FC = () => {
           <span className={styles.labelMin}>{q.label.min}</span>
           <span className={styles.labelMax}>{q.label.max}</span>
           <div className={styles.optionGroup}>
-            {[-2, -1, 1, 2].map(val => (
+            {[-2, -1, 0, 1, 2].map(val => (
               <label key={val} className={styles.optionLabel}>
                 <input
                   type="radio"
