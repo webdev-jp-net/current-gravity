@@ -39,13 +39,13 @@
 
 :root {
   /* text color */
-  --txt-basic: #0d0a0a;
-  --txt-description: #aaa;
+  --txt-basic: #000c;
+  --txt-description: #777;
   --txt-accent: #0070b3;
   --txt-on-fill: #fff;
   --txt-link: #0070b3;
   --txt-alert: #c53030;
-  --txt-disabled: #777;
+  --txt-disabled: #c4c4c4;
 
   /* background color */
   --bg-primary: #fff;
@@ -56,40 +56,8 @@
   --bg-light: #f7f7f7;
   --bg-disabled: #c4c4c4;
 
-  /* カラー */
-  --text-primary: #1a1a1a;
-  --text-secondary: #666;
+  /* border color */
   --border-color: #e0e0e0;
-  --link-color: #06c;
-
-  /* セマンティックカラー - エラー */
-  --fg-error: #c53030;
-  --bg-error: #fff5f5;
-  --border-error: #fc8181;
-
-  /* セマンティックカラー - 警告 */
-  --fg-warning: #c05621;
-  --bg-warning: #fffaf0;
-  --border-warning: #f6ad55;
-
-  /* セマンティックカラー - 成功 */
-  --fg-success: #2f855a;
-  --bg-success: #f0fff4;
-  --border-success: #68d391;
-
-  /* セマンティックカラー - 情報 */
-  --fg-info: #2c5282;
-  --bg-info: #ebf8ff;
-  --border-info: #63b3ed;
-
-  /* プライマリカラー（ブルー） */
-  --blue-solid: #3182ce;
-  --blue-contrast: #fff;
-  --blue-emphasized: #2c5282;
-  --blue-fg: #3182ce;
-
-  /* その他のカラー */
-  --fg-muted: #718096;
 
   /* スペーシング */
   --spacing-xs: 0.25rem; // 4
@@ -123,8 +91,8 @@
   /* その他 */
   --border-radius: 0.25rem;
   --transition-ease: 250ms ease;
-  --transition-enter: 375ms ease-out;
-  --transition-leave: 250ms ease-in;
+  --transition-enter: 250ms ease-out;
+  --transition-leave: 200ms ease-in;
 }
 
 html {
@@ -169,7 +137,7 @@ body {
   font-size: 1rem; // 幅375pxのアートボードで16px相当
   font-kerning: normal;
   line-height: 1.75;
-  color: var(--text-primary);
+  color: var(--txt-basic);
   word-wrap: break-word;
   overflow-wrap: break-word;
   background-color: var(--bg-primary);
