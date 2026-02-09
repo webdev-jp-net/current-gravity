@@ -25,27 +25,46 @@ export const usePersonalPlot = () => {
   const searchParams = useSearchParams()
   const [group, setGroup] = useAtom(groupAtom)
   const [answers, setAnswers] = useState<Record<string, number>>({})
-  const [shuffledQuestions, setShuffledQuestions] = useState<
+  const [shuffledQuestionList, setShuffledQuestionList] = useState<
     (typeof questionListData)[number][]
   >([])
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    const valueLocusQuestions = questionListData.filter(
+    const valueLocusList = questionListData.filter(
       (q) => q.axis === 'valueLocus'
     )
-    const boundaryQuestions = questionListData.filter(
+    const boundaryList = questionListData.filter(
       (q) => q.axis === 'boundary'
     )
-    setShuffledQuestions([
-      ...shuffleArray(valueLocusQuestions),
-      ...shuffleArray(boundaryQuestions),
+    setShuffledQuestionList([
+      ...shuffleArray(valueLocusList),
+      ...shuffleArray(boundaryList),
     ])
     setIsMounted(true)
   }, [])
 
+  const valueLocusQuestionList = shuffledQuestionList.filter(
+    (q) => q.axis === 'valueLocus'
+  )
+  const boundaryQuestionList = shuffledQuestionList.filter(
+    (q) => q.axis === 'boundary'
+  )
+  const totalCount = shuffledQuestionList.length
+
   const handleAnswerChange = (questionId: string, value: number) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }))
+  }
+
+  const handleAnswerChangeWithScroll = (
+    questionId: string,
+    value: number,
+    currentIndex: number
+  ) => {
+    handleAnswerChange(questionId, value)
+    if (currentIndex + 1 < totalCount) {
+      window.location.hash = `question-${currentIndex + 1}`
+    }
   }
 
   const isAllAnswered = questionListData.every(
@@ -69,17 +88,26 @@ export const usePersonalPlot = () => {
       metrics[q.orientation as keyof typeof metrics] += val
     })
 
+    const defaultName = '名前'
+
     if (targetId) {
       setGroup({
         ...group,
         personalPlotList: group.personalPlotList.map((p) =>
-          p.id === targetId ? { ...p, ...metrics } : p
+          p.id === targetId
+            ? {
+                ...p,
+                ...metrics,
+                displayName:
+                  p.displayName.trim() === '' ? defaultName : p.displayName,
+              }
+            : p
         ),
       })
     } else {
       const newPlot: PersonalPlot = {
         id: Date.now().toString(),
-        displayName: '',
+        displayName: defaultName,
         ...metrics,
       }
       setGroup({
@@ -88,15 +116,22 @@ export const usePersonalPlot = () => {
       })
     }
 
+    router.push('/#matrix')
+  }
+
+  const handleBack = () => {
     router.push('/#group-editor')
   }
 
   return {
     isMounted,
     answers,
-    shuffledQuestions,
+    valueLocusQuestionList,
+    boundaryQuestionList,
+    totalCount,
+    handleAnswerChangeWithScroll,
     isAllAnswered,
-    handleAnswerChange,
     handleSubmit,
+    handleBack,
   }
 }

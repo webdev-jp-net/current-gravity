@@ -1,0 +1,118 @@
+@use '@/style/_variable' as *;
+
+.question {
+  @include panel;
+
+  display: flex;
+  flex-direction: column;
+
+  @include mq(narrow) {
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    scroll-margin-top: var(--spacing-xl);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-xl);
+    scroll-margin-top: var(--spacing-3xl);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.title {
+  @include hd-sm;
+
+  @include mq(fromWide) {
+    text-align: center;
+  }
+}
+
+.body {
+  display: grid;
+
+  @include mq(narrow) {
+    grid-template-columns: 50% 50%;
+    gap: var(--spacing-sm);
+  }
+
+  @include mq(fromWide) {
+    grid-template-columns: 1fr rem(372) 1fr;
+    gap: var(--spacing-md);
+    place-content: center;
+    place-items: center;
+  }
+}
+
+.label {
+  color: var(--txt-description);
+
+  @include mq(narrow) {
+    font-size: var(--font-size-xs);
+  }
+
+  @include mq(fromWide) {
+    font-size: var(--font-size-basic);
+  }
+
+  &:first-child {
+    text-align: left;
+  }
+
+  &:last-child {
+    text-align: right;
+
+    @include mq(narrow) {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+  }
+}
+
+// 不可視なradioボタン
+.screenReaderOnly {
+  @include rect(0);
+
+  position: absolute;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.optionScale {
+  display: flex;
+  justify-content: space-between;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding-inline: var(--spacing-sm);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-2xl);
+  }
+}
+
+.optionLabel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.optionIndicator {
+  @include radio;
+
+  color: var(--txt-link);
+}

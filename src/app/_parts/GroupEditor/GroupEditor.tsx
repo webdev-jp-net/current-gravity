@@ -80,14 +80,7 @@ export const GroupEditor: FC<GroupEditorProps> = ({
                       <input
                         type="text"
                         key={`${person.id}-${person.ownership}-${person.consensus}-${person.diversity}-${person.identityFusion}`}
-                        defaultValue={
-                          person.ownership === 0 &&
-                          person.consensus === 0 &&
-                          person.diversity === 0 &&
-                          person.identityFusion === 0
-                            ? ''
-                            : `${person.ownership}, ${person.consensus}, ${person.diversity}, ${person.identityFusion}`
-                        }
+                        defaultValue={`${person.ownership}, ${person.consensus}, ${person.diversity}, ${person.identityFusion}`}
                         onBlur={e => onImport(person.id, e.target.value)}
                         placeholder="オーナーシップ, コンセンサス, 自立, 融合"
                         className={styles.input}
