@@ -1,18 +1,49 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
 import { useAtom } from 'jotai'
-import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import questionListData from '@/data/questionList.json'
 import { groupAtom } from '@/data/store'
 
 import type { PersonalPlot } from '@/type/personalPlot'
 
+const VALID_VALUES = new Set([-2, -1, 0, 1, 2])
+
+const questionIds = new Set(questionListData.map(q => q.id))
+
+/** question= の値をパース。無効なトークンはスキップ。 */
+export const parseQuestionParam = (raw: string | null): Record<string, number> => {
+  if (!raw) return {}
+  const out: Record<string, number> = {}
+  for (const segment of raw.split(',')) {
+    if (!segment) continue
+    const idx = segment.lastIndexOf('_')
+    if (idx <= 0) continue
+    const id = segment.slice(0, idx)
+    const num = Number(segment.slice(idx + 1))
+    if (!questionIds.has(id) || Number.isNaN(num) || !VALID_VALUES.has(num)) continue
+    out[id] = num
+  }
+  return out
+}
+
+/** questionList.json の出現順で安定した question= 用文字列を生成。未回答は含めない。 */
+export const serializeAnswersToQuestionParam = (answers: Record<string, number>): string => {
+  const parts: string[] = []
+  for (const q of questionListData) {
+    const v = answers[q.id]
+    if (v === undefined) continue
+    parts.push(`${q.id}_${v}`)
+  }
+  return parts.join(',')
+}
+
 export const usePersonalPlot = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const [group, setGroup] = useAtom(groupAtom)
   const [answers, setAnswers] = useState<Record<string, number>>({})
@@ -21,6 +52,9 @@ export const usePersonalPlot = () => {
   >([])
   const [isMounted, setIsMounted] = useState(false)
 
+  const questionFromUrl = searchParams.get('question')
+  const urlKeyForAnswers = `${searchParams.get('targetId') ?? ''}|${questionFromUrl ?? ''}`
+
   useEffect(() => {
     const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
     const boundaryList = questionListData.filter(q => q.axis === 'boundary')
@@ -28,6 +62,33 @@ export const usePersonalPlot = () => {
     setOrderedQuestionList([...valueLocusList, ...boundaryList])
     setIsMounted(true)
   }, [])
+
+  // URL を正: クエリが変わったら（戻る・直リンク含む）回答を復元
+  // useLayoutEffect: 直後の「answers → URL」effect が古い answers {} で走り URL を壊さないよう、同一コミット内で先に state を揃える
+  useLayoutEffect(() => {
+    setAnswers(parseQuestionParam(questionFromUrl))
+  }, [urlKeyForAnswers, questionFromUrl])
+
+  const replaceUrlWithAnswers = useCallback(
+    (nextAnswers: Record<string, number>) => {
+      const params = new URLSearchParams()
+      const targetId = searchParams.get('targetId')
+      if (targetId) params.set('targetId', targetId)
+      const q = serializeAnswersToQuestionParam(nextAnswers)
+      if (q) params.set('question', q)
+      const qs = params.toString()
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    },
+    [pathname, router, searchParams]
+  )
+
+  // レンダー／setState 更新関数内では router を触れない。effect で URL へ書き戻す。
+  useEffect(() => {
+    const serialized = serializeAnswersToQuestionParam(answers)
+    const currentQ = questionFromUrl ?? ''
+    if (serialized === currentQ) return
+    replaceUrlWithAnswers(answers)
+  }, [answers, questionFromUrl, replaceUrlWithAnswers])
 
   const valueLocusQuestionList = orderedQuestionList.filter(q => q.axis === 'valueLocus')
   const boundaryQuestionList = orderedQuestionList.filter(q => q.axis === 'boundary')
