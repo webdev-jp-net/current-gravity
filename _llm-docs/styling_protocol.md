@@ -26,7 +26,7 @@
 ### Neumorphism（ニューモーフィズム）パーツ
 
 - **panel**：パネル … mixin `panel`
-- **button**：ボタン … Button コンポーネント
+- **button**：ボタン … Buttonコンポーネント
 - **input**：入力フィールド … mixin `textbox`
 - **radio**：ラジオボタン … mixin `radio`
 
