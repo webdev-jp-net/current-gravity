@@ -45,7 +45,7 @@ export const useHome = () => {
     setIsMounted(true)
   }, [setGroup])
 
-  // 状態をURLパラメータに同期（replaceState でスクロール位置を維持）
+  // 状態をURLパラメータに同期（replaceStateでスクロール位置を維持）
   useEffect(() => {
     if (!isMounted) return
 
@@ -75,7 +75,7 @@ export const useHome = () => {
     }
   }, [group, isMounted, pathname])
 
-  // マウント完了後にハッシュまたは p= に応じてスクロール
+  // マウント完了後にハッシュまたはp=に応じてスクロール
   useEffect(() => {
     if (!isMounted) return
 

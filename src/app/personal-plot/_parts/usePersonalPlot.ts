@@ -14,7 +14,7 @@ const VALID_VALUES = new Set([-2, -1, 0, 1, 2])
 
 const questionIds = new Set(questionListData.map(q => q.id))
 
-/** question= の値をパース。無効なトークンはスキップ。 */
+/** question=の値をパース。無効なトークンはスキップ。 */
 export const parseQuestionParam = (raw: string | null): Record<string, number> => {
   if (!raw) return {}
   const out: Record<string, number> = {}
@@ -30,7 +30,7 @@ export const parseQuestionParam = (raw: string | null): Record<string, number> =
   return out
 }
 
-/** questionList.json の出現順で安定した question= 用文字列を生成。未回答は含めない。 */
+/** questionList.jsonの出現順で安定したquestion=用文字列を生成。未回答は含めない。 */
 export const serializeAnswersToQuestionParam = (answers: Record<string, number>): string => {
   const parts: string[] = []
   for (const q of questionListData) {
@@ -41,7 +41,7 @@ export const serializeAnswersToQuestionParam = (answers: Record<string, number>)
   return parts.join(',')
 }
 
-/** URL 生文字列と state の両方を questionList 順の正規形にそろえて比較する（順序差・無効トークン除外後の一致を検出）。 */
+/** URL生文字列とstateの両方をquestionList順の正規形にそろえて比較する（順序差・無効トークン除外後の一致を検出）。 */
 const canonicalQuestionParamFromUrl = (raw: string | null): string =>
   serializeAnswersToQuestionParam(parseQuestionParam(raw))
 
@@ -59,11 +59,11 @@ export const usePersonalPlot = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  /** useSearchParams は参照が毎レンダー変わり得る。deps に入れると URL 同期 effect が連鎖しうる */
+  /** useSearchParamsは参照が毎レンダー変わり得る。depsに入れるとURL同期effectが連鎖しうる */
   const searchParamsRef = useRef(searchParams)
   searchParamsRef.current = searchParams
 
-  /** URL から answers を流し込んだ直後は router.replace を走らせない（ループ防止） */
+  /** URLからanswersを流し込んだ直後はrouter.replaceを走らせない（ループ防止） */
   const suppressUrlPushRef = useRef(false)
 
   const [group, setGroup] = useAtom(groupAtom)
@@ -79,14 +79,14 @@ export const usePersonalPlot = () => {
   useEffect(() => {
     const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
     const boundaryList = questionListData.filter(q => q.axis === 'boundary')
-    // filter は元配列順を保つため、questionList.json の出現順（帰属→関係性）を維持する
+    // filterは元配列順を保つため、questionList.jsonの出現順（帰属→関係性）を維持する
     setOrderedQuestionList([...valueLocusList, ...boundaryList])
     setIsMounted(true)
   }, [])
 
-  // URL を正: クエリが変わったら（戻る・直リンク含む）回答を復元
-  // useLayoutEffect: 直後の「answers → URL」effect が古い answers {} で走り URL を壊さないよう、同一コミット内で先に state を揃える
-  // 同一内容のオブジェクトを毎回 set しない（effect の連鎖・無限ループを防ぐ）
+  // URLを正: クエリが変わったら（戻る・直リンク含む）回答を復元
+  // useLayoutEffect: 直後の「answers→URL」effectが古いanswers{}で走りURLを壊さないよう、同一コミット内で先にstateを揃える
+  // 同一内容のオブジェクトを毎回setしない（effectの連鎖・無限ループを防ぐ）
   useLayoutEffect(() => {
     suppressUrlPushRef.current = true
     const q = searchParamsRef.current.get('question')
@@ -96,7 +96,7 @@ export const usePersonalPlot = () => {
     })
   }, [urlKeyForAnswers])
 
-  /** pathname / router のみ deps。searchParams は ref 経由（参照変化で effect が再登録されない） */
+  /** pathname/routerのみdeps。searchParamsはref経由（参照変化でeffectが再登録されない） */
   const replaceUrlWithAnswers = useCallback(
     (nextAnswers: Record<string, number>) => {
       const params = new URLSearchParams()
@@ -110,8 +110,8 @@ export const usePersonalPlot = () => {
     [pathname, router]
   )
 
-  // レンダー／setState 更新関数内では router を触れない。effect で URL へ書き戻す。
-  // 正規形で比較 + URL 復元直後は 1 回スキップ（replace の連鎖防止）
+  // レンダー／setState更新関数内ではrouterを触れない。effectでURLへ書き戻す。
+  // 正規形で比較+URL復元直後は1回スキップ（replaceの連鎖防止）
   useEffect(() => {
     if (suppressUrlPushRef.current) {
       suppressUrlPushRef.current = false
