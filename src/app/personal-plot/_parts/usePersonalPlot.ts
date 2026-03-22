@@ -11,49 +11,30 @@ import { groupAtom } from '@/data/store'
 
 import type { PersonalPlot } from '@/type/personalPlot'
 
-const shuffleArray = <T,>(array: T[]): T[] => {
-  const shuffled = [...array]
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-  }
-  return shuffled
-}
-
 export const usePersonalPlot = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [group, setGroup] = useAtom(groupAtom)
   const [answers, setAnswers] = useState<Record<string, number>>({})
-  const [shuffledQuestionList, setShuffledQuestionList] = useState<
+  const [orderedQuestionList, setOrderedQuestionList] = useState<
     (typeof questionListData)[number][]
   >([])
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    const valueLocusList = questionListData.filter(
-      (q) => q.axis === 'valueLocus'
-    )
-    const boundaryList = questionListData.filter(
-      (q) => q.axis === 'boundary'
-    )
-    setShuffledQuestionList([
-      ...shuffleArray(valueLocusList),
-      ...shuffleArray(boundaryList),
-    ])
+    const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
+    const boundaryList = questionListData.filter(q => q.axis === 'boundary')
+    // filter は元配列順を保つため、questionList.json の出現順（帰属→関係性）を維持する
+    setOrderedQuestionList([...valueLocusList, ...boundaryList])
     setIsMounted(true)
   }, [])
 
-  const valueLocusQuestionList = shuffledQuestionList.filter(
-    (q) => q.axis === 'valueLocus'
-  )
-  const boundaryQuestionList = shuffledQuestionList.filter(
-    (q) => q.axis === 'boundary'
-  )
-  const totalCount = shuffledQuestionList.length
+  const valueLocusQuestionList = orderedQuestionList.filter(q => q.axis === 'valueLocus')
+  const boundaryQuestionList = orderedQuestionList.filter(q => q.axis === 'boundary')
+  const totalCount = orderedQuestionList.length
 
   const handleAnswerChange = (questionId: string, value: number) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+    setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
   const handleAnswerChangeWithScroll = (
@@ -67,9 +48,7 @@ export const usePersonalPlot = () => {
     }
   }
 
-  const isAllAnswered = questionListData.every(
-    (q) => answers[q.id] !== undefined
-  )
+  const isAllAnswered = questionListData.every(q => answers[q.id] !== undefined)
 
   const handleSubmit = () => {
     if (!isAllAnswered || !searchParams) return
@@ -83,7 +62,7 @@ export const usePersonalPlot = () => {
       identityFusion: 0,
     }
 
-    questionListData.forEach((q) => {
+    questionListData.forEach(q => {
       const val = answers[q.id] ?? 0
       metrics[q.orientation as keyof typeof metrics] += val
     })
@@ -93,13 +72,12 @@ export const usePersonalPlot = () => {
     if (targetId) {
       setGroup({
         ...group,
-        personalPlotList: group.personalPlotList.map((p) =>
+        personalPlotList: group.personalPlotList.map(p =>
           p.id === targetId
             ? {
                 ...p,
                 ...metrics,
-                displayName:
-                  p.displayName.trim() === '' ? defaultName : p.displayName,
+                displayName: p.displayName.trim() === '' ? defaultName : p.displayName,
               }
             : p
         ),
