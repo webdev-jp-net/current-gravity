@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -41,10 +41,31 @@ export const serializeAnswersToQuestionParam = (answers: Record<string, number>)
   return parts.join(',')
 }
 
+/** URL 生文字列と state の両方を questionList 順の正規形にそろえて比較する（順序差・無効トークン除外後の一致を検出）。 */
+const canonicalQuestionParamFromUrl = (raw: string | null): string =>
+  serializeAnswersToQuestionParam(parseQuestionParam(raw))
+
+const answersRecordEqual = (a: Record<string, number>, b: Record<string, number>): boolean => {
+  const keysA = Object.keys(a)
+  const keysB = Object.keys(b)
+  if (keysA.length !== keysB.length) return false
+  for (const k of keysA) {
+    if (a[k] !== b[k]) return false
+  }
+  return true
+}
+
 export const usePersonalPlot = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  /** useSearchParams は参照が毎レンダー変わり得る。deps に入れると URL 同期 effect が連鎖しうる */
+  const searchParamsRef = useRef(searchParams)
+  searchParamsRef.current = searchParams
+
+  /** URL から answers を流し込んだ直後は router.replace を走らせない（ループ防止） */
+  const suppressUrlPushRef = useRef(false)
+
   const [group, setGroup] = useAtom(groupAtom)
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [orderedQuestionList, setOrderedQuestionList] = useState<
@@ -65,28 +86,40 @@ export const usePersonalPlot = () => {
 
   // URL を正: クエリが変わったら（戻る・直リンク含む）回答を復元
   // useLayoutEffect: 直後の「answers → URL」effect が古い answers {} で走り URL を壊さないよう、同一コミット内で先に state を揃える
+  // 同一内容のオブジェクトを毎回 set しない（effect の連鎖・無限ループを防ぐ）
   useLayoutEffect(() => {
-    setAnswers(parseQuestionParam(questionFromUrl))
-  }, [urlKeyForAnswers, questionFromUrl])
+    suppressUrlPushRef.current = true
+    const q = searchParamsRef.current.get('question')
+    setAnswers(prev => {
+      const next = parseQuestionParam(q)
+      return answersRecordEqual(prev, next) ? prev : next
+    })
+  }, [urlKeyForAnswers])
 
+  /** pathname / router のみ deps。searchParams は ref 経由（参照変化で effect が再登録されない） */
   const replaceUrlWithAnswers = useCallback(
     (nextAnswers: Record<string, number>) => {
       const params = new URLSearchParams()
-      const targetId = searchParams.get('targetId')
+      const targetId = searchParamsRef.current.get('targetId')
       if (targetId) params.set('targetId', targetId)
       const q = serializeAnswersToQuestionParam(nextAnswers)
       if (q) params.set('question', q)
       const qs = params.toString()
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     },
-    [pathname, router, searchParams]
+    [pathname, router]
   )
 
   // レンダー／setState 更新関数内では router を触れない。effect で URL へ書き戻す。
+  // 正規形で比較 + URL 復元直後は 1 回スキップ（replace の連鎖防止）
   useEffect(() => {
+    if (suppressUrlPushRef.current) {
+      suppressUrlPushRef.current = false
+      return
+    }
     const serialized = serializeAnswersToQuestionParam(answers)
-    const currentQ = questionFromUrl ?? ''
-    if (serialized === currentQ) return
+    const canonicalFromUrl = canonicalQuestionParamFromUrl(questionFromUrl)
+    if (serialized === canonicalFromUrl) return
     replaceUrlWithAnswers(answers)
   }, [answers, questionFromUrl, replaceUrlWithAnswers])
 
