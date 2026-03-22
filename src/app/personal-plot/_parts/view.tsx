@@ -2,6 +2,10 @@
 
 import type { FC } from 'react'
 
+import { Check, Share2 } from 'lucide-react'
+
+import { Matrix } from '@/app/_parts/Matrix'
+
 import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
@@ -13,12 +17,16 @@ export const PersonalPlotView: FC = () => {
   const {
     isMounted,
     answers,
+    matrixPreviewList,
     valueLocusQuestionList,
     boundaryQuestionList,
     handleAnswerChangeWithScroll,
     isAllAnswered,
     handleSubmit,
     handleBack,
+    handleNavigateToHomeMatrix,
+    isShareCopied,
+    handleCopyGroupShareUrl,
   } = usePersonalPlot()
 
   if (!isMounted) return null
@@ -31,6 +39,33 @@ export const PersonalPlotView: FC = () => {
           設問のシチュエーションについて、直感であなたに近いフィーリングを選択してください。
         </p>
       </div>
+
+      {matrixPreviewList.length > 0 ? (
+        <section className={styles.matrixPreview} aria-label="回答に基づくプレビュー">
+          <Matrix personalPlotList={matrixPreviewList} />
+          <div className={styles.matrixPreviewActions}>
+            <Button
+              variant="basic"
+              size="full"
+              type="button"
+              className={styles.matrixPreviewAddButton}
+              onClick={handleNavigateToHomeMatrix}
+            >
+              みんなのいまの重心に追加
+            </Button>
+            <Button
+              variant="basic"
+              size="liquid"
+              type="button"
+              className={styles.matrixPreviewShareButton}
+              onClick={handleCopyGroupShareUrl}
+            >
+              {isShareCopied ? <Check size={20} aria-hidden /> : <Share2 size={20} aria-hidden />}
+              この結果のURLをコピー
+            </Button>
+          </div>
+        </section>
+      ) : null}
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
@@ -83,9 +118,7 @@ export const PersonalPlotView: FC = () => {
           onClick={handleSubmit}
           disabled={!isAllAnswered}
         >
-          回答を完了して
-          <br />
-          プロットを追加
+          結果を見る
         </Button>
       </footer>
     </main>

@@ -16,6 +16,51 @@
   }
 }
 
+.matrixPreview {
+  @include container;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.matrixPreviewActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: stretch;
+  width: 100%;
+
+  @include mq(fromWide) {
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: center;
+  }
+}
+
+[class].matrixPreviewAddButton {
+  width: 100%;
+  max-width: rem(360);
+
+  @include mq(fromWide) {
+    flex: 0 1 rem(360);
+    align-self: stretch;
+    width: auto;
+  }
+}
+
+[class].matrixPreviewShareButton {
+  width: 100%;
+  max-width: rem(360);
+
+  @include mq(fromWide) {
+    flex: 0 1 rem(360);
+    align-self: stretch;
+    width: auto;
+  }
+}
+
 .intro {
   @include container;
 
@@ -95,10 +140,4 @@
 
 [class].submitButton {
   max-width: rem(360);
-
-  br {
-    @include mq(fromWide) {
-      display: none;
-    }
-  }
 }
