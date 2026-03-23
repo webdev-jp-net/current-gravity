@@ -50,6 +50,7 @@ export const PersonalPlotView: FC = () => {
               type="button"
               className={styles.matrixPreviewAddButton}
               onClick={handleNavigateToHomeMatrix}
+              disabled={!isAllAnswered}
             >
               みんなのいまの重心に追加
             </Button>
