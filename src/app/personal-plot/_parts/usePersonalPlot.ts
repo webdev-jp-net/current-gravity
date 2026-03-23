@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -93,6 +93,77 @@ function buildMatrixPreviewPersonalPlot(params: {
   }
 }
 
+/**
+ * 「結果を見る」と同一の `groupAtom` 反映＋プレビュー1件の更新（Issue #65: みんなのいまの重心に追加からも利用）。
+ * `setGroup` は常に関数型更新し、`getLatestGroup` はプレビュー用にクリック時点の最新 `group` を渡す（クロージャの stale を避ける）。
+ */
+function commitPlotToGroup(params: {
+  answers: Record<string, number>
+  targetId: string | null
+  getLatestGroup: () => PersonalPlotGroup
+  setGroup: (next: PersonalPlotGroup | ((prev: PersonalPlotGroup) => PersonalPlotGroup)) => void
+  setMatrixPreviewList: (list: PersonalPlot[]) => void
+}): void {
+  const { answers, targetId, getLatestGroup, setGroup, setMatrixPreviewList } = params
+  const metrics = aggregateMetricsFromAnswers(answers)
+  const latest = getLatestGroup()
+
+  if (targetId) {
+    const previewPlot = buildMatrixPreviewPersonalPlot({
+      answers,
+      targetId,
+      group: latest,
+      plotId: targetId,
+    })
+    setMatrixPreviewList([previewPlot])
+    setGroup(prev => {
+      const exists = prev.personalPlotList.some(p => p.id === targetId)
+      if (exists) {
+        return {
+          ...prev,
+          personalPlotList: prev.personalPlotList.map(p =>
+            p.id === targetId
+              ? {
+                  ...p,
+                  ...metrics,
+                  displayName: p.displayName.trim() === '' ? DEFAULT_DISPLAY_NAME : p.displayName,
+                }
+              : p
+          ),
+        }
+      }
+      // 空のグループ等、該当idが無いときはURLのtargetIdをそのままidにして追加（mapのみだと0件のままになる）
+      const newPlot: PersonalPlot = {
+        id: targetId,
+        displayName: DEFAULT_DISPLAY_NAME,
+        ...metrics,
+      }
+      return {
+        ...prev,
+        personalPlotList: [...prev.personalPlotList, newPlot],
+      }
+    })
+  } else {
+    const newId = Date.now().toString()
+    const previewPlot = buildMatrixPreviewPersonalPlot({
+      answers,
+      targetId: null,
+      group: latest,
+      plotId: newId,
+    })
+    setMatrixPreviewList([previewPlot])
+    const newPlot: PersonalPlot = {
+      id: newId,
+      displayName: DEFAULT_DISPLAY_NAME,
+      ...metrics,
+    }
+    setGroup(prev => ({
+      ...prev,
+      personalPlotList: [...prev.personalPlotList, newPlot],
+    }))
+  }
+}
+
 /** URL生文字列とstateの両方をquestionList順の正規形にそろえて比較する（順序差・無効トークン除外後の一致を検出）。 */
 const canonicalQuestionParamFromUrl = (raw: string | null): string =>
   serializeAnswersToQuestionParam(parseQuestionParam(raw))
@@ -120,6 +191,10 @@ export const usePersonalPlot = () => {
   const suppressUrlPushRef = useRef(false)
 
   const [group, setGroup] = useAtom(groupAtom)
+  /** クリックハンドラ内で常に直近の group を参照する（クロージャが古いままの setGroup を防ぐ） */
+  const groupRef = useRef(group)
+  groupRef.current = group
+
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [orderedQuestionList, setOrderedQuestionList] = useState<
     (typeof questionListData)[number][]
@@ -136,6 +211,22 @@ export const usePersonalPlot = () => {
 
   const questionFromUrl = searchParams.get('question')
   const urlKeyForAnswers = `${searchParams.get('targetId') ?? ''}|${questionFromUrl ?? ''}`
+
+  /**
+   * 20問ぶんの回答ソース。stateが未同期のフレーム（URL復元直後など）でも、
+   * `question` が20問完備なら URL から解決する（#65: みんなのいまの重心に追加が無反応になるのを防ぐ）。
+   * state が全問そろっていればそちらを優先（画面上の編集を正とする）。
+   */
+  const answersForCommit = useMemo((): Record<string, number> | null => {
+    if (questionListData.every(q => answers[q.id] !== undefined)) {
+      return answers
+    }
+    const parsed = parseQuestionParam(questionFromUrl)
+    if (isCompleteAnswersRecord(parsed)) {
+      return parsed
+    }
+    return null
+  }, [answers, questionFromUrl])
 
   useEffect(() => {
     const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
@@ -239,12 +330,12 @@ export const usePersonalPlot = () => {
     }
   }
 
-  const isAllAnswered = questionListData.every(q => answers[q.id] !== undefined)
+  const isAllAnswered = answersForCommit !== null
 
   const handleSubmit = () => {
-    if (!isAllAnswered || !searchParams) return
+    if (!answersForCommit || !searchParams) return
 
-    const snapshot = serializeAnswersToQuestionParam(answers)
+    const snapshot = serializeAnswersToQuestionParam(answersForCommit)
     // 同一回答の連打ではグループへの再反映を避け、スクロールのみ（ボタンは活性のまま）
     if (
       lastSubmittedSnapshotRef.current !== null &&
@@ -255,47 +346,13 @@ export const usePersonalPlot = () => {
     }
 
     const targetId = searchParams.get('targetId')
-    const metrics = aggregateMetricsFromAnswers(answers)
-
-    if (targetId) {
-      const previewPlot = buildMatrixPreviewPersonalPlot({
-        answers,
-        targetId,
-        group,
-        plotId: targetId,
-      })
-      setMatrixPreviewList([previewPlot])
-      setGroup({
-        ...group,
-        personalPlotList: group.personalPlotList.map(p =>
-          p.id === targetId
-            ? {
-                ...p,
-                ...metrics,
-                displayName: p.displayName.trim() === '' ? DEFAULT_DISPLAY_NAME : p.displayName,
-              }
-            : p
-        ),
-      })
-    } else {
-      const newId = Date.now().toString()
-      const previewPlot = buildMatrixPreviewPersonalPlot({
-        answers,
-        targetId: null,
-        group,
-        plotId: newId,
-      })
-      setMatrixPreviewList([previewPlot])
-      const newPlot: PersonalPlot = {
-        id: newId,
-        displayName: DEFAULT_DISPLAY_NAME,
-        ...metrics,
-      }
-      setGroup({
-        ...group,
-        personalPlotList: [...group.personalPlotList, newPlot],
-      })
-    }
+    commitPlotToGroup({
+      answers: answersForCommit,
+      targetId,
+      getLatestGroup: () => groupRef.current,
+      setGroup,
+      setMatrixPreviewList,
+    })
 
     lastSubmittedSnapshotRef.current = snapshot
     setSubmitGeneration(g => g + 1)
@@ -305,16 +362,46 @@ export const usePersonalPlot = () => {
     router.push('/#group-editor')
   }
 
-  /** トップの「みんなのいまの重心」マトリクスへ（従来の遷移） */
+  /**
+   * トップの「みんなのいまの重心」マトリクスへ。
+   * 「結果を見る」と同一の `groupAtom` 反映を行ってから遷移する（未反映の回答が残らないようにする）。
+   * 直近送信と同一スナップショットのときは二重追加を避け、遷移のみ行う。
+   */
   const handleNavigateToHomeMatrix = () => {
-    router.push('/#matrix')
+    if (!answersForCommit || !searchParams) return
+
+    const snapshot = serializeAnswersToQuestionParam(answersForCommit)
+    const alreadyCommitted =
+      lastSubmittedSnapshotRef.current !== null && snapshot === lastSubmittedSnapshotRef.current
+
+    if (!alreadyCommitted) {
+      commitPlotToGroup({
+        answers: answersForCommit,
+        targetId: searchParams.get('targetId'),
+        getLatestGroup: () => groupRef.current,
+        setGroup,
+        setMatrixPreviewList,
+      })
+      lastSubmittedSnapshotRef.current = snapshot
+    }
+
+    // App Router では `router.push('/#hash')` が期待どおり `/` に遷移しないことがあるため、パスとハッシュを分ける
+    queueMicrotask(() => {
+      void router.push('/')
+      queueMicrotask(() => {
+        if (typeof window !== 'undefined') {
+          window.location.hash = '#matrix'
+        }
+      })
+    })
   }
 
   /** 設問20問＋任意の targetId を復元できる絶対 URL（replaceUrlWithAnswers と同じクエリ形式） */
   const handleCopyGroupShareUrl = useCallback(() => {
     const params = new URLSearchParams()
     if (targetIdFromUrl) params.set('targetId', targetIdFromUrl)
-    const q = serializeAnswersToQuestionParam(answers)
+    const source = answersForCommit ?? answers
+    const q = serializeAnswersToQuestionParam(source)
     if (q) params.set('question', q)
     const qs = params.toString()
     const origin = typeof window !== 'undefined' ? window.location.origin : ''
@@ -327,7 +414,7 @@ export const usePersonalPlot = () => {
         alert(CLIPBOARD_COPY_UNAVAILABLE_MESSAGE)
       }
     })
-  }, [answers, pathname, targetIdFromUrl])
+  }, [answers, answersForCommit, pathname, targetIdFromUrl])
 
   return {
     isMounted,
