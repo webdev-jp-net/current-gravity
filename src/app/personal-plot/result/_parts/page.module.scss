@@ -1,5 +1,7 @@
 @use '@/style/_variable' as *;
 
+/* `/personal-plot` と同一レイアウトクラス。generate-component.md の各ルート _parts/page.module.scss 規約に合わせ配置 */
+
 .surveyForm {
   display: flex;
   flex-direction: column;
