@@ -9,10 +9,9 @@ import { Matrix } from '@/app/_parts/Matrix'
 
 import { Button } from '@/components/Button'
 
-import { Question } from '../../_parts/Question'
-
 import styles from './page.module.scss'
 
+import { Question } from './Question'
 import { usePersonalPlotResult } from './usePersonalPlotResult'
 
 export const PersonalPlotResultView: FC = () => {
@@ -101,10 +100,11 @@ export const PersonalPlotResultView: FC = () => {
             {valueLocusQuestionList.map((q, i) => (
               <Question
                 key={q.id}
-                item={q}
-                index={i}
-                mode="readonly"
+                question={q.question}
+                concept={q.concept}
+                label={q.label}
                 value={parsedAnswers[q.id]}
+                index={i}
               />
             ))}
           </div>
@@ -121,10 +121,11 @@ export const PersonalPlotResultView: FC = () => {
             {boundaryQuestionList.map((q, i) => (
               <Question
                 key={q.id}
-                item={q}
-                index={valueLocusQuestionList.length + i}
-                mode="readonly"
+                question={q.question}
+                concept={q.concept}
+                label={q.label}
                 value={parsedAnswers[q.id]}
+                index={valueLocusQuestionList.length + i}
               />
             ))}
           </div>

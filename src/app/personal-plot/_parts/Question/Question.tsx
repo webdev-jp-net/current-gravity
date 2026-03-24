@@ -5,6 +5,7 @@ import styles from './Question.module.scss'
 export type QuestionItem = {
   id: string
   question: string
+  concept: string
   axis: string
   orientation: string
   label: { min: string; max: string }
