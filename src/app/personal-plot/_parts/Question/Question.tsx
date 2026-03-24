@@ -40,9 +40,6 @@ export const Question: FC<QuestionProps> = ({
         <h3 className={styles.title}>{question}</h3>
       </header>
       <div className={styles.body}>
-        {readOnly && readonlyValue !== undefined ? (
-          <input type="hidden" name={id} value={readonlyValue} />
-        ) : null}
         <span className={styles.label}>{label.min}</span>
         <div className={styles.optionScale}>
           {[-2, -1, 0, 1, 2].map((val, ri) => (

@@ -16,7 +16,6 @@ import {
   PLOT_TARGET_ID_SESSION_KEY,
   PREVIEW_PLACEHOLDER_ID,
   questionListData,
-  readAnswersFromForm,
   serializeAnswersToQuestionParam,
 } from '../../_parts/personalPlotLogic'
 
@@ -161,20 +160,18 @@ export const usePersonalPlotResult = () => {
     })
   }
 
-  /** readonly radio をフォームから読み、入力ルートへ渡す（URL の question 文字列に依存しない） */
+  /** 結果ページで保持している回答（URL 由来）で入力ルートへ渡す */
   const handleEditFormSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const form = e.currentTarget
-      const answers = readAnswersFromForm(form)
-      if (!isCompleteAnswersRecord(answers)) return
+      if (!answersForCommit) return
 
       const params = new URLSearchParams()
       if (resolvedTargetId) params.set('targetId', resolvedTargetId)
-      params.set('question', serializeAnswersToQuestionParam(answers))
+      params.set('question', serializeAnswersToQuestionParam(answersForCommit))
       void router.push(`/personal-plot?${params.toString()}`)
     },
-    [resolvedTargetId, router]
+    [answersForCommit, resolvedTargetId, router]
   )
 
   const handleCopyResultShareUrl = useCallback(() => {
