@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
   isCompleteAnswersRecord,
   parseQuestionParam,
+  PLOT_TARGET_ID_SESSION_KEY,
   questionListData,
   readAnswersFromForm,
   serializeAnswersToQuestionParam,
@@ -60,6 +61,13 @@ export const usePersonalPlot = () => {
     setIsMounted(true)
   }, [])
 
+  /** 入力ルートに入ったとき、前ターンの結果連携用 targetId を残さない（送信時に改めて書く） */
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(PLOT_TARGET_ID_SESSION_KEY)
+    }
+  }, [])
+
   useLayoutEffect(() => {
     if (!isMounted) return
     if (!isCompleteAnswersRecord(parsedFromUrl)) return
@@ -109,8 +117,15 @@ export const usePersonalPlot = () => {
     const answers = readAnswersFromForm(form)
     if (!isCompleteAnswersRecord(answers)) return
 
+    if (typeof window !== 'undefined') {
+      if (targetIdFromUrl) {
+        window.sessionStorage.setItem(PLOT_TARGET_ID_SESSION_KEY, targetIdFromUrl)
+      } else {
+        window.sessionStorage.removeItem(PLOT_TARGET_ID_SESSION_KEY)
+      }
+    }
+
     const params = new URLSearchParams()
-    if (targetIdFromUrl) params.set('targetId', targetIdFromUrl)
     params.set('question', serializeAnswersToQuestionParam(answers))
     router.push(`/personal-plot/result?${params.toString()}`)
   }

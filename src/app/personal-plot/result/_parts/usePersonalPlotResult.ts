@@ -1,5 +1,6 @@
 'use client'
 
+import type { FormEvent } from 'react'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
@@ -12,8 +13,10 @@ import {
   commitPlotToGroup,
   isCompleteAnswersRecord,
   parseQuestionParam,
+  PLOT_TARGET_ID_SESSION_KEY,
   PREVIEW_PLACEHOLDER_ID,
   questionListData,
+  readAnswersFromForm,
   serializeAnswersToQuestionParam,
 } from '../../_parts/personalPlotLogic'
 
@@ -29,8 +32,15 @@ export const usePersonalPlotResult = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const targetIdFromUrl = searchParams.get('targetId')
   const questionFromUrl = searchParams.get('question')
+  const targetIdQueryParam = searchParams.get('targetId')
+
+  /** クエリの targetId は基本使わず sessionStorage（送信時）で渡す。旧ブックマーク用 URL だけ query から拾い state に固定する */
+  const [plotTargetId, setPlotTargetId] = useState<string | null>(() =>
+    typeof window !== 'undefined' ? window.sessionStorage.getItem(PLOT_TARGET_ID_SESSION_KEY) : null
+  )
+
+  const resolvedTargetId = plotTargetId ?? targetIdQueryParam
 
   const [group, setGroup] = useAtom(groupAtom)
   const groupRef = useRef(group)
@@ -60,12 +70,12 @@ export const usePersonalPlotResult = () => {
     return [
       buildMatrixPreviewPersonalPlot({
         answers: answersForCommit,
-        targetId: targetIdFromUrl,
+        targetId: resolvedTargetId,
         group,
-        plotId: targetIdFromUrl ?? PREVIEW_PLACEHOLDER_ID,
+        plotId: resolvedTargetId ?? PREVIEW_PLACEHOLDER_ID,
       }),
     ]
-  }, [answersForCommit, group, targetIdFromUrl])
+  }, [answersForCommit, group, resolvedTargetId])
 
   useEffect(() => {
     setIsMounted(true)
@@ -74,21 +84,35 @@ export const usePersonalPlotResult = () => {
   /**
    * URL が20問完備のとき、groupAtom へ1回だけ反映する。
    * sessionStorage で Strict Mode 二重実行時の二重追加を防ぐ。
+   * targetId は plotTargetId（session）と query（旧 URL）の論理和で解決し、反映後に query からは外す。
    */
   useLayoutEffect(() => {
     if (!isComplete || !answersForCommit) return
 
+    const tidFromUrl = searchParams.get('targetId')
+    const effectiveTargetId = plotTargetId ?? tidFromUrl
+
     const snapshot = serializeAnswersToQuestionParam(answersForCommit)
-    const storageKey = `${RESULT_COMMIT_STORAGE_PREFIX}${targetIdFromUrl ?? ''}|${snapshot}`
+    const storageKey = `${RESULT_COMMIT_STORAGE_PREFIX}${effectiveTargetId ?? ''}|${snapshot}`
+
+    const stripTargetIdFromUrl = () => {
+      if (!tidFromUrl) return
+      setPlotTargetId(prev => prev ?? tidFromUrl)
+      const params = new URLSearchParams(searchParams.toString())
+      params.delete('targetId')
+      const qs = params.toString()
+      void router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+    }
 
     if (typeof window !== 'undefined' && window.sessionStorage.getItem(storageKey)) {
       lastSubmittedSnapshotRef.current = snapshot
+      stripTargetIdFromUrl()
       return
     }
 
     commitPlotToGroup({
       answers: answersForCommit,
-      targetId: targetIdFromUrl,
+      targetId: effectiveTargetId,
       getLatestGroup: () => groupRef.current,
       setGroup,
       setMatrixPreviewList: noopSetMatrixPreview,
@@ -97,7 +121,17 @@ export const usePersonalPlotResult = () => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem(storageKey, '1')
     }
-  }, [answersForCommit, isComplete, questionFromUrl, setGroup, targetIdFromUrl])
+    stripTargetIdFromUrl()
+  }, [
+    answersForCommit,
+    isComplete,
+    pathname,
+    plotTargetId,
+    questionFromUrl,
+    router,
+    searchParams,
+    setGroup,
+  ])
 
   const handleNavigateToHomeMatrix = () => {
     if (!answersForCommit) return
@@ -109,7 +143,7 @@ export const usePersonalPlotResult = () => {
     if (!alreadyCommitted) {
       commitPlotToGroup({
         answers: answersForCommit,
-        targetId: targetIdFromUrl,
+        targetId: resolvedTargetId,
         getLatestGroup: () => groupRef.current,
         setGroup,
         setMatrixPreviewList: noopSetMatrixPreview,
@@ -127,17 +161,24 @@ export const usePersonalPlotResult = () => {
     })
   }
 
-  const handleNavigateToEditSurvey = useCallback(() => {
-    const params = new URLSearchParams()
-    if (targetIdFromUrl) params.set('targetId', targetIdFromUrl)
-    if (questionFromUrl) params.set('question', questionFromUrl)
-    const qs = params.toString()
-    void router.push(qs ? `/personal-plot?${qs}` : '/personal-plot')
-  }, [questionFromUrl, router, targetIdFromUrl])
+  /** readonly radio をフォームから読み、入力ルートへ渡す（URL の question 文字列に依存しない） */
+  const handleEditFormSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const form = e.currentTarget
+      const answers = readAnswersFromForm(form)
+      if (!isCompleteAnswersRecord(answers)) return
+
+      const params = new URLSearchParams()
+      if (resolvedTargetId) params.set('targetId', resolvedTargetId)
+      params.set('question', serializeAnswersToQuestionParam(answers))
+      void router.push(`/personal-plot?${params.toString()}`)
+    },
+    [resolvedTargetId, router]
+  )
 
   const handleCopyResultShareUrl = useCallback(() => {
     const params = new URLSearchParams()
-    if (targetIdFromUrl) params.set('targetId', targetIdFromUrl)
     if (answersForCommit) {
       const q = serializeAnswersToQuestionParam(answersForCommit)
       if (q) params.set('question', q)
@@ -153,7 +194,7 @@ export const usePersonalPlotResult = () => {
         alert(CLIPBOARD_COPY_UNAVAILABLE_MESSAGE)
       }
     })
-  }, [answersForCommit, pathname, targetIdFromUrl])
+  }, [answersForCommit, pathname])
 
   const orderedQuestionList = useMemo(() => {
     const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
@@ -179,7 +220,7 @@ export const usePersonalPlotResult = () => {
     boundaryQuestionList,
     isAllAnswered: answersForCommit !== null,
     handleNavigateToHomeMatrix,
-    handleNavigateToEditSurvey,
+    handleEditFormSubmit,
     isShareCopied,
     handleCopyResultShareUrl,
   }

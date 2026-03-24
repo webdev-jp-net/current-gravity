@@ -10,6 +10,12 @@ export const questionIds = new Set(questionListData.map(q => q.id))
 /** ロード時プレビュー用の仮 id（targetId なし URL） */
 export const PREVIEW_PLACEHOLDER_ID = 'preview'
 
+/**
+ * 入力から結果へ遷移するときだけ使う一時領域（同一タブの sessionStorage）。
+ * 共有用の結果 URL に Group 編集用 id を載せないため、クエリの targetId は使わずここで渡す。
+ */
+export const PLOT_TARGET_ID_SESSION_KEY = 'pp-plot-target-id'
+
 export const DEFAULT_DISPLAY_NAME = '名前'
 
 /** question=の値をパース。無効なトークンはスキップ。 */

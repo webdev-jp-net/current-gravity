@@ -31,15 +31,16 @@
 #### 入力ルート（`/personal-plot`）
 
 - 単一の HTML `<form>` に20問をまとめ、**操作中は URL やグローバルストアに回答進捗を同期しない**。各設問はネイティブの `radio`（非制御）とし、**すべてのグループに `required`** を付与する。送信ボタン等の活性は **`form.checkValidity()` に基づく**（フォームの `input` / `change` で再評価）。
-- **「結果を見る」**（`submit`）時にのみ `FormData` 相当で20問を読み取り、**クエリ `question`（および任意の `targetId`）付きで `/personal-plot/result` へ遷移**する。
-- 任意クエリ **`targetId`**（Group Editor の「設問から入力」など）は、**該当プロットの更新用 id** として結果ページ・`groupAtom` 反映まで引き継ぐ。`/personal-plot` ロード時に `targetId` がある場合は、**先頭の質問ブロック付近へスクロール**して入力開始しやすくする。
-- `/personal-plot` の URL では **`question` による回答の復元は行わない**（将来、結果ページからの「編集」戻りなど別経路を想定）。
+- **「結果を見る」**（`submit`）時にのみ `FormData` で20問を読み取り、**クエリは `question` のみ**付けて `/personal-plot/result` へ遷移する。Group Editor 経由などで `/personal-plot` に **`targetId` クエリ**がある場合は、送信時に **`sessionStorage` に退避**し、結果側で読み取って `groupAtom` 反映に使う（**共有 URL には載せない**）。
+- `/personal-plot` ロード時に URL に `targetId` がある場合は、**先頭の質問ブロック付近へスクロール**して入力開始しやすくする。マウント時に前回の `sessionStorage` の target はクリアし、**今回の送信で改めて書く**。
+- `/personal-plot` の URL に **`question` が付いた状態**（結果ページの「結果を編集する」からの戻りなど）では、**その値でフォームをシード**する。
 
 #### 結果ページ（`/personal-plot/result`）
 
 - **URL の `question` で20問分が揃っている場合**に、共有 `Matrix` で位置を表示する。マウント時に **同一内容の `groupAtom` 反映を1回**行う（共有 URL の直リンク・リロードに対応）。Strict Mode 等での二重実行は **sessionStorage キー**で抑止する。
-- Matrix 直下に「みんなのいまの重心に追加」と「この結果のURLをコピー」を置く。「みんなのいまの重心に追加」は、未反映の場合は `groupAtom` を更新したうえでトップの `/#matrix` へ遷移する。コピーする文字列は **回答復元用クエリ**（`question` および任意の `targetId`）を絶対 URL としたもの（`/personal-plot` から「結果を見る」で遷移するときと同形式）。
-- 各質問ブロックは **読み取り専用**（選択変更不可）で、URL から復元した回答として表示する。
+- **`targetId` の解決**: 主に入力フォームから結果へ遷移した直後の **`sessionStorage`**。旧ブックマーク用に結果 URL に **`targetId` クエリ**が残っている場合は初回マウントで読み取り、**`replace` でクエリから外す**（共有に id が混ざらないようにする）。
+- Matrix 直下に「みんなのいまの重心に追加」と「この結果のURLをコピー」を置く。「みんなのいまの重心に追加」は、未反映の場合は `groupAtom` を更新したうえでトップの `/#matrix` へ遷移する。**コピーする URL は `question` のみ**（`/personal-plot/result` のパス＋クエリ）。`targetId` は含めない。
+- 各質問ブロックは **読み取り専用表示**（操作感は変更不可）。**「結果を編集する」**は同一 `<form>` 内の `submit` とし、`FormData` から回答を読み取って **`/personal-plot` へ遷移**する（必要なら **`targetId` をクエリに含め**、入力側でスクロール・更新文脈を維持する）。readonly の見た目用 radio に加え、送信に **`type="hidden"`** で値を載せる（`disabled` のみではフォーム送信対象にならないため）。
 
 ### 直接入力およびインポート (Import UI)
 

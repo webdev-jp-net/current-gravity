@@ -26,7 +26,7 @@ export const PersonalPlotResultView: FC = () => {
     boundaryQuestionList,
     isAllAnswered,
     handleNavigateToHomeMatrix,
-    handleNavigateToEditSurvey,
+    handleEditFormSubmit,
     isShareCopied,
     handleCopyResultShareUrl,
   } = usePersonalPlotResult()
@@ -89,57 +89,53 @@ export const PersonalPlotResultView: FC = () => {
         </section>
       ) : null}
 
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>帰属</h2>
-          <p className={styles.sectionLead}>
-            判断・決定・結果に対する責任の帰属をあらわした志向です。
-          </p>
-        </div>
-        <div className={styles.sectionBody}>
-          {valueLocusQuestionList.map((q, i) => (
-            <Question
-              key={q.id}
-              item={q}
-              index={i}
-              mode="readonly"
-              value={parsedAnswers[q.id]}
-            />
-          ))}
-        </div>
-      </section>
+      <form className={styles.resultEditForm} onSubmit={handleEditFormSubmit}>
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>帰属</h2>
+            <p className={styles.sectionLead}>
+              判断・決定・結果に対する責任の帰属をあらわした志向です。
+            </p>
+          </div>
+          <div className={styles.sectionBody}>
+            {valueLocusQuestionList.map((q, i) => (
+              <Question
+                key={q.id}
+                item={q}
+                index={i}
+                mode="readonly"
+                value={parsedAnswers[q.id]}
+              />
+            ))}
+          </div>
+        </section>
 
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>関係性</h2>
-          <p className={styles.sectionLead}>
-            自分以外のモノ・人・現象との関係性をあらわした志向です。
-          </p>
-        </div>
-        <div className={styles.sectionBody}>
-          {boundaryQuestionList.map((q, i) => (
-            <Question
-              key={q.id}
-              item={q}
-              index={valueLocusQuestionList.length + i}
-              mode="readonly"
-              value={parsedAnswers[q.id]}
-            />
-          ))}
-        </div>
-      </section>
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>関係性</h2>
+            <p className={styles.sectionLead}>
+              自分以外のモノ・人・現象との関係性をあらわした志向です。
+            </p>
+          </div>
+          <div className={styles.sectionBody}>
+            {boundaryQuestionList.map((q, i) => (
+              <Question
+                key={q.id}
+                item={q}
+                index={valueLocusQuestionList.length + i}
+                mode="readonly"
+                value={parsedAnswers[q.id]}
+              />
+            ))}
+          </div>
+        </section>
 
-      <footer className={styles.footer}>
-        <Button
-          variant="basic"
-          size="full"
-          type="button"
-          className={styles.submitButton}
-          onClick={handleNavigateToEditSurvey}
-        >
-          結果を編集する
-        </Button>
-      </footer>
+        <footer className={styles.footer}>
+          <Button variant="basic" size="full" type="submit" className={styles.submitButton}>
+            結果を編集する
+          </Button>
+        </footer>
+      </form>
     </main>
   )
 }
