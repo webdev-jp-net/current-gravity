@@ -2,141 +2,221 @@
   {
     "id": "valueLocus-1",
     "question": "コンセプトや設計、訓練など外から見えない分野にも関心があり、研究したり手をかけたくなってしまう。",
+    "concept": "外から可視化されない内在構造や完成度そのものに価値を感じ、関与が深くなる志向。",
     "axis": "valueLocus",
     "orientation": "ownership",
-    "label": { "min": "内側は最低限で適切", "max": "熱中してしまう" }
+    "label": {
+      "min": "内側は最低限で適切",
+      "max": "熱中してしまう"
+    }
   },
   {
     "id": "valueLocus-2",
     "question": "責任感があり、ついつい関与が深くなって疲れてしまうことがある。",
+    "concept": "責任の所在を自分側に引き寄せやすく、手放さず抱え込むオーナーシップ傾向。",
     "axis": "valueLocus",
     "orientation": "ownership",
-    "label": { "min": "疲れない運用をしている", "max": "そうなりがち" }
+    "label": {
+      "min": "疲れない運用をしている",
+      "max": "そうなりがち"
+    }
   },
   {
     "id": "valueLocus-3",
     "question": "結果が喜ばれるとしても、モノの品質を妥協する解決は自分の満足とは別物。",
+    "concept": "外部評価よりも内在的な完成度や納得を判断基準として保持する志向。",
     "axis": "valueLocus",
     "orientation": "ownership",
-    "label": { "min": "喜ばれれば純粋に満足", "max": "妥協した違和感は残る" }
+    "label": {
+      "min": "喜ばれれば純粋に満足",
+      "max": "妥協した違和感は残る"
+    }
   },
   {
     "id": "valueLocus-4",
     "question": "0→1という、まだこの世にないものの姿を決め形作るフェーズには特別な手応えを感じる。",
+    "concept": "未定義状態から構造や方向性を決める初期フェーズに強い手応えを感じる特性。",
     "axis": "valueLocus",
     "orientation": "ownership",
-    "label": { "min": "得意な人に頼る", "max": "まかせて" }
+    "label": {
+      "min": "得意な人に頼る",
+      "max": "まかせて"
+    }
   },
   {
     "id": "valueLocus-5",
     "question": "決定案から自分の関与やアイデアが全てなくなってしまうと、内心ざんねんだ。",
+    "concept": "成果よりも関与や思考の痕跡が残ることに価値を感じる内在的満足の傾向。",
     "axis": "valueLocus",
     "orientation": "ownership",
-    "label": { "min": "決まれば純粋に満足", "max": "内心そうだ" }
+    "label": {
+      "min": "決まれば純粋に満足",
+      "max": "内心そうだ"
+    }
   },
   {
     "id": "valueLocus-6",
     "question": "どこに出すか、どう伝えるか、どう根回ししておくかで価値を動かすことに関心がある。",
+    "concept": "内容そのものよりも流通・配置・合意形成によって価値が変わる点への関心。",
     "axis": "valueLocus",
     "orientation": "consensus",
-    "label": { "min": "それほど関心がない", "max": "とても意義を感じる" }
+    "label": {
+      "min": "それほど関心がない",
+      "max": "とても意義を感じる"
+    }
   },
   {
     "id": "valueLocus-7",
     "question": "アウトプットの運用に重心を置いているので、 立ち上げや過程のキャッチアップが相対的に浅くなることがある。",
+    "concept": "制作過程よりも公開・展開・運用フェーズを主戦場と捉える志向。",
     "axis": "valueLocus",
     "orientation": "consensus",
-    "label": { "min": "途中の重心のほうが強い", "max": "出すときからが本番" }
+    "label": {
+      "min": "途中の重心のほうが強い",
+      "max": "出すときからが本番"
+    }
   },
   {
     "id": "valueLocus-8",
     "question": "反応や評価が返ってきたとき、ようやく一区切りついた気持ちになる。",
+    "concept": "形を出すことより、外部からの反応によって完了感が成立する価値観。",
     "axis": "valueLocus",
     "orientation": "consensus",
-    "label": { "min": "評価は形が出せたあとの追加要素", "max": "受け入れてもらえるまではアサイン中" }
+    "label": {
+      "min": "評価は形が出せたあとの追加要素",
+      "max": "受け入れてもらえるまではアサイン中"
+    }
   },
   {
     "id": "valueLocus-9",
     "question": "好きではないタスクも、必要とされることだと捉えて取り組む。",
+    "concept": "嗜好と切り離し、役割や期待に応じて行動を選択できる運用志向。",
     "axis": "valueLocus",
     "orientation": "consensus",
-    "label": { "min": "分かるけど手は遅い", "max": "割り切って進めるのは得意" }
+    "label": {
+      "min": "分かるけど手は遅い",
+      "max": "割り切って進めるのは得意"
+    }
   },
   {
     "id": "valueLocus-10",
     "question": "自分の勉強を共有する場所があると、意味や納得の裏付けになり安心感がある。",
+    "concept": "内省だけでなく、外部からの承認や共鳴によって納得感が補強される特性。",
     "axis": "valueLocus",
     "orientation": "consensus",
-    "label": { "min": "意味は自分で決める", "max": "外からも認められると心強い" }
+    "label": {
+      "min": "意味は自分で決める",
+      "max": "外からも認められると心強い"
+    }
   },
   {
     "id": "boundary-1",
     "question": "「話題だから美味しい」「有名だからおしゃれ」という評価のしかたは違和感がある。",
+    "concept": "話題性や権威と評価軸を混線させることへの直感的な境界検知。",
     "axis": "boundary",
     "orientation": "diversity",
-    "label": { "min": "どこに違和感？", "max": "違和感を感じる" }
+    "label": {
+      "min": "どこに違和感？",
+      "max": "違和感を感じる"
+    }
   },
   {
     "id": "boundary-2",
     "question": "さまざまな価値観が交錯する物語を、どの登場人物や勢力にも自己投影せず楽しめる。",
+    "concept": "正義や立場を固定せず、複数の解釈を並列で保持できる境界特性。",
     "axis": "boundary",
     "orientation": "diversity",
-    "label": { "min": "誰かを応援する派", "max": "興味深い世界観だ" }
+    "label": {
+      "min": "誰かを応援する派",
+      "max": "興味深い世界観だ"
+    }
   },
   {
     "id": "boundary-3",
     "question": "自分がおすすめしたものへ相手は興味がなくてもかまわない。",
+    "concept": "自分の評価と他者の関心を分離して扱える境界の安定性。",
     "axis": "boundary",
     "orientation": "diversity",
-    "label": { "min": "ややさみしい", "max": "ぜんぜん平気" }
+    "label": {
+      "min": "ややさみしい",
+      "max": "ぜんぜん平気"
+    }
   },
   {
     "id": "boundary-4",
     "question": "状況に応じた立ち回りが求められる交流会や懇親会では、消耗を感じやすい。",
+    "concept": "文脈適応や関係調整を同時処理する場面での境界負荷の検知。",
     "axis": "boundary",
     "orientation": "diversity",
-    "label": { "min": "ぜんぜん自然体でいける", "max": "消耗する" }
+    "label": {
+      "min": "ぜんぜん自然体でいける",
+      "max": "消耗する"
+    }
   },
   {
     "id": "boundary-5",
     "question": "いつもキレっキレの提案をする人がパッとしなくても、評価や信頼感は大きく揺らがない。",
+    "concept": "能力評価を一時的な成果変動と切り分けて捉えられる境界感覚。",
     "axis": "boundary",
     "orientation": "diversity",
-    "label": { "min": "ギャップに内心ざわつく", "max": "今回は調子悪いね" }
+    "label": {
+      "min": "ギャップに内心ざわつく",
+      "max": "今回は調子悪いね"
+    }
   },
   {
     "id": "boundary-6",
     "question": "物事を進行するとき、人間関係でまとめる立ち回りが自分には合っている。",
+    "concept": "関係性を軸に進行を安定させる融合的な進め方への親和性。",
     "axis": "boundary",
     "orientation": "identityFusion",
-    "label": { "min": "よくわからない、自分はしない。", "max": "気がつけばそこに寄ってる" }
+    "label": {
+      "min": "よくわからない、自分はしない。",
+      "max": "気がつけばそこに寄ってる"
+    }
   },
   {
     "id": "boundary-7",
     "question": "「Aさん絶対すごいよね！」と切り出されると、まず「すごいよね」と同意する。",
+    "concept": "他者の評価フレームに即座に同調し、自身の判断と混線させやすい傾向。",
     "axis": "boundary",
     "orientation": "identityFusion",
-    "label": { "min": "まずは「ふーん」", "max": "それ、自分のことだ" }
+    "label": {
+      "min": "まずは「ふーん」",
+      "max": "それ、自分のことだ"
+    }
   },
   {
     "id": "boundary-8",
     "question": "レビューやおすすめを、共感したまま自分の評価として表明していることがある。",
+    "concept": "他者の感想を自分の評価として内面化・表明する境界の曖昧さ。",
     "axis": "boundary",
     "orientation": "identityFusion",
-    "label": { "min": "おすすめは参考止まり", "max": "いつのまにかやりがち" }
+    "label": {
+      "min": "おすすめは参考止まり",
+      "max": "いつのまにかやりがち"
+    }
   },
   {
     "id": "boundary-9",
     "question": "グループでの取り組みは、推進委員や代表がリードする体制がわかりやすくて安心。",
+    "concept": "代表への委譲や一体感によって安心を得る融合志向。",
     "axis": "boundary",
     "orientation": "identityFusion",
-    "label": { "min": "場合による", "max": "そうだと思う" }
+    "label": {
+      "min": "場合による",
+      "max": "そうだと思う"
+    }
   },
   {
     "id": "boundary-10",
     "question": "多数決で決めきるとき、賛成ではない人が残ることを内心では割り切りにくい。",
+    "concept": "決定結果よりも関係の残余や同質性を気にかける融合的感受性。",
     "axis": "boundary",
     "orientation": "identityFusion",
-    "label": { "min": "決まればどっちでもいい", "max": "仕方ないけど気がかり" }
+    "label": {
+      "min": "決まればどっちでもいい",
+      "max": "仕方ないけど気がかり"
+    }
   }
 ]
