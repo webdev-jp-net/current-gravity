@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 
+import { Button } from '@/components/Button'
+
 import styles from './Question.module.scss'
 
 export type QuestionItem = {
@@ -20,8 +22,10 @@ type QuestionProps = {
   defaultValue?: number
   /** readonly 時のみ。表示する値 */
   value?: number
-  /** edit 時、選択後に次設問へスクロールするために使用 */
-  onSelect?: (id: string, val: number, index: number) => void
+  /** undefinedなら「前へ」ボタン非活性 */
+  onPrev?: () => void
+  /** undefinedなら「次へ」ボタン非活性 */
+  onNext?: () => void
 }
 
 export const Question: FC<QuestionProps> = ({
@@ -30,7 +34,8 @@ export const Question: FC<QuestionProps> = ({
   mode = 'edit',
   defaultValue,
   value: readonlyValue,
-  onSelect,
+  onPrev,
+  onNext,
 }) => {
   const { id, question, label } = item
   const readOnly = mode === 'readonly'
@@ -55,13 +60,11 @@ export const Question: FC<QuestionProps> = ({
                   ? {
                       checked: readonlyValue === val,
                       disabled: true,
-                      // 制御コンポーネントとして checked を渡すため、React が onChange を要求する
                       onChange: () => {},
                     }
                   : {
                       required: ri === 0,
                       defaultChecked: defaultValue === val,
-                      onChange: () => onSelect?.(id, val, index),
                     })}
               />
               <span className={styles.optionIndicator}></span>
@@ -70,6 +73,16 @@ export const Question: FC<QuestionProps> = ({
         </div>
         <span className={styles.label}>{label.max}</span>
       </div>
+      {!readOnly && (
+        <footer className={styles.footer}>
+          <Button variant="basic" size="liquid" type="button" disabled={!onPrev} onClick={onPrev}>
+            前へ
+          </Button>
+          <Button variant="basic" size="liquid" type="button" disabled={!onNext} onClick={onNext}>
+            次へ
+          </Button>
+        </footer>
+      )}
     </section>
   )
 }
