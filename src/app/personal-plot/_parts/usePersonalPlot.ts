@@ -130,10 +130,8 @@ export const usePersonalPlot = () => {
     router.push(`/personal-plot/result?${params.toString()}`)
   }
 
-  const handleAnswerSelectWithScroll = (_id: string, _val: number, currentIndex: number) => {
-    if (currentIndex + 1 < totalCount) {
-      window.location.hash = `question-${currentIndex + 1}`
-    }
+  const scrollToQuestion = (index: number) => {
+    window.location.hash = `question-${index}`
   }
 
   const handleBack = () => {
@@ -149,7 +147,7 @@ export const usePersonalPlot = () => {
     valueLocusQuestionList,
     boundaryQuestionList,
     totalCount,
-    handleAnswerSelectWithScroll,
+    scrollToQuestion,
     handleSubmit,
     handleBack,
   }
