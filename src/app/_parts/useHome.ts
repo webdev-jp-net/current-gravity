@@ -15,13 +15,25 @@ export const useHome = () => {
   const [isMounted, setIsMounted] = useState(false)
   const initialLoadHadParams = useRef(false)
 
-  // ハイドレーションエラー対策および初期URLパラメータ解析
+  /**
+   * `?name` / `p=` からの復元は「まだ1件もプロットが無い」ときだけ行う。
+   * survey で `groupAtom` に載せたあと `/` へ戻った初回でも、古いクエリで全置換されない（#65）。
+   * 共有URL直リンクは初期 atom が空のため従来どおり復元される。
+   */
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const nameParam = urlParams.get('name')
-    const plotParams = urlParams.getAll('p')
+    setGroup(current => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const nameParam = urlParams.get('name')
+      const plotParams = urlParams.getAll('p')
 
-    if (nameParam || plotParams.length > 0) {
+      if (!nameParam && plotParams.length === 0) {
+        return current
+      }
+
+      if (current.personalPlotList.length > 0) {
+        return current
+      }
+
       initialLoadHadParams.current = true
       const personalPlotList: PersonalPlot[] = plotParams.map((p, index) => {
         const [displayName, ownership, consensus, diversity, identityFusion] =
@@ -36,16 +48,16 @@ export const useHome = () => {
         }
       })
 
-      setGroup({
+      return {
         name: nameParam || '新しいグループ',
         personalPlotList,
-      })
-    }
+      }
+    })
 
     setIsMounted(true)
   }, [setGroup])
 
-  // 状態をURLパラメータに同期（replaceState でスクロール位置を維持）
+  // 状態をURLパラメータに同期（replaceStateでスクロール位置を維持）
   useEffect(() => {
     if (!isMounted) return
 
@@ -75,7 +87,7 @@ export const useHome = () => {
     }
   }, [group, isMounted, pathname])
 
-  // マウント完了後にハッシュまたは p= に応じてスクロール
+  // マウント完了後にハッシュまたはp=に応じてスクロール
   useEffect(() => {
     if (!isMounted) return
 

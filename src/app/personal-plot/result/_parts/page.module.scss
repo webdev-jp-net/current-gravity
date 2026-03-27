@@ -1,5 +1,13 @@
 @use '@/style/_variable' as *;
 
+/* `/personal-plot` と同一レイアウトクラス。generate-component.md の各ルート _parts/page.module.scss 規約に合わせ配置 */
+
+.resultEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .surveyForm {
   display: flex;
   flex-direction: column;
@@ -13,12 +21,12 @@
 
   @include mq(narrow) {
     gap: var(--spacing-xl);
-    padding: var(--spacing-2xl) 0 0;
+    padding: var(--spacing-2xl) 0;
   }
 
   @include mq(fromWide) {
     gap: var(--spacing-3xl);
-    padding: var(--spacing-3xl) 0 0;
+    padding: var(--spacing-3xl) 0;
   }
 }
 

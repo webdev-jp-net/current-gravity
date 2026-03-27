@@ -1,6 +1,6 @@
 'use client'
 
-import type { FC } from 'react'
+import type { FC, FormEvent } from 'react'
 
 import { Button } from '@/components/Button'
 
@@ -12,14 +12,20 @@ import { usePersonalPlot } from './usePersonalPlot'
 export const PersonalPlotView: FC = () => {
   const {
     isMounted,
-    answers,
+    formRef,
+    formValid,
+    handleFormInput,
+    effectiveDefaults,
     valueLocusQuestionList,
     boundaryQuestionList,
-    handleAnswerChangeWithScroll,
-    isAllAnswered,
+    handleAnswerSelectWithScroll,
     handleSubmit,
     handleBack,
   } = usePersonalPlot()
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    handleSubmit(e)
+  }
 
   if (!isMounted) return null
 
@@ -32,62 +38,76 @@ export const PersonalPlotView: FC = () => {
         </p>
       </div>
 
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>帰属</h2>
-          <p className={styles.sectionLead}>
-            判断・決定・結果に対する責任の帰属をあらわした志向です。
-          </p>
-        </div>
-        <div className={styles.sectionBody}>
-          {valueLocusQuestionList.map((q, i) => (
-            <Question
-              key={q.id}
-              item={q}
-              index={i}
-              value={answers[q.id]}
-              onAnswerChange={handleAnswerChangeWithScroll}
-            />
-          ))}
-        </div>
-      </section>
+      <form
+        ref={formRef}
+        className={styles.surveyForm}
+        onSubmit={onSubmit}
+        onInput={handleFormInput}
+        onChange={handleFormInput}
+      >
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>帰属</h2>
+            <p className={styles.sectionLead}>
+              判断・決定・結果に対する責任の帰属をあらわした志向です。
+            </p>
+          </div>
+          <div className={styles.sectionBody}>
+            {valueLocusQuestionList.map((q, i) => (
+              <Question
+                key={q.id}
+                item={q}
+                index={i}
+                mode="edit"
+                defaultValue={effectiveDefaults[q.id]}
+                onSelect={handleAnswerSelectWithScroll}
+              />
+            ))}
+          </div>
+        </section>
 
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>関係性</h2>
-          <p className={styles.sectionLead}>
-            自分以外のモノ・人・現象との関係性をあらわした志向です。
-          </p>
-        </div>
-        <div className={styles.sectionBody}>
-          {boundaryQuestionList.map((q, i) => (
-            <Question
-              key={q.id}
-              item={q}
-              index={valueLocusQuestionList.length + i}
-              value={answers[q.id]}
-              onAnswerChange={handleAnswerChangeWithScroll}
-            />
-          ))}
-        </div>
-      </section>
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>関係性</h2>
+            <p className={styles.sectionLead}>
+              自分以外のモノ・人・現象との関係性をあらわした志向です。
+            </p>
+          </div>
+          <div className={styles.sectionBody}>
+            {boundaryQuestionList.map((q, i) => (
+              <Question
+                key={q.id}
+                item={q}
+                index={valueLocusQuestionList.length + i}
+                mode="edit"
+                defaultValue={effectiveDefaults[q.id]}
+                onSelect={handleAnswerSelectWithScroll}
+              />
+            ))}
+          </div>
+        </section>
 
-      <footer className={styles.footer}>
-        <Button variant="basic" size="full" className={styles.submitButton} onClick={handleBack}>
-          測定をやめて戻る
-        </Button>
-        <Button
-          variant="basic"
-          size="full"
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          disabled={!isAllAnswered}
-        >
-          回答を完了して
-          <br />
-          プロットを追加
-        </Button>
-      </footer>
+        <footer className={styles.footer}>
+          <Button
+            variant="basic"
+            size="full"
+            type="button"
+            className={styles.submitButton}
+            onClick={handleBack}
+          >
+            測定をやめて戻る
+          </Button>
+          <Button
+            variant="basic"
+            size="full"
+            className={styles.submitButton}
+            type="submit"
+            disabled={!formValid}
+          >
+            結果を見る
+          </Button>
+        </footer>
+      </form>
     </main>
   )
 }
