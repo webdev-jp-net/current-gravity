@@ -3,7 +3,7 @@
 .surveyForm {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--spacing-4xl);
 }
 
 .personalPlot {
