@@ -36,10 +36,10 @@
 
 .concept {
   margin: 0;
-  color: var(--txt-description);
+  color: var(--txt-paragraph);
 
   @include mq(narrow) {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
   }
 
   @include mq(fromWide) {
@@ -164,5 +164,19 @@
       width var(--transition-leave),
       height var(--transition-leave),
       background-color var(--transition-leave);
+  }
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+
+  .concept {
+    grid-column: span 2;
+  }
+
+  .label:last-child {
+    grid-row: 2 / 3;
   }
 }

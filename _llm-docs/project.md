@@ -17,7 +17,7 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 ├── _llm-rules/         # [開発作法]セッション制御、GitHub運用、基本原則
 ├── _llm-docs/          # [正本]プロジェクト専門知識・仕様定義
 │   ├── spec/           # 各機能の詳細な技術仕様書（Scoring, Drawing等）
-│   └── *.md            # 共通定義（dictionary, question_concepts等）
+│   └── *.md            # 共通定義（dictionary等）
 ├── src/                # [開発系ソース]
 │   ├── data/           # 静的データ・状態定義（questionList.json, store.ts等）
 │   ├── pages/          # ルーティング（Next.jsの規約に基づく画面定義）
@@ -33,7 +33,7 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 - **[model_definition.md](./spec/model_definition.md)**:軸の定義およびスコア算出ロジック。
 - **[personal_plot.md](./spec/personal_plot.md)**:データ構造および入力・インポート仕様。
 - **[matrix_drawing.md](./spec/matrix_drawing.md)**:マトリクス描画および表示制御仕様。
-- **[question_concepts.md](./question_concepts.md)**:設問ごとの背景意図および詳細コンセプト。
+- **[questionList.json](../src/data/questionList.json)**:設問定義・コンセプト・評価ラベル。
 
 ## Design Guidelines
 
