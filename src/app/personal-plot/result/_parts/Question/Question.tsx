@@ -6,7 +6,10 @@ const STEPS = [-2, -1, 0, 1, 2] as const
 
 export type ResultQuestionProps = {
   question: string
-  concept: string
+  concept: {
+    description: string
+    case: { min: string; max: string }
+  }
   label: { min: string; max: string }
   value: number | undefined
   index: number
@@ -19,7 +22,7 @@ export const Question: FC<ResultQuestionProps> = ({
   value,
   index,
 }) => {
-  const showConcept = concept.trim().length > 0
+  const showConcept = concept.description.trim().length > 0
   const isKnownStep = value !== undefined && (STEPS as readonly number[]).includes(value)
   const srSelected = isKnownStep ? `選択の値: ${value}` : '選択なし'
 
@@ -27,7 +30,7 @@ export const Question: FC<ResultQuestionProps> = ({
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
         <h3 className={styles.title}>{question}</h3>
-        {showConcept ? <p className={styles.concept}>{concept}</p> : null}
+        {showConcept ? <p className={styles.concept}>{concept.description}</p> : null}
         <p className={styles.visuallyHidden}>{srSelected}</p>
       </header>
       <div className={styles.body}>

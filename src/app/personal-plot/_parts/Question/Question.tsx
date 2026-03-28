@@ -7,7 +7,10 @@ import styles from './Question.module.scss'
 export type QuestionItem = {
   id: string
   question: string
-  concept: string
+  concept: {
+    description: string
+    case: { min: string; max: string }
+  }
   axis: string
   orientation: string
   label: { min: string; max: string }
