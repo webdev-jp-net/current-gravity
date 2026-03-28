@@ -18,7 +18,8 @@ export const PersonalPlotView: FC = () => {
     effectiveDefaults,
     valueLocusQuestionList,
     boundaryQuestionList,
-    handleAnswerSelectWithScroll,
+    totalCount,
+    scrollToQuestion,
     handleSubmit,
     handleBack,
   } = usePersonalPlot()
@@ -60,7 +61,8 @@ export const PersonalPlotView: FC = () => {
                 index={i}
                 mode="edit"
                 defaultValue={effectiveDefaults[q.id]}
-                onSelect={handleAnswerSelectWithScroll}
+                onPrev={i > 0 ? () => scrollToQuestion(i - 1) : undefined}
+                onNext={i < totalCount - 1 ? () => scrollToQuestion(i + 1) : undefined}
               />
             ))}
           </div>
@@ -74,16 +76,20 @@ export const PersonalPlotView: FC = () => {
             </p>
           </div>
           <div className={styles.sectionBody}>
-            {boundaryQuestionList.map((q, i) => (
-              <Question
-                key={q.id}
-                item={q}
-                index={valueLocusQuestionList.length + i}
-                mode="edit"
-                defaultValue={effectiveDefaults[q.id]}
-                onSelect={handleAnswerSelectWithScroll}
-              />
-            ))}
+            {boundaryQuestionList.map((q, i) => {
+              const index = valueLocusQuestionList.length + i
+              return (
+                <Question
+                  key={q.id}
+                  item={q}
+                  index={index}
+                  mode="edit"
+                  defaultValue={effectiveDefaults[q.id]}
+                  onPrev={index > 0 ? () => scrollToQuestion(index - 1) : undefined}
+                  onNext={index < totalCount - 1 ? () => scrollToQuestion(index + 1) : undefined}
+                />
+              )
+            })}
           </div>
         </section>
 

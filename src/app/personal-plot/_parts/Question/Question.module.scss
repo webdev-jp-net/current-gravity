@@ -116,3 +116,9 @@
 
   color: var(--txt-link);
 }
+
+.footer {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
