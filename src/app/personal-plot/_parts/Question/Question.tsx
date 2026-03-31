@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 
+import { ThumbsDown, ThumbsUp } from 'lucide-react'
+
 import { Button } from '@/components/Button'
 
 import styles from './Question.module.scss'
@@ -49,7 +51,13 @@ export const Question: FC<QuestionProps> = ({
         <h3 className={styles.title}>{question}</h3>
       </header>
       <div className={styles.body}>
-        <span className={styles.label}>{label.min}</span>
+        <div className={styles.label}>
+          <span className={styles.labelHeading}>
+            <ThumbsDown size={12} />
+            ちがう
+          </span>
+          <span>{label.min}</span>
+        </div>
         <div className={styles.optionScale}>
           {[-2, -1, 0, 1, 2].map((val, ri) => (
             <label key={val} className={styles.optionLabel}>
@@ -74,7 +82,13 @@ export const Question: FC<QuestionProps> = ({
             </label>
           ))}
         </div>
-        <span className={styles.label}>{label.max}</span>
+        <div className={styles.label}>
+          <span className={styles.labelHeading}>
+            そうだ
+            <ThumbsUp size={12} />
+          </span>
+          <span>{label.max}</span>
+        </div>
       </div>
       {!readOnly && (
         <footer className={styles.footer}>
