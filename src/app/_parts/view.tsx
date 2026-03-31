@@ -2,6 +2,8 @@
 
 import type { FC } from 'react'
 
+import { PoleIcon } from '@/components/PoleIcon'
+
 import styles from './page.module.scss'
 
 import { GroupEditor } from './GroupEditor'
@@ -27,7 +29,16 @@ export const HomeView: FC = () => {
   return (
     <main className={styles.home} data-testid="home">
       <Hero />
-      <Matrix personalPlotList={completePersonList} />
+      <div className={styles.matrix}>
+        <PoleIcon variant="ownership" className={[styles.icon, styles.ownership].join(' ')} />
+        <PoleIcon variant="consensus" className={[styles.icon, styles.consensus].join(' ')} />
+        <PoleIcon variant="diversity" className={[styles.icon, styles.diversity].join(' ')} />
+        <PoleIcon
+          variant="identityFusion"
+          className={[styles.icon, styles.identityFusion].join(' ')}
+        />
+        <Matrix personalPlotList={completePersonList} />
+      </div>
       <GroupEditor
         groupName={group.name}
         personalPlotList={group.personalPlotList}
