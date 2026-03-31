@@ -17,6 +17,7 @@
     "@visx/responsive": "^3.12.0",
     "@visx/scale": "^3.12.0",
     "@visx/shape": "^3.12.0",
+    "budoux": "^0.8.1",
     "jotai": "^2.16.2",
     "lucide-react": "^0.408.0",
     "next": "^15.0.0",
