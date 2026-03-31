@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 
+import { BudouXText } from '@/components/BudouXText'
 import { Button } from '@/components/Button'
 
 import styles from './Question.module.scss'
@@ -48,7 +49,9 @@ export const Question: FC<QuestionProps> = ({
   return (
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
-        <h3 className={styles.title}>{question}</h3>
+        <h3 className={styles.title}>
+          <BudouXText>{question}</BudouXText>
+        </h3>
       </header>
       <div className={styles.body}>
         <div className={styles.label}>
@@ -56,7 +59,9 @@ export const Question: FC<QuestionProps> = ({
             <ThumbsDown size={12} />
             ちがう
           </span>
-          <span>{label.min}</span>
+          <span>
+            <BudouXText>{label.min}</BudouXText>
+          </span>
         </div>
         <div className={styles.optionScale}>
           {[-2, -1, 0, 1, 2].map((val, ri) => (
@@ -87,7 +92,9 @@ export const Question: FC<QuestionProps> = ({
             そうだ
             <ThumbsUp size={12} />
           </span>
-          <span>{label.max}</span>
+          <span>
+            <BudouXText>{label.max}</BudouXText>
+          </span>
         </div>
       </div>
       {!readOnly && (

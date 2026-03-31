@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 
+import { BudouXText } from '@/components/BudouXText'
+
 import styles from './Question.module.scss'
 
 const STEPS = [-2, -1, 0, 1, 2] as const
@@ -23,11 +25,15 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
   return (
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
-        <h3 className={styles.title}>{question}</h3>
+        <h3 className={styles.title}>
+          <BudouXText>{question}</BudouXText>
+        </h3>
         <p className={styles.visuallyHidden}>{srSelected}</p>
       </header>
       <div className={styles.body}>
-        <span className={styles.label}>{label.min}</span>
+        <span className={styles.label}>
+          <BudouXText>{label.min}</BudouXText>
+        </span>
         <div className={styles.optionScale} role="presentation" aria-hidden>
           {STEPS.map(step => (
             <div key={step} className={styles.segmentSlot}>
@@ -39,13 +45,21 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
             </div>
           ))}
         </div>
-        <span className={styles.label}>{label.max}</span>
+        <span className={styles.label}>
+          <BudouXText>{label.max}</BudouXText>
+        </span>
       </div>
       {showConcept && (
         <footer className={styles.footer}>
-          <p className={styles.concept}>{concept.description}</p>
-          <p className={styles.label}>{concept.case.min}</p>
-          <p className={styles.label}>{concept.case.max}</p>
+          <p className={styles.concept}>
+            <BudouXText>{concept.description}</BudouXText>
+          </p>
+          <p className={styles.label}>
+            <BudouXText>{concept.case.min}</BudouXText>
+          </p>
+          <p className={styles.label}>
+            <BudouXText>{concept.case.max}</BudouXText>
+          </p>
         </footer>
       )}
     </section>
