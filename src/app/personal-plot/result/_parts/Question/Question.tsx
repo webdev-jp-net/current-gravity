@@ -3,26 +3,28 @@ import type { FC } from 'react'
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import { BudouXText } from '@/components/BudouXText'
+import { PoleIcon } from '@/components/PoleIcon'
 
 import styles from './Question.module.scss'
 
-const STEPS = [-2, -1, 0, 1, 2] as const
+import { useQuestion } from './useQuestion'
+
+import type { QuestionItem } from '@/type/question'
 
 export type ResultQuestionProps = {
-  question: string
-  concept: {
-    description: string
-    case: { min: string; max: string }
-  }
-  label: { min: string; max: string }
+  item: QuestionItem
   value: number | undefined
   index: number
 }
 
-export const Question: FC<ResultQuestionProps> = ({ question, concept, label, value, index }) => {
-  const showConcept = concept.description.trim().length > 0
-  const isKnownStep = value !== undefined && (STEPS as readonly number[]).includes(value)
-  const srSelected = isKnownStep ? `選択の値: ${value}` : '選択なし'
+export const Question: FC<ResultQuestionProps> = ({ item, value, index }) => {
+  const { question, concept, label, axis, orientation } = item
+  const { STEP_LIST, conceptCasePole, conceptCaseLabel } = useQuestion({
+    concept,
+    axis,
+    orientation,
+    value,
+  })
 
   return (
     <section id={`question-${index}`} className={styles.question}>
@@ -30,7 +32,6 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
         </h3>
-        <p className={styles.visuallyHidden}>{srSelected}</p>
       </header>
       <div className={styles.body}>
         <div className={styles.label}>
@@ -43,7 +44,7 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
           </span>
         </div>
         <div className={styles.optionScale} role="presentation" aria-hidden>
-          {STEPS.map(step => (
+          {STEP_LIST.map(step => (
             <div key={step} className={styles.segmentSlot}>
               <span
                 className={
@@ -63,15 +64,25 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
           </span>
         </div>
       </div>
-      {showConcept && (
-        <footer className={styles.footer}>
-          <p className={styles.concept}>
-            <BudouXText>{concept.description}</BudouXText>
-          </p>
-          <p className={styles.label}>{concept.case.min}</p>
-          <p className={styles.label}>{concept.case.max}</p>
-        </footer>
-      )}
+      <div className={styles.concept}>
+        <h3 className={styles.conceptDescription}>
+          <BudouXText>{concept.description}</BudouXText>
+        </h3>
+        <div className={`${styles.conceptCase} ${styles['--min']}`}>
+          <h4 className={styles.conceptLabel}>
+            <PoleIcon className={styles.conceptIcon} variant={conceptCasePole.min} />
+            {conceptCaseLabel.min}
+          </h4>
+          <p className={styles.paragraph}>{concept.case.min}</p>
+        </div>
+        <div className={`${styles.conceptCase} ${styles['--max']}`}>
+          <h4 className={styles.conceptLabel}>
+            <PoleIcon className={styles.conceptIcon} variant={conceptCasePole.max} />
+            {conceptCaseLabel.max}
+          </h4>
+          <p className={styles.paragraph}>{concept.case.max}</p>
+        </div>
+      </div>
     </section>
   )
 }

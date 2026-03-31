@@ -11,6 +11,8 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
+import type { QuestionItem } from '@/type/question'
+
 import { Question } from './Question'
 import { usePersonalPlotResult } from './usePersonalPlotResult'
 
@@ -98,14 +100,7 @@ export const PersonalPlotResultView: FC = () => {
           </div>
           <div className={styles.sectionBody}>
             {valueLocusQuestionList.map((q, i) => (
-              <Question
-                key={q.id}
-                question={q.question}
-                concept={q.concept}
-                label={q.label}
-                value={parsedAnswers[q.id]}
-                index={i}
-              />
+              <Question key={q.id} item={q as QuestionItem} value={parsedAnswers[q.id]} index={i} />
             ))}
           </div>
         </section>
@@ -121,9 +116,7 @@ export const PersonalPlotResultView: FC = () => {
             {boundaryQuestionList.map((q, i) => (
               <Question
                 key={q.id}
-                question={q.question}
-                concept={q.concept}
-                label={q.label}
+                item={q as QuestionItem}
                 value={parsedAnswers[q.id]}
                 index={valueLocusQuestionList.length + i}
               />
