@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 
+import { ThumbsDown, ThumbsUp } from 'lucide-react'
+
 import { BudouXText } from '@/components/BudouXText'
 
 import styles from './Question.module.scss'
@@ -31,9 +33,15 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
         <p className={styles.visuallyHidden}>{srSelected}</p>
       </header>
       <div className={styles.body}>
-        <span className={styles.label}>
-          <BudouXText>{label.min}</BudouXText>
-        </span>
+        <div className={styles.label}>
+          <span className={styles.labelHeading}>
+            <ThumbsDown size={12} />
+            ちがう
+          </span>
+          <span>
+            <BudouXText>{label.min}</BudouXText>
+          </span>
+        </div>
         <div className={styles.optionScale} role="presentation" aria-hidden>
           {STEPS.map(step => (
             <div key={step} className={styles.segmentSlot}>
@@ -45,9 +53,15 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
             </div>
           ))}
         </div>
-        <span className={styles.label}>
-          <BudouXText>{label.max}</BudouXText>
-        </span>
+        <div className={styles.label}>
+          <span className={styles.labelHeading}>
+            そうだ
+            <ThumbsUp size={12} />
+          </span>
+          <span>
+            <BudouXText>{label.max}</BudouXText>
+          </span>
+        </div>
       </div>
       {showConcept && (
         <footer className={styles.footer}>
