@@ -170,13 +170,38 @@
 .footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+
+  @include mq(narrow) {
+    gap: var(--spacing-sm) var(--spacing-lg);
+    padding: var(--spacing-lg) 0 0;
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-md) var(--spacing-2xl);
+    padding: var(--spacing-xl) 0 0;
+  }
 
   .concept {
     grid-column: span 2;
   }
 
-  .label:last-child {
-    grid-row: 2 / 3;
+  .label {
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      align-items: flex-end;
+      text-align: left;
+
+      @include mq(narrow) {
+        grid-row: 2 / 3;
+      }
+
+      @include mq(fromWide) {
+        grid-column: 2 / 3;
+      }
+    }
   }
 }

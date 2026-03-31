@@ -54,12 +54,8 @@ export const Question: FC<ResultQuestionProps> = ({ question, concept, label, va
           <p className={styles.concept}>
             <BudouXText>{concept.description}</BudouXText>
           </p>
-          <p className={styles.label}>
-            <BudouXText>{concept.case.min}</BudouXText>
-          </p>
-          <p className={styles.label}>
-            <BudouXText>{concept.case.max}</BudouXText>
-          </p>
+          <p className={styles.label}>{concept.case.min}</p>
+          <p className={styles.label}>{concept.case.max}</p>
         </footer>
       )}
     </section>
