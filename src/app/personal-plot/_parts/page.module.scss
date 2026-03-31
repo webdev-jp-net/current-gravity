@@ -13,12 +13,12 @@
 
   @include mq(narrow) {
     gap: var(--spacing-xl);
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-2xl) 0 0;
   }
 
   @include mq(fromWide) {
     gap: var(--spacing-3xl);
-    padding: var(--spacing-3xl) 0;
+    padding: var(--spacing-3xl) 0 0;
   }
 }
 

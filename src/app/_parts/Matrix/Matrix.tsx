@@ -103,23 +103,23 @@ const MatrixContent: FC<{
           <text x={center.x} y={innerHeight + 45} textAnchor="middle" className={styles.axisName}>
             帰属
           </text>
-          <text x={-36} y={center.y - 10} textAnchor="middle" className={styles.axisName}>
+          <text x={-32} y={center.y - 10 + 6} textAnchor="middle" className={styles.axisName}>
             関係性
           </text>
-          <text x={-36} y={center.y + 10} textAnchor="middle" className={styles.axisLabel}>
+          <text x={-32} y={center.y + 10 + 6} textAnchor="middle" className={styles.axisLabel}>
             自立
           </text>
           <text
-            x={innerWidth + 36}
-            y={center.y - 10}
+            x={innerWidth + 32}
+            y={center.y - 10 + 6}
             textAnchor="middle"
             className={styles.axisName}
           >
             関係性
           </text>
           <text
-            x={innerWidth + 36}
-            y={center.y + 10}
+            x={innerWidth + 32}
+            y={center.y + 10 + 6}
             textAnchor="middle"
             className={styles.axisLabel}
           >
