@@ -5,19 +5,11 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import { BudouXText } from '@/components/BudouXText'
 import { Button } from '@/components/Button'
 
-import styles from './Question.module.scss'
+import type { QuestionItem } from '@/type/question'
 
-export type QuestionItem = {
-  id: string
-  question: string
-  concept: {
-    description: string
-    case: { min: string; max: string }
-  }
-  axis: string
-  orientation: string
-  label: { min: string; max: string }
-}
+import { STEP_LIST } from '@/constants/model'
+
+import styles from './Question.module.scss'
 
 type QuestionProps = {
   item: QuestionItem
@@ -64,7 +56,7 @@ export const Question: FC<QuestionProps> = ({
           </span>
         </div>
         <div className={styles.optionScale}>
-          {[-2, -1, 0, 1, 2].map((val, ri) => (
+          {STEP_LIST.map((val, ri) => (
             <label key={val} className={styles.optionLabel}>
               <input
                 type="radio"

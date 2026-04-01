@@ -1,1 +1,2 @@
-export { Question, type QuestionItem } from './Question'
+export { Question } from './Question'
+export type { QuestionItem } from '@/type/question'

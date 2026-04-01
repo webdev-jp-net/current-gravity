@@ -2,16 +2,8 @@
 
 import type { QuestionAxis, QuestionPole } from '@/type/question'
 
-import { POLE_LABEL } from '@/constants/pole'
-
-const STEP_LIST = [-2, -1, 0, 1, 2] as const
-
-const OPPOSITE_POLE: Record<QuestionPole, QuestionPole> = {
-  ownership: 'consensus',
-  consensus: 'ownership',
-  diversity: 'identityFusion',
-  identityFusion: 'diversity',
-}
+import { OPPOSITE_POLE, POLE_LABEL } from '@/constants/model'
+import { STEP_LIST } from '@/constants/model'
 
 type UseQuestionProps = {
   concept: {
@@ -19,16 +11,16 @@ type UseQuestionProps = {
     case: { min: string; max: string }
   }
   axis: QuestionAxis
-  orientation: QuestionPole
+  pole: QuestionPole
   value: number | undefined
 }
 
-export const useQuestion = ({ concept, axis: _axis, orientation, value }: UseQuestionProps) => {
+export const useQuestion = ({ concept: _concept, axis: _axis, pole, value }: UseQuestionProps) => {
   const isKnownStep = value !== undefined && (STEP_LIST as readonly number[]).includes(value)
 
   const conceptCasePole = {
-    min: OPPOSITE_POLE[orientation],
-    max: orientation,
+    min: OPPOSITE_POLE[pole],
+    max: pole,
   }
 
   const conceptCaseLabel = {

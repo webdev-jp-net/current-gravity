@@ -18,11 +18,11 @@ export type ResultQuestionProps = {
 }
 
 export const Question: FC<ResultQuestionProps> = ({ item, value, index }) => {
-  const { question, concept, label, axis, orientation } = item
+  const { question, concept, label, axis, pole } = item
   const { STEP_LIST, conceptCasePole, conceptCaseLabel } = useQuestion({
     concept,
     axis,
-    orientation,
+    pole,
     value,
   })
 

@@ -56,7 +56,7 @@ export function aggregateMetricsFromAnswers(
   }
   questionListData.forEach(q => {
     const val = answers[q.id] ?? 0
-    metrics[q.orientation as keyof typeof metrics] += val
+    metrics[q.pole as keyof typeof metrics] += val
   })
   return metrics
 }

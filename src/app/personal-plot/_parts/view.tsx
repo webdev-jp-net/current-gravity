@@ -6,6 +6,8 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
+import type { QuestionItem } from '@/type/question'
+
 import { Question } from './Question'
 import { usePersonalPlot } from './usePersonalPlot'
 
@@ -57,7 +59,7 @@ export const PersonalPlotView: FC = () => {
             {valueLocusQuestionList.map((q, i) => (
               <Question
                 key={q.id}
-                item={q}
+                item={q as QuestionItem}
                 index={i}
                 mode="edit"
                 defaultValue={effectiveDefaults[q.id]}
@@ -81,7 +83,7 @@ export const PersonalPlotView: FC = () => {
               return (
                 <Question
                   key={q.id}
-                  item={q}
+                  item={q as QuestionItem}
                   index={index}
                   mode="edit"
                   defaultValue={effectiveDefaults[q.id]}
