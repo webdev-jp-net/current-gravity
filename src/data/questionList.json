@@ -10,11 +10,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "ownership",
     "label": {
       "min": "関係がこじれるほうが気持ち悪い",
       "max": "矛盾が残るほうが気持ち悪い"
-    }
+    },
+    "pole": "ownership"
   },
   {
     "id": "valueLocus-2",
@@ -27,11 +27,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "ownership",
     "label": {
       "min": "読み手に分かりやすい表現に調整する",
       "max": "感じたことや学びは正確に残したい"
-    }
+    },
+    "pole": "ownership"
   },
   {
     "id": "valueLocus-3",
@@ -44,11 +44,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "ownership",
     "label": {
       "min": "割り切って最初から一定のペースでできる",
       "max": "ギリギリになると一気にはかどる"
-    }
+    },
+    "pole": "ownership"
   },
   {
     "id": "valueLocus-4",
@@ -61,11 +61,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "ownership",
     "label": {
       "min": "正解の満足感が大切",
       "max": "自力で解くから楽しい"
-    }
+    },
+    "pole": "ownership"
   },
   {
     "id": "valueLocus-5",
@@ -78,13 +78,12 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "ownership",
     "label": {
       "min": "決まればいいので消えても気にしない",
       "max": "内容に自分の関与が残っていてほしい"
-    }
+    },
+    "pole": "ownership"
   },
-
   {
     "id": "valueLocus-6",
     "question": "どこに出すか、どう伝えるか、どう根回ししておくかで結果を変えることに関心がある。",
@@ -96,11 +95,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "consensus",
     "label": {
       "min": "それほど関心がない",
       "max": "とても関心がある"
-    }
+    },
+    "pole": "consensus"
   },
   {
     "id": "valueLocus-7",
@@ -113,11 +112,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "consensus",
     "label": {
       "min": "自分のためにやるので関係ない",
       "max": "認められるとモチベーションが上がる"
-    }
+    },
+    "pole": "consensus"
   },
   {
     "id": "valueLocus-8",
@@ -130,11 +129,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "consensus",
     "label": {
       "min": "自分は自分なので気にならない",
       "max": "アウェーは怖いので様子をみたい"
-    }
+    },
+    "pole": "consensus"
   },
   {
     "id": "valueLocus-9",
@@ -147,11 +146,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "consensus",
     "label": {
       "min": "あるていど自分でつくってから相談したい",
       "max": "相談しながら独断にならないようにしたい"
-    }
+    },
+    "pole": "consensus"
   },
   {
     "id": "valueLocus-10",
@@ -164,11 +163,11 @@
       }
     },
     "axis": "valueLocus",
-    "orientation": "consensus",
     "label": {
       "min": "自分が納得できないと良かったと思えない",
       "max": "相手が喜ぶのなら内容はあまり気にしない"
-    }
+    },
+    "pole": "consensus"
   },
   {
     "id": "boundary-1",
@@ -181,11 +180,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "diversity",
     "label": {
       "min": "どこに違和感？",
       "max": "違和感を感じる"
-    }
+    },
+    "pole": "diversity"
   },
   {
     "id": "boundary-2",
@@ -198,11 +197,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "diversity",
     "label": {
       "min": "誰が言ったかも大事",
       "max": "伝えている内容が大事"
-    }
+    },
+    "pole": "diversity"
   },
   {
     "id": "boundary-3",
@@ -215,11 +214,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "diversity",
     "label": {
       "min": "人気や評価が下がると好きな気持ちがゆらぐ",
       "max": "自分は好きだから気にせず応援する"
-    }
+    },
+    "pole": "diversity"
   },
   {
     "id": "boundary-4",
@@ -232,11 +231,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "diversity",
     "label": {
       "min": "ややさみしい",
       "max": "ぜんぜん平気"
-    }
+    },
+    "pole": "diversity"
   },
   {
     "id": "boundary-5",
@@ -249,11 +248,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "diversity",
     "label": {
       "min": "なにを求められているかそれとなく分かる",
       "max": "考えれば考えるほどわからない"
-    }
+    },
+    "pole": "diversity"
   },
   {
     "id": "boundary-6",
@@ -266,11 +265,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "identityFusion",
     "label": {
       "min": "多少が何かで変わる",
       "max": "だいたいよしなにできる"
-    }
+    },
+    "pole": "identityFusion"
   },
   {
     "id": "boundary-7",
@@ -283,11 +282,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "identityFusion",
     "label": {
       "min": "意味は接点の内容による",
       "max": "特別な感じがして嬉しい"
-    }
+    },
+    "pole": "identityFusion"
   },
   {
     "id": "boundary-8",
@@ -300,11 +299,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "identityFusion",
     "label": {
       "min": "まとまらないなら意見の比較検討が大事",
       "max": "先に進めるためには割り切った導きも大事"
-    }
+    },
+    "pole": "identityFusion"
   },
   {
     "id": "boundary-9",
@@ -317,11 +316,11 @@
       }
     },
     "axis": "boundary",
-    "orientation": "identityFusion",
     "label": {
       "min": "そういうのには疎いほう",
       "max": "絆を感じて嬉しい"
-    }
+    },
+    "pole": "identityFusion"
   },
   {
     "id": "boundary-10",
@@ -334,10 +333,10 @@
       }
     },
     "axis": "boundary",
-    "orientation": "identityFusion",
     "label": {
       "min": "決まれば気にならない",
       "max": "反対はゼロのほうがいい"
-    }
+    },
+    "pole": "identityFusion"
   }
 ]

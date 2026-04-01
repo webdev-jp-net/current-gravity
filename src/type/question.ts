@@ -4,7 +4,7 @@ export type QuestionAxis = 'valueLocus' | 'boundary'
 export type QuestionItem = {
   id: string
   axis: QuestionAxis
-  orientation: QuestionPole
+  pole: QuestionPole
   label: { min: string; max: string }
   concept: { description: string; case: { min: string; max: string } }
   question: string
