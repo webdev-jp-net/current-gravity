@@ -4,13 +4,13 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import { BudouXText } from '@/components/BudouXText'
 import { Button } from '@/components/Button'
+import { PoleIcon } from '@/components/PoleIcon'
 
 import styles from './Question.module.scss'
 
 import type { QuestionItem } from '@/type/question'
 
-import { STEP_LIST } from '@/constants/model'
-
+import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL, POLE_DESCRIPTION } from '@/constants/model'
 type QuestionProps = {
   item: QuestionItem
   index: number
@@ -41,6 +41,16 @@ export const Question: FC<QuestionProps> = ({
   return (
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
+        <div className={styles.headerCategory}>
+          <span className={styles.index}>Q{index + 1}</span>
+          <p className={styles.headerLabel}>{AXIS_DESCRIPTION[item.axis]}</p>
+          <p className={styles.headerLabel}>
+            <span className={styles.poleLabel}>
+              <PoleIcon className={styles.poleIcon} variant={item.pole} />
+              {POLE_LABEL[item.pole]}
+            </span>
+          </p>
+        </div>
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
         </h3>

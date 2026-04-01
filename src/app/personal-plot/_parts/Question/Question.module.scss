@@ -22,7 +22,49 @@
 .header {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+
+  @include mq(narrow) {
+    gap: var(--spacing-xl);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-2xl);
+  }
+}
+
+.headerCategory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.index {
+  @include hd-lg;
+
+  place-self: center;
+  font-weight: var(--font-weight-thin);
+  color: var(--txt-description);
+}
+
+.headerLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+}
+
+.poleLabel {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  white-space: nowrap;
+}
+
+.poleIcon {
+  @include rect(1.2em);
+
+  fill: currentColor;
 }
 
 .title {
