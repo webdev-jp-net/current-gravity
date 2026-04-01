@@ -6,10 +6,10 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
-import type { QuestionItem } from '@/type/question'
-
 import { Question } from './Question'
 import { usePersonalPlot } from './usePersonalPlot'
+
+import type { QuestionItem } from '@/type/question'
 
 export const PersonalPlotView: FC = () => {
   const {

@@ -5,11 +5,11 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import { BudouXText } from '@/components/BudouXText'
 import { Button } from '@/components/Button'
 
+import styles from './Question.module.scss'
+
 import type { QuestionItem } from '@/type/question'
 
 import { STEP_LIST } from '@/constants/model'
-
-import styles from './Question.module.scss'
 
 type QuestionProps = {
   item: QuestionItem

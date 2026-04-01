@@ -11,10 +11,10 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
-import type { QuestionItem } from '@/type/question'
-
 import { Question } from './Question'
 import { usePersonalPlotResult } from './usePersonalPlotResult'
+
+import type { QuestionItem } from '@/type/question'
 
 export const PersonalPlotResultView: FC = () => {
   const router = useRouter()

@@ -49,15 +49,9 @@ export const usePersonalPlotResult = () => {
   const lastSubmittedSnapshotRef = useRef<string | null>(null)
   const [isShareCopied, setIsShareCopied] = useState(false)
 
-  const parsedAnswers = useMemo(
-    () => parseQuestionParam(questionFromUrl),
-    [questionFromUrl]
-  )
+  const parsedAnswers = useMemo(() => parseQuestionParam(questionFromUrl), [questionFromUrl])
 
-  const isComplete = useMemo(
-    () => isCompleteAnswersRecord(parsedAnswers),
-    [parsedAnswers]
-  )
+  const isComplete = useMemo(() => isCompleteAnswersRecord(parsedAnswers), [parsedAnswers])
 
   const answersForCommit = useMemo((): Record<string, number> | null => {
     if (!isComplete) return null

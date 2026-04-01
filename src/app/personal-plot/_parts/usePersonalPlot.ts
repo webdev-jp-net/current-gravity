@@ -22,10 +22,7 @@ export const usePersonalPlot = () => {
   const targetIdFromUrl = searchParams.get('targetId')
   const questionFromUrl = searchParams.get('question')
 
-  const parsedFromUrl = useMemo(
-    () => parseQuestionParam(questionFromUrl),
-    [questionFromUrl]
-  )
+  const parsedFromUrl = useMemo(() => parseQuestionParam(questionFromUrl), [questionFromUrl])
 
   /** 結果から「結果を編集する」等で `question=` 付き遷移したとき1回だけ保持し、URL からは外す */
   const [frozenSeed, setFrozenSeed] = useState<Record<string, number> | null>(null)
