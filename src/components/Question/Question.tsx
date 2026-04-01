@@ -8,11 +8,11 @@ import { PoleIcon } from '@/components/PoleIcon'
 
 import styles from './Question.module.scss'
 
+import { useQuestion } from './useQuestion'
+
 import type { QuestionItem } from '@/type/question'
 
 import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL } from '@/constants/model'
-
-import { useQuestion } from './useQuestion'
 
 type QuestionProps = {
   item: QuestionItem
