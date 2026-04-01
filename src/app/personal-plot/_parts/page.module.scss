@@ -123,6 +123,7 @@
 .footer {
   position: sticky;
   bottom: 0;
+  z-index: 1;
   display: flex;
   place-content: center;
   justify-content: center;

@@ -3,15 +3,16 @@
 import type { FC, FormEvent } from 'react'
 
 import { Button } from '@/components/Button'
+import { Question } from '@/components/Question'
 
 import styles from './page.module.scss'
+
+import { usePersonalPlot } from './usePersonalPlot'
 
 import type { QuestionItem } from '@/type/question'
 
 import { AXIS_DESCRIPTION } from '@/constants/model'
 
-import { Question } from '@/components/Question'
-import { usePersonalPlot } from './usePersonalPlot'
 
 export const PersonalPlotView: FC = () => {
   const {

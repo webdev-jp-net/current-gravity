@@ -55,17 +55,10 @@
   font-size: var(--font-size-sm);
 }
 
-.poleLabel {
-  display: flex;
-  gap: var(--spacing-xs);
-  align-items: center;
-  white-space: nowrap;
-}
-
-.poleIcon {
-  @include rect(1.2em);
-
-  fill: currentColor;
+.headerPoleLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--txt-description);
 }
 
 .title {
@@ -300,13 +293,6 @@
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
-}
-
-.conceptIcon {
-  @include rect(1.2em);
-
-  color: var(--txt-description);
-  fill: currentColor;
 }
 
 .paragraph {
