@@ -4,32 +4,52 @@
   display: flex;
   gap: var(--spacing-xs);
   align-items: center;
-  width: 100%;
-  padding: 0;
-  color: currentColor;
   white-space: nowrap;
-  cursor: pointer;
-  background: none;
-  border: none;
 }
 
 .icon {
   @include rect(1.2em);
 
+  color: var(--txt-description);
   fill: currentColor;
 }
 
+.triggerIcon {
+  @include rect(1em);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-xs);
+  color: var(--txt-description);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
 .description {
-  inset: unset;
-  padding: var(--spacing-sm) var(--spacing-md);
-  margin-bottom: var(--spacing-xs);
+  padding: var(--spacing-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-normal);
   color: var(--txt-paragraph);
   background-color: rgb(255 255 255 / 80%);
   backdrop-filter: blur(rem(4));
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--txt-on-fill);
   border-radius: rem(8);
   box-shadow: 0 rem(4) rem(16) rgb(0 0 0 / 10%);
-  position-area: top center;
+
+  @include mq(narrow) {
+    inset: 0;
+    width: calc(100vw - var(--spacing-md) - var(--spacing-md));
+    position-area: top left;
+    margin: var(--spacing-md) var(--spacing-md);
+  }
+
+  @include mq(fromWide) {
+    inset: unset;
+    position-area: top center;
+    width: rem(360);
+    margin: var(--spacing-sm);
+  }
 }

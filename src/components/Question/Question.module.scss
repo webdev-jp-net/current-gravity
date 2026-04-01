@@ -55,6 +55,12 @@
   font-size: var(--font-size-sm);
 }
 
+.headerPoleLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--txt-description);
+}
+
 .title {
   @include hd-sm;
 
@@ -287,7 +293,6 @@
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
-  color: var(--txt-description);
 }
 
 .paragraph {

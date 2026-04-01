@@ -47,9 +47,7 @@ export const Question: FC<QuestionProps> = ({
         <div className={styles.headerCategory}>
           <span className={styles.index}>Q{index + 1}</span>
           <p className={styles.headerLabel}>{AXIS_DESCRIPTION[axis]}</p>
-          <div className={styles.headerLabel}>
-            <PoleLabel pole={pole} />
-          </div>
+          <PoleLabel pole={pole} className={styles.headerPoleLabel} />
         </div>
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
@@ -112,13 +110,13 @@ export const Question: FC<QuestionProps> = ({
           </h3>
           <div className={`${styles.conceptCase} ${styles['--min']}`}>
             <h4 className={styles.conceptLabel}>
-              <PoleLabel pole={conceptCasePole.min} />
+              <PoleLabel pole={conceptCasePole.min} withDescription />
             </h4>
             <p className={styles.paragraph}>{concept.case.min}</p>
           </div>
           <div className={`${styles.conceptCase} ${styles['--max']}`}>
             <h4 className={styles.conceptLabel}>
-              <PoleLabel pole={conceptCasePole.max} />
+              <PoleLabel pole={conceptCasePole.max} withDescription />
             </h4>
             <p className={styles.paragraph}>{concept.case.max}</p>
           </div>
