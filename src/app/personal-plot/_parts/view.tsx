@@ -6,10 +6,12 @@ import { Button } from '@/components/Button'
 
 import styles from './page.module.scss'
 
+import type { QuestionItem } from '@/type/question'
+
+import { AXIS_DESCRIPTION } from '@/constants/model'
+
 import { Question } from './Question'
 import { usePersonalPlot } from './usePersonalPlot'
-
-import type { QuestionItem } from '@/type/question'
 
 export const PersonalPlotView: FC = () => {
   const {
@@ -52,7 +54,7 @@ export const PersonalPlotView: FC = () => {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>帰属</h2>
             <p className={styles.sectionLead}>
-              判断・決定・結果に対する責任の帰属をあらわした志向です。
+              {AXIS_DESCRIPTION.valueLocus}
             </p>
           </div>
           <div className={styles.sectionBody}>
@@ -74,7 +76,7 @@ export const PersonalPlotView: FC = () => {
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>関係性</h2>
             <p className={styles.sectionLead}>
-              自分以外のモノ・人・現象との関係性をあらわした志向です。
+              {AXIS_DESCRIPTION.boundary}
             </p>
           </div>
           <div className={styles.sectionBody}>

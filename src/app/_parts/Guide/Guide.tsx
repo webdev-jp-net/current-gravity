@@ -2,6 +2,13 @@
 
 import type { FC } from 'react'
 
+import {
+  AXIS_DESCRIPTION,
+  AXIS_LABEL,
+  POLE_DESCRIPTION,
+  POLE_LABEL,
+} from '@/constants/model'
+
 import styles from './Guide.module.scss'
 
 export const Guide: FC = () => {
@@ -14,14 +21,14 @@ export const Guide: FC = () => {
       <div className={styles.body}>
         <section className={styles.axis}>
           <header className={styles.axisHeader}>
-            <h3 className={styles.axisTitle}>帰属志向</h3>
-            <p>判断・決定・結果に対する責任の帰属をあらわした志向です。</p>
+            <h3 className={styles.axisTitle}>{AXIS_LABEL.valueLocus}志向</h3>
+            <p>{AXIS_DESCRIPTION.valueLocus}</p>
           </header>
           <div className={styles.axisBody}>
             <section className={styles.pole}>
               <header className={styles.poleHeader}>
-                <h4 className={styles.poleTitle}>オーナーシップ</h4>
-                <p>オーナーシップ志向は、責任を自分が主体的に引き受ける選好です。</p>
+                <h4 className={styles.poleTitle}>{POLE_LABEL.ownership}</h4>
+                <p>{POLE_DESCRIPTION.ownership}</p>
                 <p>
                   本来の「オーナーシップ」どおりの意味で、「リーダーシップ」とは別の概念です。
                   <br />
@@ -58,8 +65,8 @@ export const Guide: FC = () => {
             </section>
             <section className={styles.pole}>
               <header className={styles.poleHeader}>
-                <h4 className={styles.poleTitle}>コンセンサス</h4>
-                <p>コンセンサス志向は、総和をつくり責任を場や合意へ移譲する選好です。</p>
+                <h4 className={styles.poleTitle}>{POLE_LABEL.consensus}</h4>
+                <p>{POLE_DESCRIPTION.consensus}</p>
                 <p>
                   consensus側は、流通・配置・根回し、公開・展開・運用フェーズ、反応による完了感、役割としての遂行、承認による納得補強といった外部との接続点で価値が立ち上がるプロセスを段階的に分解しています。
                 </p>
@@ -94,14 +101,14 @@ export const Guide: FC = () => {
 
         <section className={styles.axis}>
           <header className={styles.axisHeader}>
-            <h3 className={styles.axisTitle}>関係性志向</h3>
-            <p>自分以外のモノ・人・現象との関係性をあらわした志向です。</p>
+            <h3 className={styles.axisTitle}>{AXIS_LABEL.boundary}志向</h3>
+            <p>{AXIS_DESCRIPTION.boundary}</p>
           </header>
           <div className={styles.axisBody}>
             <section className={styles.pole}>
               <header className={styles.poleHeader}>
-                <h4 className={styles.poleTitle}>自立</h4>
-                <p>自立は、ダイバーシティを選好する志向です。</p>
+                <h4 className={styles.poleTitle}>{POLE_LABEL.diversity}</h4>
+                <p>{POLE_DESCRIPTION.diversity}</p>
                 <p>
                   心理学本来の「自立」とは厳密に一致していません。融合の対角へダイバーシティを配置したときの誤認バイアスを軽減する目的で「自立」を採用しています。
                 </p>
@@ -133,8 +140,8 @@ export const Guide: FC = () => {
             </section>
             <section className={styles.pole}>
               <header className={styles.poleHeader}>
-                <h4 className={styles.poleTitle}>融合</h4>
-                <p>融合は、一体感を選好する志向です。</p>
+                <h4 className={styles.poleTitle}>{POLE_LABEL.identityFusion}</h4>
+                <p>{POLE_DESCRIPTION.identityFusion}</p>
               </header>
               <div className={styles.poleBody}>
                 <p>端点に近づくと顕在化する傾向：</p>
