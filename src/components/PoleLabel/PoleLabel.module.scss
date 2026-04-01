@@ -1,20 +1,16 @@
 @use '@/style/_variable' as *;
 
 .poleLabel {
-  position: relative;
-  width: 100%;
-}
-
-.summary {
   display: flex;
   gap: var(--spacing-xs);
   align-items: center;
+  width: 100%;
+  padding: 0;
+  color: currentColor;
   white-space: nowrap;
   cursor: pointer;
-
-  &::-webkit-details-marker {
-    display: none;
-  }
+  background: none;
+  border: none;
 }
 
 .icon {
@@ -24,17 +20,16 @@
 }
 
 .description {
-  position: absolute;
-  inset: auto 0 100%;
-  z-index: 1;
+  inset: unset;
   padding: var(--spacing-sm) var(--spacing-md);
-  margin: var(--spacing-md) 0;
+  margin-bottom: var(--spacing-xs);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-normal);
   color: var(--txt-paragraph);
   background-color: rgb(255 255 255 / 80%);
   backdrop-filter: blur(rem(4));
-  border: 1px solid var(--txt-on-fill);
+  border: 1px solid var(--border-color);
   border-radius: rem(8);
   box-shadow: 0 rem(4) rem(16) rgb(0 0 0 / 10%);
+  position-area: top center;
 }
