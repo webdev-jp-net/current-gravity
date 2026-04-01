@@ -35,3 +35,15 @@ export const POLE_DIRECTION: Record<QuestionPole, 1 | -1> = {
   identityFusion: 1,
   diversity: -1,
 }
+
+export const AXIS_DESCRIPTION: Record<QuestionAxis, string> = {
+  valueLocus: '判断・決定・結果に対する責任の帰属',
+  boundary: '人・評価・解釈・規範との関係の持ち方',
+}
+
+export const POLE_DESCRIPTION: Record<QuestionPole, string> = {
+  ownership: '責任を自分で持ち価値を内側で成立させたい志向',
+  consensus: '責任を場や合意へ移譲して価値を外側で成立させる志向',
+  diversity: '関係性をまぜず分けて扱いたい志向',
+  identityFusion: '関係性を収束させ一体感をもちたい志向',
+}
