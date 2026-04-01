@@ -8,15 +8,16 @@ import { useRouter } from 'next/navigation'
 import { Matrix } from '@/app/_parts/Matrix'
 
 import { Button } from '@/components/Button'
+import { Question } from '@/components/Question'
 
 import styles from './page.module.scss'
+
+import { usePersonalPlotResult } from './usePersonalPlotResult'
 
 import type { QuestionItem } from '@/type/question'
 
 import { AXIS_DESCRIPTION } from '@/constants/model'
 
-import { Question } from '@/components/Question'
-import { usePersonalPlotResult } from './usePersonalPlotResult'
 
 export const PersonalPlotResultView: FC = () => {
   const router = useRouter()
