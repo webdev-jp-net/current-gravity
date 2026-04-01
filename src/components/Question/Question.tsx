@@ -4,7 +4,7 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react'
 
 import { BudouXText } from '@/components/BudouXText'
 import { Button } from '@/components/Button'
-import { PoleIcon } from '@/components/PoleIcon'
+import { PoleLabel } from '@/components/PoleLabel'
 
 import styles from './Question.module.scss'
 
@@ -12,7 +12,7 @@ import { useQuestion } from './useQuestion'
 
 import type { QuestionItem } from '@/type/question'
 
-import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL } from '@/constants/model'
+import { STEP_LIST, AXIS_DESCRIPTION } from '@/constants/model'
 
 type QuestionProps = {
   item: QuestionItem
@@ -39,7 +39,7 @@ export const Question: FC<QuestionProps> = ({
 }) => {
   const { id, question, concept, label, axis, pole } = item
   const isResult = mode === 'result'
-  const { conceptCasePole, conceptCaseLabel } = useQuestion({ concept, axis, pole, value })
+  const { conceptCasePole } = useQuestion({ concept, axis, pole, value })
 
   return (
     <section id={`question-${index}`} className={styles.question}>
@@ -47,12 +47,9 @@ export const Question: FC<QuestionProps> = ({
         <div className={styles.headerCategory}>
           <span className={styles.index}>Q{index + 1}</span>
           <p className={styles.headerLabel}>{AXIS_DESCRIPTION[axis]}</p>
-          <p className={styles.headerLabel}>
-            <span className={styles.poleLabel}>
-              <PoleIcon className={styles.poleIcon} variant={pole} />
-              {POLE_LABEL[pole]}
-            </span>
-          </p>
+          <div className={styles.headerLabel}>
+            <PoleLabel pole={pole} />
+          </div>
         </div>
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
@@ -115,15 +112,13 @@ export const Question: FC<QuestionProps> = ({
           </h3>
           <div className={`${styles.conceptCase} ${styles['--min']}`}>
             <h4 className={styles.conceptLabel}>
-              <PoleIcon className={styles.conceptIcon} variant={conceptCasePole.min} />
-              {conceptCaseLabel.min}
+              <PoleLabel pole={conceptCasePole.min} />
             </h4>
             <p className={styles.paragraph}>{concept.case.min}</p>
           </div>
           <div className={`${styles.conceptCase} ${styles['--max']}`}>
             <h4 className={styles.conceptLabel}>
-              <PoleIcon className={styles.conceptIcon} variant={conceptCasePole.max} />
-              {conceptCaseLabel.max}
+              <PoleLabel pole={conceptCasePole.max} />
             </h4>
             <p className={styles.paragraph}>{concept.case.max}</p>
           </div>

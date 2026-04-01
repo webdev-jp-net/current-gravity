@@ -1,0 +1,40 @@
+@use '@/style/_variable' as *;
+
+.poleLabel {
+  position: relative;
+  width: 100%;
+}
+
+.summary {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.icon {
+  @include rect(1.2em);
+
+  fill: currentColor;
+}
+
+.description {
+  position: absolute;
+  inset: auto 0 100%;
+  z-index: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--txt-paragraph);
+  background-color: rgb(255 255 255 / 80%);
+  backdrop-filter: blur(rem(4));
+  border: 1px solid var(--txt-on-fill);
+  border-radius: rem(8);
+  box-shadow: 0 rem(4) rem(16) rgb(0 0 0 / 10%);
+}
