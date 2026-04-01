@@ -1,9 +1,6 @@
-'use client'
-
 import type { QuestionAxis, QuestionPole } from '@/type/question'
 
-import { OPPOSITE_POLE, POLE_LABEL } from '@/constants/model'
-import { STEP_LIST } from '@/constants/model'
+import { OPPOSITE_POLE, POLE_LABEL, STEP_LIST } from '@/constants/model'
 
 type UseQuestionProps = {
   concept: {
@@ -29,7 +26,6 @@ export const useQuestion = ({ concept: _concept, axis: _axis, pole, value }: Use
   }
 
   return {
-    STEP_LIST,
     isKnownStep,
     conceptCasePole,
     conceptCaseLabel,

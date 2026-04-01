@@ -15,7 +15,7 @@ import type { QuestionItem } from '@/type/question'
 
 import { AXIS_DESCRIPTION } from '@/constants/model'
 
-import { Question } from './Question'
+import { Question } from '@/components/Question'
 import { usePersonalPlotResult } from './usePersonalPlotResult'
 
 export const PersonalPlotResultView: FC = () => {
@@ -102,7 +102,7 @@ export const PersonalPlotResultView: FC = () => {
           </div>
           <div className={styles.sectionBody}>
             {valueLocusQuestionList.map((q, i) => (
-              <Question key={q.id} item={q as QuestionItem} value={parsedAnswers[q.id]} index={i} />
+              <Question key={q.id} item={q as QuestionItem} mode="result" value={parsedAnswers[q.id]} index={i} />
             ))}
           </div>
         </section>
@@ -119,6 +119,7 @@ export const PersonalPlotResultView: FC = () => {
               <Question
                 key={q.id}
                 item={q as QuestionItem}
+                mode="result"
                 value={parsedAnswers[q.id]}
                 index={valueLocusQuestionList.length + i}
               />

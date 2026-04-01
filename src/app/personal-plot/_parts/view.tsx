@@ -10,7 +10,7 @@ import type { QuestionItem } from '@/type/question'
 
 import { AXIS_DESCRIPTION } from '@/constants/model'
 
-import { Question } from './Question'
+import { Question } from '@/components/Question'
 import { usePersonalPlot } from './usePersonalPlot'
 
 export const PersonalPlotView: FC = () => {
@@ -63,7 +63,7 @@ export const PersonalPlotView: FC = () => {
                 key={q.id}
                 item={q as QuestionItem}
                 index={i}
-                mode="edit"
+                mode="input"
                 defaultValue={effectiveDefaults[q.id]}
                 onPrev={i > 0 ? () => scrollToQuestion(i - 1) : undefined}
                 onNext={i < totalCount - 1 ? () => scrollToQuestion(i + 1) : undefined}
@@ -87,7 +87,7 @@ export const PersonalPlotView: FC = () => {
                   key={q.id}
                   item={q as QuestionItem}
                   index={index}
-                  mode="edit"
+                  mode="input"
                   defaultValue={effectiveDefaults[q.id]}
                   onPrev={index > 0 ? () => scrollToQuestion(index - 1) : undefined}
                   onNext={index < totalCount - 1 ? () => scrollToQuestion(index + 1) : undefined}
