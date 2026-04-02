@@ -66,68 +66,49 @@ export const PersonalPlotResultView: FC = () => {
       <div className={styles.matrix}>
         <Matrix personalPlotList={matrixPreviewList} />
       </div>
-      <section className={styles.matrixPreview}>
-        <div className={styles.matrixPreviewActions}>
-          <Button
-            variant="basic"
-            size="full"
-            type="button"
-            className={styles.matrixPreviewAddButton}
-            onClick={handleNavigateToHomeMatrix}
-            disabled={!isAllAnswered}
-          >
-            みんなのいまの重心に追加
-          </Button>
-          <Button
-            variant="basic"
-            size="liquid"
-            type="button"
-            className={styles.matrixPreviewShareButton}
-            onClick={handleCopyResultShareUrl}
-          >
-            {isShareCopied ? <Check size={20} aria-hidden /> : <Share2 size={20} aria-hidden />}
-            この結果のURLをコピー
-          </Button>
-        </div>
+      <section className={styles.console}>
+        <Button
+          variant="basic"
+          size="full"
+          type="button"
+          className={styles.button}
+          onClick={handleNavigateToHomeMatrix}
+          disabled={!isAllAnswered}
+        >
+          みんなのいまの重心に追加
+        </Button>
+        <Button
+          variant="basic"
+          size="liquid"
+          type="button"
+          className={styles.button}
+          onClick={handleCopyResultShareUrl}
+        >
+          {isShareCopied ? <Check size={20} aria-hidden /> : <Share2 size={20} aria-hidden />}
+          この結果のURLをコピー
+        </Button>
       </section>
-
       <form className={styles.resultEditForm} onSubmit={handleEditFormSubmit}>
         <section className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>帰属</h2>
-            <p className={styles.sectionLead}>{AXIS_DESCRIPTION.valueLocus}</p>
-          </div>
-          <div className={styles.sectionBody}>
-            {valueLocusQuestionList.map((q, i) => (
-              <Question
-                key={q.id}
-                item={q as QuestionItem}
-                mode="result"
-                value={parsedAnswers[q.id]}
-                index={i}
-              />
-            ))}
-          </div>
+          {valueLocusQuestionList.map((q, i) => (
+            <Question
+              key={q.id}
+              item={q as QuestionItem}
+              mode="result"
+              value={parsedAnswers[q.id]}
+              index={i}
+            />
+          ))}
+          {boundaryQuestionList.map((q, i) => (
+            <Question
+              key={q.id}
+              item={q as QuestionItem}
+              mode="result"
+              value={parsedAnswers[q.id]}
+              index={valueLocusQuestionList.length + i}
+            />
+          ))}
         </section>
-
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>関係性</h2>
-            <p className={styles.sectionLead}>{AXIS_DESCRIPTION.boundary}</p>
-          </div>
-          <div className={styles.sectionBody}>
-            {boundaryQuestionList.map((q, i) => (
-              <Question
-                key={q.id}
-                item={q as QuestionItem}
-                mode="result"
-                value={parsedAnswers[q.id]}
-                index={valueLocusQuestionList.length + i}
-              />
-            ))}
-          </div>
-        </section>
-
         <footer className={styles.footer}>
           <Button variant="basic" size="full" type="submit" className={styles.submitButton}>
             結果を編集する

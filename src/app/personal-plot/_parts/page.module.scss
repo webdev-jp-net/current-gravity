@@ -3,7 +3,6 @@
 .surveyForm {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4xl);
 }
 
 .personalPlot {
@@ -89,6 +88,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+
+  @include mq(narrow) {
+    padding-bottom: var(--spacing-2xl);
+  }
+
+  @include mq(fromWide) {
+    padding-bottom: var(--spacing-3xl);
+  }
 }
 
 .sectionHeader {

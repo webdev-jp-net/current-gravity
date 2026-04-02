@@ -13,7 +13,6 @@ import type { QuestionItem } from '@/type/question'
 
 import { AXIS_DESCRIPTION } from '@/constants/model'
 
-
 export const PersonalPlotView: FC = () => {
   const {
     isMounted,
@@ -52,50 +51,31 @@ export const PersonalPlotView: FC = () => {
         onChange={handleFormInput}
       >
         <section className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>帰属</h2>
-            <p className={styles.sectionLead}>
-              {AXIS_DESCRIPTION.valueLocus}
-            </p>
-          </div>
-          <div className={styles.sectionBody}>
-            {valueLocusQuestionList.map((q, i) => (
+          {valueLocusQuestionList.map((q, i) => (
+            <Question
+              key={q.id}
+              item={q as QuestionItem}
+              index={i}
+              mode="input"
+              defaultValue={effectiveDefaults[q.id]}
+              onPrev={i > 0 ? () => scrollToQuestion(i - 1) : undefined}
+              onNext={i < totalCount - 1 ? () => scrollToQuestion(i + 1) : undefined}
+            />
+          ))}
+          {boundaryQuestionList.map((q, i) => {
+            const index = valueLocusQuestionList.length + i
+            return (
               <Question
                 key={q.id}
                 item={q as QuestionItem}
-                index={i}
+                index={index}
                 mode="input"
                 defaultValue={effectiveDefaults[q.id]}
-                onPrev={i > 0 ? () => scrollToQuestion(i - 1) : undefined}
-                onNext={i < totalCount - 1 ? () => scrollToQuestion(i + 1) : undefined}
+                onPrev={index > 0 ? () => scrollToQuestion(index - 1) : undefined}
+                onNext={index < totalCount - 1 ? () => scrollToQuestion(index + 1) : undefined}
               />
-            ))}
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>関係性</h2>
-            <p className={styles.sectionLead}>
-              {AXIS_DESCRIPTION.boundary}
-            </p>
-          </div>
-          <div className={styles.sectionBody}>
-            {boundaryQuestionList.map((q, i) => {
-              const index = valueLocusQuestionList.length + i
-              return (
-                <Question
-                  key={q.id}
-                  item={q as QuestionItem}
-                  index={index}
-                  mode="input"
-                  defaultValue={effectiveDefaults[q.id]}
-                  onPrev={index > 0 ? () => scrollToQuestion(index - 1) : undefined}
-                  onNext={index < totalCount - 1 ? () => scrollToQuestion(index + 1) : undefined}
-                />
-              )
-            })}
-          </div>
+            )
+          })}
         </section>
 
         <footer className={styles.footer}>
