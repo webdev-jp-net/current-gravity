@@ -6,6 +6,7 @@ import { Group } from '@visx/group'
 import { ParentSize } from '@visx/responsive'
 import { Line } from '@visx/shape'
 
+import { PoleIcon } from '@/components/PoleIcon'
 import { PoleLabel } from '@/components/PoleLabel'
 
 import styles from './Matrix.module.scss'
@@ -145,6 +146,13 @@ const MatrixContent: FC<{
 export const Matrix: FC<MatrixProps> = ({ personalPlotList }) => {
   return (
     <div id="matrix" className={styles.matrix}>
+      <PoleIcon variant="ownership" className={[styles.icon, styles['--ownership']].join(' ')} />
+      <PoleIcon variant="consensus" className={[styles.icon, styles['--consensus']].join(' ')} />
+      <PoleIcon variant="diversity" className={[styles.icon, styles['--diversity']].join(' ')} />
+      <PoleIcon
+        variant="identityFusion"
+        className={[styles.icon, styles['--identityFusion']].join(' ')}
+      />
       <PoleLabel
         pole="ownership"
         icon={false}

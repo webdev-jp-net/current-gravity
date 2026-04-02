@@ -83,6 +83,17 @@
   gap: var(--spacing-md);
 }
 
+.matrix {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  margin: var(--spacing-lg) 0;
+
+  @include mq(narrow) {
+    aspect-ratio: 1 / 1;
+  }
+}
+
 .pageTitle {
   @include hd-lg;
 }
