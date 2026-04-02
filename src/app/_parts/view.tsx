@@ -2,12 +2,13 @@
 
 import type { FC } from 'react'
 
+import { Matrix } from '@/components/Matrix'
+
 import styles from './page.module.scss'
 
 import { GroupEditor } from './GroupEditor'
 import { Guide } from './Guide'
 import { Hero } from './Hero'
-import { Matrix } from './Matrix'
 import { useHome } from './useHome'
 
 export const HomeView: FC = () => {
@@ -27,7 +28,9 @@ export const HomeView: FC = () => {
   return (
     <main className={styles.home} data-testid="home">
       <Hero />
-      <Matrix personalPlotList={completePersonList} />
+      <div className={styles.matrix}>
+        <Matrix personalPlotList={completePersonList} />
+      </div>
       <GroupEditor
         groupName={group.name}
         personalPlotList={group.personalPlotList}

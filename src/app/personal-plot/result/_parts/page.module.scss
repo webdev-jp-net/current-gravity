@@ -1,10 +1,5 @@
 @use '@/style/_variable' as *;
 
-.surveyForm {
-  display: flex;
-  flex-direction: column;
-}
-
 .personalPlot {
   display: flex;
   flex-direction: column;
@@ -33,6 +28,39 @@
   @include hd-lg;
 
   text-align: center;
+}
+
+.matrix {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  margin: var(--spacing-lg) 0;
+
+  @include mq(narrow) {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.console {
+  @include container;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: stretch;
+  width: 100%;
+
+  @include mq(fromWide) {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  [class].button {
+    width: 100%;
+    max-width: rem(360);
+    min-height: rem(48);
+    font-size: var(--font-size-md);
+  }
 }
 
 .section {

@@ -1,0 +1,348 @@
+@use '@/style/_variable' as *;
+@use 'sass:color';
+
+.question {
+  @include panel;
+
+  display: flex;
+  flex-direction: column;
+
+  @include mq(narrow) {
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    scroll-margin-top: var(--spacing-xl);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-xl);
+    scroll-margin-top: var(--spacing-3xl);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+
+  @include mq(narrow) {
+    gap: var(--spacing-sm);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-md);
+  }
+}
+
+.headerCategory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.index {
+  @include hd-lg;
+
+  place-self: center;
+  font-weight: var(--font-weight-thin);
+  color: var(--txt-description);
+}
+
+.headerLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+}
+
+.headerPoleLabel {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--txt-description);
+}
+
+.title {
+  @include hd-sm;
+
+  @include mq(fromWide) {
+    text-align: center;
+  }
+}
+
+.body {
+  display: grid;
+
+  @include mq(narrow) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm) var(--spacing-xl);
+  }
+
+  @include mq(fromWide) {
+    grid-template-columns: 1fr rem(372) 1fr;
+    gap: var(--spacing-md) var(--spacing-xl);
+    place-content: center;
+    place-items: center;
+    padding: 0 var(--spacing-xl);
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  color: var(--txt-description);
+
+  @include mq(narrow) {
+    font-size: var(--font-size-xs);
+  }
+
+  @include mq(fromWide) {
+    position: relative;
+    top: rem(-12);
+    width: 100%;
+    font-size: var(--font-size-basic);
+  }
+
+  &:first-child {
+    text-align: left;
+  }
+
+  .label ~ & {
+    align-items: flex-end;
+    text-align: right;
+
+    @include mq(narrow) {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+  }
+}
+
+.annotation {
+  @include txt-paragraph;
+
+  color: var(--txt-disabled);
+  text-align: center;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+    font-size: var(--font-size-xs);
+  }
+
+  @include mq(fromWide) {
+    grid-column: span 3;
+    font-size: var(--font-size-sm);
+  }
+}
+
+.value {
+  @include txt-paragraph;
+
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--txt-accent);
+  text-align: center;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+  }
+
+  @include mq(fromWide) {
+    grid-column: span 3;
+  }
+}
+
+.labelHeading {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  justify-content: center;
+  width: rem(64);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--border-color);
+  border-radius: rem(4);
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// 不可視なradioボタン
+.screenReaderOnly {
+  @include rect(0);
+
+  position: absolute;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.optionScale {
+  display: flex;
+  justify-content: space-between;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding-inline: var(--spacing-xs);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-2xl);
+  }
+}
+
+// input mode
+.optionLabel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.optionIndicator {
+  @include radio;
+
+  color: var(--txt-accent);
+}
+
+// result mode
+.segmentSlot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-sm);
+}
+
+.segment {
+  @include rect(rem(36));
+
+  position: relative;
+  flex-shrink: 0;
+  color: var(--txt-accent);
+  background-color: rgb(0 0 0 / 3%);
+  border-radius: 50%;
+
+  &::before {
+    @include rect(rem(16));
+
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: auto;
+    pointer-events: none;
+    content: '';
+    user-select: none;
+    background-color: transparent;
+    border-radius: 50%;
+    transition:
+      width var(--transition-ease),
+      background-color var(--transition-ease),
+      height var(--transition-ease);
+  }
+}
+
+.segmentActive {
+  &::before {
+    @include rect(rem(18));
+
+    background-color: currentColor;
+    filter: drop-shadow(0 0 rem(8) var(--txt-accent));
+    transition:
+      width var(--transition-leave),
+      height var(--transition-leave),
+      background-color var(--transition-leave);
+  }
+}
+
+.concept {
+  border-top: 1px solid var(--border-color);
+
+  @include mq(narrow) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0 0;
+  }
+
+  @include mq(fromWide) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-lg);
+  }
+}
+
+.conceptDescription {
+  margin: 0;
+  font-weight: var(--font-weight-regular);
+  color: var(--txt-paragraph);
+
+  @include mq(narrow) {
+    font-size: var(--font-size-md);
+  }
+
+  @include mq(fromWide) {
+    grid-column: span 2;
+    font-size: var(--font-size-lg);
+    text-align: center;
+  }
+}
+
+.conceptCase {
+  display: flex;
+  flex-direction: column;
+
+  @include mq(narrow) {
+    gap: var(--spacing-xs);
+  }
+
+  @include mq(fromWide) {
+    gap: var(--spacing-sm);
+  }
+
+  &.--min {
+    @include mq(narrow) {
+      order: 2;
+    }
+  }
+
+  &.--max {
+    @include mq(narrow) {
+      order: 1;
+    }
+
+    @include mq(fromWide) {
+      grid-column: 2 / 3;
+    }
+  }
+}
+
+.conceptLabel {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.paragraph {
+  @include mq(narrow) {
+    font-size: var(--font-size-sm);
+  }
+
+  @include mq(fromWide) {
+    font-size: var(--font-size-basic);
+  }
+}
+
+.footer {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}

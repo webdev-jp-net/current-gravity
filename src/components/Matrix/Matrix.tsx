@@ -6,11 +6,16 @@ import { Group } from '@visx/group'
 import { ParentSize } from '@visx/responsive'
 import { Line } from '@visx/shape'
 
+import { PoleIcon } from '@/components/PoleIcon'
+import { PoleLabel } from '@/components/PoleLabel'
+
 import styles from './Matrix.module.scss'
 
 import { useMatrix } from './useMatrix'
 
 import type { PersonalPlot } from '@/type/personalPlot'
+
+import { AXIS_LABEL } from '@/constants/model'
 
 interface MatrixProps {
   personalPlotList: PersonalPlot[]
@@ -91,39 +96,22 @@ const MatrixContent: FC<{
         </g>
 
         <Group>
-          <text x={center.x} y={-35} textAnchor="middle" className={styles.axisName}>
-            帰属
+          <text x={center.x} y={-16} textAnchor="middle" className={styles.axisName}>
+            {AXIS_LABEL.valueLocus}
           </text>
-          <text x={center.x} y={-15} textAnchor="middle" className={styles.axisLabel}>
-            オーナーシップ
+          <text x={center.x} y={innerHeight + 28} textAnchor="middle" className={styles.axisName}>
+            {AXIS_LABEL.valueLocus}
           </text>
-          <text x={center.x} y={innerHeight + 25} textAnchor="middle" className={styles.axisLabel}>
-            コンセンサス
-          </text>
-          <text x={center.x} y={innerHeight + 45} textAnchor="middle" className={styles.axisName}>
-            帰属
-          </text>
-          <text x={-36} y={center.y - 10} textAnchor="middle" className={styles.axisName}>
-            関係性
-          </text>
-          <text x={-36} y={center.y + 10} textAnchor="middle" className={styles.axisLabel}>
-            自立
+          <text x={-32} y={center.y - 16} textAnchor="middle" className={styles.axisName}>
+            {AXIS_LABEL.boundary}
           </text>
           <text
-            x={innerWidth + 36}
-            y={center.y - 10}
+            x={innerWidth + 32}
+            y={center.y - 16}
             textAnchor="middle"
             className={styles.axisName}
           >
-            関係性
-          </text>
-          <text
-            x={innerWidth + 36}
-            y={center.y + 10}
-            textAnchor="middle"
-            className={styles.axisLabel}
-          >
-            融合
+            {AXIS_LABEL.boundary}
           </text>
         </Group>
 
@@ -158,6 +146,37 @@ const MatrixContent: FC<{
 export const Matrix: FC<MatrixProps> = ({ personalPlotList }) => {
   return (
     <div id="matrix" className={styles.matrix}>
+      <PoleIcon variant="ownership" className={[styles.icon, styles['--ownership']].join(' ')} />
+      <PoleIcon variant="consensus" className={[styles.icon, styles['--consensus']].join(' ')} />
+      <PoleIcon variant="diversity" className={[styles.icon, styles['--diversity']].join(' ')} />
+      <PoleIcon
+        variant="identityFusion"
+        className={[styles.icon, styles['--identityFusion']].join(' ')}
+      />
+      <PoleLabel
+        pole="ownership"
+        icon={false}
+        withDescription
+        className={`${styles.poleLabel} ${styles['--ownership']}`}
+      />
+      <PoleLabel
+        pole="consensus"
+        icon={false}
+        withDescription
+        className={`${styles.poleLabel} ${styles['--consensus']}`}
+      />
+      <PoleLabel
+        pole="diversity"
+        icon={false}
+        withDescription
+        className={`${styles.poleLabel} ${styles['--diversity']}`}
+      />
+      <PoleLabel
+        pole="identityFusion"
+        icon={false}
+        withDescription
+        className={`${styles.poleLabel} ${styles['--identityFusion']}`}
+      />
       <ParentSize>
         {({ width, height }) => (
           <MatrixContent personalPlotList={personalPlotList} width={width} height={height} />

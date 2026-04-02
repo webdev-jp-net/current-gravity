@@ -1,122 +1,134 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
-import { useAtom } from 'jotai'
-import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import questionListData from '@/data/questionList.json'
-import { groupAtom } from '@/data/store'
+import {
+  isCompleteAnswersRecord,
+  parseQuestionParam,
+  PLOT_TARGET_ID_SESSION_KEY,
+  questionListData,
+  readAnswersFromForm,
+  serializeAnswersToQuestionParam,
+} from './personalPlotLogic'
 
-import type { PersonalPlot } from '@/type/personalPlot'
-
-const shuffleArray = <T,>(array: T[]): T[] => {
-  const shuffled = [...array]
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-  }
-  return shuffled
-}
+export { parseQuestionParam, serializeAnswersToQuestionParam } from './personalPlotLogic'
 
 export const usePersonalPlot = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [group, setGroup] = useAtom(groupAtom)
-  const [answers, setAnswers] = useState<Record<string, number>>({})
-  const [shuffledQuestionList, setShuffledQuestionList] = useState<
+  const targetIdFromUrl = searchParams.get('targetId')
+  const questionFromUrl = searchParams.get('question')
+
+  const parsedFromUrl = useMemo(() => parseQuestionParam(questionFromUrl), [questionFromUrl])
+
+  /** 結果から「結果を編集する」等で `question=` 付き遷移したとき1回だけ保持し、URL からは外す */
+  const [frozenSeed, setFrozenSeed] = useState<Record<string, number> | null>(null)
+
+  const effectiveDefaults = useMemo((): Record<string, number> => {
+    if (frozenSeed !== null) return frozenSeed
+    if (isCompleteAnswersRecord(parsedFromUrl)) return parsedFromUrl
+    return {}
+  }, [frozenSeed, parsedFromUrl])
+
+  const formRef = useRef<HTMLFormElement>(null)
+  const [formValid, setFormValid] = useState(false)
+
+  const [orderedQuestionList, setOrderedQuestionList] = useState<
     (typeof questionListData)[number][]
   >([])
   const [isMounted, setIsMounted] = useState(false)
 
+  const valueLocusQuestionList = useMemo(
+    () => orderedQuestionList.filter(q => q.axis === 'valueLocus'),
+    [orderedQuestionList]
+  )
+  const boundaryQuestionList = useMemo(
+    () => orderedQuestionList.filter(q => q.axis === 'boundary'),
+    [orderedQuestionList]
+  )
+  const totalCount = orderedQuestionList.length
+
   useEffect(() => {
-    const valueLocusList = questionListData.filter(
-      (q) => q.axis === 'valueLocus'
-    )
-    const boundaryList = questionListData.filter(
-      (q) => q.axis === 'boundary'
-    )
-    setShuffledQuestionList([
-      ...shuffleArray(valueLocusList),
-      ...shuffleArray(boundaryList),
-    ])
+    const valueLocusList = questionListData.filter(q => q.axis === 'valueLocus')
+    const boundaryList = questionListData.filter(q => q.axis === 'boundary')
+    setOrderedQuestionList([...valueLocusList, ...boundaryList])
     setIsMounted(true)
   }, [])
 
-  const valueLocusQuestionList = shuffledQuestionList.filter(
-    (q) => q.axis === 'valueLocus'
-  )
-  const boundaryQuestionList = shuffledQuestionList.filter(
-    (q) => q.axis === 'boundary'
-  )
-  const totalCount = shuffledQuestionList.length
-
-  const handleAnswerChange = (questionId: string, value: number) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
-  }
-
-  const handleAnswerChangeWithScroll = (
-    questionId: string,
-    value: number,
-    currentIndex: number
-  ) => {
-    handleAnswerChange(questionId, value)
-    if (currentIndex + 1 < totalCount) {
-      window.location.hash = `question-${currentIndex + 1}`
+  /** 入力ルートに入ったとき、前ターンの結果連携用 targetId を残さない（送信時に改めて書く） */
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(PLOT_TARGET_ID_SESSION_KEY)
     }
-  }
+  }, [])
 
-  const isAllAnswered = questionListData.every(
-    (q) => answers[q.id] !== undefined
-  )
+  useLayoutEffect(() => {
+    if (!isMounted) return
+    if (!isCompleteAnswersRecord(parsedFromUrl)) return
+    setFrozenSeed({ ...parsedFromUrl })
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('question')
+    const qs = params.toString()
+    void router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }, [isMounted, parsedFromUrl, pathname, questionFromUrl, router, searchParams])
 
-  const handleSubmit = () => {
-    if (!isAllAnswered || !searchParams) return
-
-    const targetId = searchParams.get('targetId')
-
-    const metrics = {
-      ownership: 0,
-      consensus: 0,
-      diversity: 0,
-      identityFusion: 0,
-    }
-
-    questionListData.forEach((q) => {
-      const val = answers[q.id] ?? 0
-      metrics[q.orientation as keyof typeof metrics] += val
+  /** Group Editor からの `targetId` 付き遷移時、先頭設問付近へスクロール */
+  useEffect(() => {
+    if (!isMounted || !targetIdFromUrl) return
+    requestAnimationFrame(() => {
+      document.getElementById('question-0')?.scrollIntoView({ behavior: 'smooth' })
     })
+  }, [isMounted, targetIdFromUrl])
 
-    const defaultName = '名前'
+  const syncFormValid = useCallback(() => {
+    const el = formRef.current
+    if (!el) return
+    setFormValid(el.checkValidity())
+  }, [])
 
-    if (targetId) {
-      setGroup({
-        ...group,
-        personalPlotList: group.personalPlotList.map((p) =>
-          p.id === targetId
-            ? {
-                ...p,
-                ...metrics,
-                displayName:
-                  p.displayName.trim() === '' ? defaultName : p.displayName,
-              }
-            : p
-        ),
-      })
-    } else {
-      const newPlot: PersonalPlot = {
-        id: Date.now().toString(),
-        displayName: defaultName,
-        ...metrics,
+  useEffect(() => {
+    if (!isMounted) return
+    syncFormValid()
+  }, [isMounted, syncFormValid])
+
+  /** URL シード直後など、20 問そろったあと submit 活性を合わせる */
+  useEffect(() => {
+    if (!isMounted || !isCompleteAnswersRecord(effectiveDefaults)) return
+    requestAnimationFrame(() => syncFormValid())
+  }, [effectiveDefaults, isMounted, syncFormValid])
+
+  const handleFormInput = useCallback(() => {
+    syncFormValid()
+  }, [syncFormValid])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+    const answers = readAnswersFromForm(form)
+    if (!isCompleteAnswersRecord(answers)) return
+
+    if (typeof window !== 'undefined') {
+      if (targetIdFromUrl) {
+        window.sessionStorage.setItem(PLOT_TARGET_ID_SESSION_KEY, targetIdFromUrl)
+      } else {
+        window.sessionStorage.removeItem(PLOT_TARGET_ID_SESSION_KEY)
       }
-      setGroup({
-        ...group,
-        personalPlotList: [...group.personalPlotList, newPlot],
-      })
     }
 
-    router.push('/#matrix')
+    const params = new URLSearchParams()
+    params.set('question', serializeAnswersToQuestionParam(answers))
+    router.push(`/personal-plot/result?${params.toString()}`)
+  }
+
+  const scrollToQuestion = (index: number) => {
+    window.location.hash = `question-${index}`
   }
 
   const handleBack = () => {
@@ -125,12 +137,14 @@ export const usePersonalPlot = () => {
 
   return {
     isMounted,
-    answers,
+    formRef,
+    formValid,
+    handleFormInput,
+    effectiveDefaults,
     valueLocusQuestionList,
     boundaryQuestionList,
     totalCount,
-    handleAnswerChangeWithScroll,
-    isAllAnswered,
+    scrollToQuestion,
     handleSubmit,
     handleBack,
   }

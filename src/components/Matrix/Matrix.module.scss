@@ -1,0 +1,125 @@
+@use '@/style/_variable' as *;
+
+.matrix {
+  position: relative;
+  width: min(calc(100% - #{rem(16 + 16)}), rem(640), 100vh);
+  max-width: rem(640);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.axisLine {
+  stroke: var(--border-color);
+  stroke-width: 1;
+}
+
+.axisName {
+  @include txt-description;
+
+  fill: var(--txt-description);
+}
+
+.poleLabel {
+  position: absolute;
+  z-index: 1;
+  width: fit-content;
+  padding-left: 1.2em;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+
+  &.--ownership {
+    inset: rem(4) 0 auto;
+    margin: 0 auto;
+  }
+
+  &.--consensus {
+    inset: auto 0 rem(4);
+    margin: 0 auto;
+  }
+
+  &.--diversity {
+    inset: 0 auto 0 rem(-16);
+    margin: auto 0;
+  }
+
+  &.--identityFusion {
+    inset: 0 rem(-8) 0 auto;
+    margin: auto 0;
+  }
+}
+
+.plotLabel {
+  @include txt-description;
+}
+
+.plotPoint {
+  filter: drop-shadow(0 0 rem(2) var(--txt-accent));
+  fill: var(--txt-accent);
+}
+
+// icon
+.icon {
+  position: absolute;
+  z-index: 0;
+  color: var(--border-color);
+  filter: drop-shadow(-1px -1px rem(1) rgb(0 0 0 / 10%)) drop-shadow(1px 1px rem(1) white)
+    drop-shadow(-2px -2px rem(2) rgb(0 0 0 / 5%)) drop-shadow(2px 2px rem(2) white);
+  opacity: 0.5;
+  fill: currentColor;
+
+  @include mq(narrow) {
+    @include rect(rem(40));
+  }
+
+  @include mq(fromWide) {
+    @include rect(rem(42));
+  }
+
+  &.--ownership {
+    margin: 0 auto;
+
+    @include mq(narrow) {
+      inset: rem(-40) 0 auto;
+    }
+
+    @include mq(fromWide) {
+      inset: rem(-40) 0 auto;
+    }
+  }
+
+  &.--consensus {
+    margin: 0 auto;
+
+    @include mq(narrow) {
+      inset: auto 0 rem(-40);
+    }
+
+    @include mq(fromWide) {
+      inset: auto 0 rem(-40);
+    }
+  }
+
+  &.--diversity {
+    margin: auto 0;
+
+    @include mq(narrow) {
+      inset: rem(40 * 2) auto 0 rem(8);
+    }
+
+    @include mq(fromWide) {
+      inset: 0 auto 0 rem(-48);
+    }
+  }
+
+  &.--identityFusion {
+    margin: auto 0;
+
+    @include mq(narrow) {
+      inset: rem(40 * 2) rem(8) 0 auto;
+    }
+
+    @include mq(fromWide) {
+      inset: 0 rem(-48) 0 auto;
+    }
+  }
+}
