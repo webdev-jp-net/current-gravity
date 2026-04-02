@@ -11,8 +11,6 @@ import { usePersonalPlot } from './usePersonalPlot'
 
 import type { QuestionItem } from '@/type/question'
 
-import { AXIS_DESCRIPTION } from '@/constants/model'
-
 export const PersonalPlotView: FC = () => {
   const {
     isMounted,

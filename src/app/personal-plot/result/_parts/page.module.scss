@@ -82,35 +82,6 @@
   }
 }
 
-.sectionHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.sectionTitle {
-  @include hd-md;
-
-  color: var(--txt-basic);
-}
-
-.sectionLead {
-  @include txt-paragraph;
-}
-
-.sectionBody {
-  display: flex;
-  flex-direction: column;
-
-  @include mq(narrow) {
-    gap: var(--spacing-xl);
-  }
-
-  @include mq(fromWide) {
-    gap: var(--spacing-xl);
-  }
-}
-
 .footer {
   position: sticky;
   bottom: 0;

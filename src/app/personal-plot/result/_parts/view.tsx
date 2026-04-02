@@ -15,8 +15,6 @@ import { usePersonalPlotResult } from './usePersonalPlotResult'
 
 import type { QuestionItem } from '@/type/question'
 
-import { AXIS_DESCRIPTION } from '@/constants/model'
-
 export const PersonalPlotResultView: FC = () => {
   const router = useRouter()
   const {
