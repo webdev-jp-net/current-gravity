@@ -109,9 +109,7 @@ export const Question: FC<QuestionProps> = ({
       </div>
       {isResult && (
         <div className={styles.concept}>
-          <h3 className={styles.conceptDescription}>
-            <BudouXText>{concept.description}</BudouXText>
-          </h3>
+          <h3 className={styles.conceptDescription}>{concept.description}</h3>
           <div className={`${styles.conceptCase} ${styles['--min']}`}>
             <h4 className={styles.conceptLabel}>
               <PoleLabel pole={conceptCasePole.min} withDescription />
