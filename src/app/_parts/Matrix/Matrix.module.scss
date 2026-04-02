@@ -6,13 +6,6 @@
   max-width: rem(640);
   aspect-ratio: 1 / 1;
   margin: 0 auto;
-
-  > div {
-    @include rect(100%);
-
-    position: absolute;
-    inset: 0;
-  }
 }
 
 .axisLine {
@@ -26,9 +19,33 @@
   fill: var(--txt-description);
 }
 
-.axisLabel {
+.poleLabel {
+  position: absolute;
+  z-index: 1;
+  width: fit-content;
+  padding-left: 1.2em;
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  fill: var(--txt-basic);
+
+  &.--ownership {
+    inset: rem(4) 0 auto;
+    margin: 0 auto;
+  }
+
+  &.--consensus {
+    inset: auto 0 rem(4);
+    margin: 0 auto;
+  }
+
+  &.--diversity {
+    inset: 0 auto 0 rem(-16);
+    margin: auto 0;
+  }
+
+  &.--identityFusion {
+    inset: 0 rem(-8) 0 auto;
+    margin: auto 0;
+  }
 }
 
 .plotLabel {

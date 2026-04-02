@@ -14,11 +14,13 @@ import { POLE_LABEL, POLE_DESCRIPTION } from '@/constants/model'
 
 type PoleLabelProps = ComponentProps<'span'> & {
   pole: QuestionPole
+  /** falseのときPoleIconを非表示にする（デフォルト: true） */
+  icon?: boolean
   /** trueのとき説明ポップオーバーを表示するトリガーボタンを表示する */
   withDescription?: boolean
 }
 
-export const PoleLabel: FC<PoleLabelProps> = ({ pole, withDescription = false, ...props }) => {
+export const PoleLabel: FC<PoleLabelProps> = ({ pole, icon = true, withDescription = false, ...props }) => {
   const uid = useId()
   const anchorName = `--pole-label-${uid.replace(/:/g, '')}`
   const popoverId = `pole-description-${uid.replace(/:/g, '')}`
@@ -26,7 +28,7 @@ export const PoleLabel: FC<PoleLabelProps> = ({ pole, withDescription = false, .
   return (
     <>
       <span {...props} className={[styles.poleLabel, props.className].join(' ')}>
-        <PoleIcon className={styles.icon} variant={pole} />
+        {icon && <PoleIcon className={styles.icon} variant={pole} />}
         {POLE_LABEL[pole]}
         {withDescription && (
           <button
