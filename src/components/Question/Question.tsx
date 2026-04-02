@@ -102,6 +102,10 @@ export const Question: FC<QuestionProps> = ({
             <BudouXText>{label.max}</BudouXText>
           </span>
         </div>
+
+        {!isResult && (
+          <p className={styles.annotation}>結果的にとる行動より&nbsp;本音で選んでみてください</p>
+        )}
       </div>
       {isResult && (
         <div className={styles.concept}>

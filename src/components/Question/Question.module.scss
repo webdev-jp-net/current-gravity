@@ -73,15 +73,16 @@
   display: grid;
 
   @include mq(narrow) {
-    grid-template-columns: 50% 50%;
-    gap: var(--spacing-sm);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm) var(--spacing-xl);
   }
 
   @include mq(fromWide) {
     grid-template-columns: 1fr rem(372) 1fr;
-    gap: var(--spacing-md);
+    gap: var(--spacing-md) var(--spacing-xl);
     place-content: center;
     place-items: center;
+    padding: 0 var(--spacing-xl);
   }
 }
 
@@ -96,6 +97,9 @@
   }
 
   @include mq(fromWide) {
+    position: relative;
+    top: rem(-12);
+    width: 100%;
     font-size: var(--font-size-basic);
   }
 
@@ -103,7 +107,7 @@
     text-align: left;
   }
 
-  &:last-child {
+  .label ~ & {
     align-items: flex-end;
     text-align: right;
 
@@ -111,6 +115,23 @@
       grid-row: 1 / 2;
       grid-column: 2 / 3;
     }
+  }
+}
+
+.annotation {
+  @include txt-paragraph;
+
+  color: var(--txt-disabled);
+  text-align: center;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+    font-size: var(--font-size-xs);
+  }
+
+  @include mq(fromWide) {
+    grid-column: span 3;
+    font-size: var(--font-size-sm);
   }
 }
 
@@ -150,7 +171,7 @@
     grid-column: span 2;
     gap: var(--spacing-md);
     width: 100%;
-    padding-inline: var(--spacing-sm);
+    padding-inline: var(--spacing-xs);
   }
 
   @include mq(fromWide) {
@@ -239,8 +260,8 @@
   @include mq(fromWide) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg) var(--spacing-2xl);
-    padding: var(--spacing-xl) 0 0;
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-lg);
   }
 }
 
@@ -255,7 +276,7 @@
 
   @include mq(fromWide) {
     grid-column: span 2;
-    font-size: var(--font-size-basic);
+    font-size: var(--font-size-lg);
     text-align: center;
   }
 }
