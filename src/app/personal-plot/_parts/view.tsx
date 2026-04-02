@@ -35,10 +35,7 @@ export const PersonalPlotView: FC = () => {
   return (
     <main className={styles.personalPlot} data-testid="personal-plot">
       <div className={styles.intro}>
-        <h1 className={styles.pageTitle}>あなたのいまの重心を測定</h1>
-        <p className={styles.introBody}>
-          設問のシチュエーションについて、直感であなたに近いフィーリングを選択してください。
-        </p>
+        <h1 className={styles.pageTitle}>あなたのいまの重心</h1>
       </div>
 
       <form

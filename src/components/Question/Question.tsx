@@ -45,10 +45,10 @@ export const Question: FC<QuestionProps> = ({
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
         <div className={styles.headerCategory}>
-          <span className={styles.index}>Q{index + 1}</span>
           <p className={styles.headerLabel}>{AXIS_DESCRIPTION[axis]}</p>
           <PoleLabel pole={pole} className={styles.headerPoleLabel} />
         </div>
+        <span className={styles.index}>Q{index + 1}</span>
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
         </h3>

@@ -31,10 +31,8 @@
 
 .pageTitle {
   @include hd-lg;
-}
 
-.introBody {
-  @include txt-paragraph;
+  text-align: center;
 }
 
 .section {
