@@ -208,7 +208,7 @@
 .optionIndicator {
   @include radio;
 
-  color: var(--txt-link);
+  color: var(--txt-accent);
 }
 
 // result mode
@@ -225,7 +225,7 @@
 
   position: relative;
   flex-shrink: 0;
-  color: var(--txt-link);
+  color: var(--txt-accent);
   background-color: rgb(0 0 0 / 3%);
   border-radius: 50%;
 
@@ -253,9 +253,7 @@
     @include rect(rem(18));
 
     background-color: currentColor;
-    box-shadow:
-      0 0 rem(16) color.adjust(#0070b3, $lightness: 50%),
-      0 0 rem(8) #0070b3;
+    filter: drop-shadow(0 0 rem(8) var(--txt-accent));
     transition:
       width var(--transition-leave),
       height var(--transition-leave),

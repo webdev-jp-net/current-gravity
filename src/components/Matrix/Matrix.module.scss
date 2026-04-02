@@ -53,7 +53,8 @@
 }
 
 .plotPoint {
-  fill: var(--txt-link);
+  filter: drop-shadow(0 0 rem(2) var(--txt-accent));
+  fill: var(--txt-accent);
 }
 
 // icon
