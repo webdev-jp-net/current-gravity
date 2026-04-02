@@ -1,13 +1,5 @@
 @use '@/style/_variable' as *;
 
-/* `/personal-plot` と同一レイアウトクラス。generate-component.md の各ルート _parts/page.module.scss 規約に合わせ配置 */
-
-.resultEditForm {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3xl);
-}
-
 .personalPlot {
   display: flex;
   flex-direction: column;
@@ -15,57 +7,12 @@
 
   @include mq(narrow) {
     gap: var(--spacing-xl);
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-2xl) 0 0;
   }
 
   @include mq(fromWide) {
     gap: var(--spacing-3xl);
-    padding: var(--spacing-3xl) 0;
-  }
-}
-
-.matrixPreview {
-  @include container;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  align-items: center;
-}
-
-.matrixPreviewActions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  align-items: stretch;
-  width: 100%;
-
-  @include mq(fromWide) {
-    flex-flow: row wrap;
-    align-items: stretch;
-    justify-content: center;
-  }
-}
-
-[class].matrixPreviewAddButton {
-  width: 100%;
-  max-width: rem(360);
-
-  @include mq(fromWide) {
-    flex: 0 1 rem(360);
-    align-self: stretch;
-    width: auto;
-  }
-}
-
-[class].matrixPreviewShareButton {
-  width: 100%;
-  max-width: rem(360);
-
-  @include mq(fromWide) {
-    flex: 0 1 rem(360);
-    align-self: stretch;
-    width: auto;
+    padding: var(--spacing-3xl) 0 0;
   }
 }
 
@@ -75,6 +22,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+}
+
+.pageTitle {
+  @include hd-lg;
+
+  text-align: center;
 }
 
 .matrix {
@@ -88,12 +41,26 @@
   }
 }
 
-.pageTitle {
-  @include hd-lg;
-}
+.console {
+  @include container;
 
-.introBody {
-  @include txt-paragraph;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: stretch;
+  width: 100%;
+
+  @include mq(fromWide) {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  [class].button {
+    width: 100%;
+    max-width: rem(360);
+    min-height: rem(48);
+    font-size: var(--font-size-md);
+  }
 }
 
 .section {
@@ -102,34 +69,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-}
-
-.sectionHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.sectionTitle {
-  @include hd-md;
-
-  color: var(--txt-basic);
-}
-
-.sectionLead {
-  @include txt-paragraph;
-}
-
-.sectionBody {
-  display: flex;
-  flex-direction: column;
 
   @include mq(narrow) {
-    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
   }
 
   @include mq(fromWide) {
-    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-3xl);
   }
 }
 

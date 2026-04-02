@@ -3,7 +3,6 @@
 .surveyForm {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4xl);
 }
 
 .personalPlot {
@@ -22,51 +21,6 @@
   }
 }
 
-.matrixPreview {
-  @include container;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  align-items: center;
-}
-
-.matrixPreviewActions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  align-items: stretch;
-  width: 100%;
-
-  @include mq(fromWide) {
-    flex-flow: row wrap;
-    align-items: stretch;
-    justify-content: center;
-  }
-}
-
-[class].matrixPreviewAddButton {
-  width: 100%;
-  max-width: rem(360);
-
-  @include mq(fromWide) {
-    flex: 0 1 rem(360);
-    align-self: stretch;
-    width: auto;
-  }
-}
-
-[class].matrixPreviewShareButton {
-  width: 100%;
-  max-width: rem(360);
-
-  @include mq(fromWide) {
-    flex: 0 1 rem(360);
-    align-self: stretch;
-    width: auto;
-  }
-}
-
 .intro {
   @include container;
 
@@ -77,10 +31,8 @@
 
 .pageTitle {
   @include hd-lg;
-}
 
-.introBody {
-  @include txt-paragraph;
+  text-align: center;
 }
 
 .section {
@@ -89,34 +41,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
-}
-
-.sectionHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.sectionTitle {
-  @include hd-md;
-
-  color: var(--txt-basic);
-}
-
-.sectionLead {
-  @include txt-paragraph;
-}
-
-.sectionBody {
-  display: flex;
-  flex-direction: column;
 
   @include mq(narrow) {
-    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
   }
 
   @include mq(fromWide) {
-    gap: var(--spacing-xl);
+    padding-bottom: var(--spacing-3xl);
   }
 }
 

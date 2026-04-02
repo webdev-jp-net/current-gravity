@@ -12,7 +12,7 @@ import { useQuestion } from './useQuestion'
 
 import type { QuestionItem } from '@/type/question'
 
-import { STEP_LIST, AXIS_DESCRIPTION } from '@/constants/model'
+import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL, OPPOSITE_POLE } from '@/constants/model'
 
 type QuestionProps = {
   item: QuestionItem
@@ -45,10 +45,10 @@ export const Question: FC<QuestionProps> = ({
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
         <div className={styles.headerCategory}>
-          <span className={styles.index}>Q{index + 1}</span>
           <p className={styles.headerLabel}>{AXIS_DESCRIPTION[axis]}</p>
           <PoleLabel pole={pole} className={styles.headerPoleLabel} />
         </div>
+        <span className={styles.index}>Q{index + 1}</span>
         <h3 className={styles.title}>
           <BudouXText>{question}</BudouXText>
         </h3>
@@ -102,12 +102,23 @@ export const Question: FC<QuestionProps> = ({
             <BudouXText>{label.max}</BudouXText>
           </span>
         </div>
+
+        {!isResult && (
+          <p className={styles.annotation}>結果的にとる行動より&nbsp;本音で選んでみてください</p>
+        )}
+        {isResult && value !== undefined && (
+          <p className={styles.value}>
+            {value > 0
+              ? `${POLE_LABEL[pole]} +${value}`
+              : value < 0
+                ? `${POLE_LABEL[OPPOSITE_POLE[pole]]} +${Math.abs(value)}`
+                : '±0'}
+          </p>
+        )}
       </div>
       {isResult && (
         <div className={styles.concept}>
-          <h3 className={styles.conceptDescription}>
-            <BudouXText>{concept.description}</BudouXText>
-          </h3>
+          <h3 className={styles.conceptDescription}>{concept.description}</h3>
           <div className={`${styles.conceptCase} ${styles['--min']}`}>
             <h4 className={styles.conceptLabel}>
               <PoleLabel pole={conceptCasePole.min} withDescription />
