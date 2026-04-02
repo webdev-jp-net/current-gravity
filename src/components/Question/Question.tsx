@@ -12,7 +12,7 @@ import { useQuestion } from './useQuestion'
 
 import type { QuestionItem } from '@/type/question'
 
-import { STEP_LIST, AXIS_DESCRIPTION } from '@/constants/model'
+import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL, OPPOSITE_POLE } from '@/constants/model'
 
 type QuestionProps = {
   item: QuestionItem
@@ -105,6 +105,15 @@ export const Question: FC<QuestionProps> = ({
 
         {!isResult && (
           <p className={styles.annotation}>結果的にとる行動より&nbsp;本音で選んでみてください</p>
+        )}
+        {isResult && value !== undefined && (
+          <p className={styles.value}>
+            {value > 0
+              ? `${POLE_LABEL[pole]} +${value}`
+              : value < 0
+                ? `${POLE_LABEL[OPPOSITE_POLE[pole]]} +${Math.abs(value)}`
+                : '±0'}
+          </p>
         )}
       </div>
       {isResult && (

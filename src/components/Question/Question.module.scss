@@ -135,6 +135,22 @@
   }
 }
 
+.value {
+  @include txt-paragraph;
+
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+
+  @include mq(narrow) {
+    grid-column: span 2;
+  }
+
+  @include mq(fromWide) {
+    grid-column: span 3;
+  }
+}
+
 .labelHeading {
   display: inline-flex;
   gap: var(--spacing-xs);
