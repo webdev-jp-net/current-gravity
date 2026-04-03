@@ -136,7 +136,7 @@ export function commitPlotToGroup(params: {
       }
       return {
         ...prev,
-        personalPlotList: [...prev.personalPlotList, newPlot],
+        personalPlotList: [newPlot, ...prev.personalPlotList],
       }
     })
   } else {
@@ -155,7 +155,7 @@ export function commitPlotToGroup(params: {
     }
     setGroup(prev => ({
       ...prev,
-      personalPlotList: [...prev.personalPlotList, newPlot],
+      personalPlotList: [newPlot, ...prev.personalPlotList],
     }))
   }
 }

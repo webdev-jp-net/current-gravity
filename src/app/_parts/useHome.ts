@@ -119,7 +119,7 @@ export const useHome = () => {
     }
     setGroup({
       ...group,
-      personalPlotList: [...group.personalPlotList, newPerson],
+      personalPlotList: [newPerson, ...group.personalPlotList],
     })
   }
 
