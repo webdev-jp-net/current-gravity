@@ -1,6 +1,5 @@
 ---
 description: Session Control Rules
-globs: **/*
 alwaysApply: true
 ---
 
@@ -13,7 +12,7 @@ alwaysApply: true
 **品質優先の原則**: 急ぐ必要はありません。関連する仕様書のすべての記載内容を読み飛ばさずに確認してから開始してください。
 
 0. **CHECK** current branch: `git status && git branch --show-current`
-   - developブランチの場合: github_integration.mdを先に読み込み、featureブランチ作成後に続行
+   - mainおよびdevelopブランチの場合: github_integration.mdを先に読み込み、featureブランチ作成後に続行
 1. **READ** this file completely (このファイルを完全に読み込む）
 2. **LOAD CORE PRINCIPLES** - 基本原則を最初に確認
    - `_llm-rules/core_rules.md` - 不明点確認・承認取得の原則
@@ -34,12 +33,9 @@ alwaysApply: true
 以下の質問に答えて、タスクの性質を特定してください：
 
 **主要な技術スタック:**
-- Frontend development (React, Vue, Svelte, etc.) - フロントエンド開発
-- Backend development (API, Database, Server) - バックエンド開発
-- Full-stack development - フルスタック開発
-- Testing/QA - テスト・品質保証
 - Documentation - ドキュメント作成
 - Configuration/Setup - 設定・セットアップ
+- development - 開発
 
 **主要なアクションタイプ:**
 - New implementation - 新規実装
@@ -57,45 +53,9 @@ alwaysApply: true
 
 ## 🎯 ルール選択ロジック
 
-### フロントエンド開発
-**conditions:**
-- UI/UXコンポーネントの作成・修正
-- フロントエンドフレームワークの使用 (React, Vue, etc.)
-- スタイリング、レイアウト、デザイン作業
-- フロントエンド状態管理
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-- `_llm-rules/implementation_principles.md`（必須・確認済み）
-
-
-### バックエンド開発
-**conditions:**
-- API開発・修正
-- データベーススキーマ・クエリ
-- サーバー設定
-- 認証・認可
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-- `_llm-rules/implementation_principles.md`（必須・確認済み）
-
-### テスト作業
-**conditions:**
-- テスト作成・修正
-- テスト戦略計画
-- QAプロセス
-- テスト自動化
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-- `_llm-rules/implementation_principles.md`（実装関連・確認済み）
-- `_llm-rules/test_rule.md`（メイン）
-- プロジェクト固有のテスト設定は[プロジェクト要件定義](../../_llm-docs/project.md)から参照
-
 ### GitHub実行・運用作業
 **conditions:**
-- 日常的なIssue作成・管理・ラベル付与
+- 日常的なIssue作成・管理
 - PR作成・レビュー・マージ
 - GitHub CLI（`gh`コマンド）の使用
 - コミット・PRとIssueの連携運用
@@ -110,8 +70,7 @@ alwaysApply: true
 **PR作成時の推奨フロー:**
 - ドキュメント反映の確認: 実装に伴う仕様書・設計書の更新確認
   - 未反映の場合: **PR作成前に必ずドキュメントを更新**
-- 学習内容の記録: `_llm-memories/*.md`への追記
-- PR作成: `gh pr create`（ドキュメント更新と学習記録の完了を確認後）
+- PR作成: `gh pr create`（ドキュメント更新の完了を確認後）
 
 ### タスク戦略・分解作業
 **conditions:**
@@ -125,19 +84,19 @@ alwaysApply: true
 **読み込むルール:**
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/github_integration.md`（GitHub連携前提）
-- `_llm-rules/task/management.md`（メイン）
 
-### フルスタック開発
+### 開発
 **conditions:**
-- フロントエンド・バックエンド両方の作業
-- エンドツーエンド機能実装
-- システム統合
+- フロントエンド実装
+- コンポーネント開発
+- スタイリング作業
 
 **読み込むルール:**
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/implementation_principles.md`（必須・確認済み）
+- `_llm-rules/coding.md`（コーディング標準）
+- `_llm-rules/components.md`（コンポーネントガイドライン）
 - `_llm-rules/github_integration.md`（リポジトリ作業が含まれる場合）
-- `_llm-rules/test_rule.md`（テストが含まれる場合）
 
 ### ドキュメント・計画作業
 **conditions:**
@@ -148,105 +107,6 @@ alwaysApply: true
 
 **読み込むルール:**
 - `_llm-rules/core_rules.md`（必須・確認済み）
-
-### 要件定義書作成作業
-**conditions:**
-- 要件定義書の新規作成・更新・修正
-- 各サイト別の要件定義書からの要件抽出
-- `_llm-docs`配下のサイト別要件定義所から内容を抽出
-- `docs/requirements_specification.md`へのプロジェクト全体の要件定義書mdファイル設置
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-
-**作業内容:**
-- `_llm-docs`配下のサイト別要件定義書を分析
-- プロジェクト全体の要件定義書として必要な内容を抽出
-- `docs/requirements_specification.md`にプロジェクト全体の要件定義書用のmdファイルを作成・更新
-
-**重要な制約事項:**
-- サイト別要件定義書に明記されていない機能や要件は追加しない
-- 憶測や推測による内容の補完は禁止
-- 未記入のセクションは「※サイト別要件定義書に記載なし」と明記
-- 具体的な数値や仕様はサイト別要件定義書に記載がある場合のみ記載
-- 業界の一般的な要件であっても、サイト別要件定義書に記載がなければ記載しない
-
-### generate_taskコマンド実行作業
-**conditions:**
-- ユーザーが明示的に`generate_task`コマンドを指定
-- 自然言語の要件からタスク分解が必要
-- Issue候補の自動生成を要求
-- **重要**:「Issueを作って」等の曖昧な表現では実行しない
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-- `_llm-rules/github_integration.md`（GitHub連携前提）
-- `_llm-rules/task/generation.md`（メイン - generate_task専用）
-- `_llm-rules/task/management.md`（補助 - タスク管理戦略）
-- `_llm-rules/issue/master.md`（補助 - Issue管理）
-
-**作業内容:**
-- 明示的なコマンド実行の確認
-- 自然言語要件の分析とタスク分解
-- 適切な粒度でのIssue候補生成
-- DRAFTセクションへの保存（オプション）
-
-### Issue候補生成・管理作業
-**conditions:**
-- 要件定義からのIssue候補生成
-- DRAFT Issues管理とレビュー
-- 既存IssueとDRAFTの重複チェック
-- DRAFTからGitHub Issueへの一括作成
-- Issue管理ワークフローの実行
-- リポジトリ横断でのIssue調整
-- Issue形式の仕様確認・実装
-
-**読み込むルール:**
-- `_llm-rules/core_rules.md`（必須・確認済み）
-- `_llm-rules/implementation_principles.md`（技術要件の場合・確認済み）
-- `_llm-rules/github_integration.md`（GitHub連携前提）
-- `_llm-rules/issue/master.md`（メイン - Issue管理統合）
-- `_llm-rules/issue/format.md`（補助 - 自動参照）
-
-**技術仕様参照:**
-- `_llm-rules/issue/format.md`（Issue形式技術仕様）
-- `_llm-rules/issue/projects_integration.md`（GitHub Projects連携ルール）
-- Issue管理・GitHub Projects固有設定は[プロジェクト要件定義](../../_llm-docs/project.md)を参照
-
-**作業内容:**
-- プロジェクトの要件定義・詳細設計を分析
-- Issue候補をDRAFTとして各リポジトリに生成
-- 手動レビュー後の重複チェック・品質確認
-- `sync-with-github.js`による一括Issue作成
-- `_llm-memories/issues/[repo].md`での状態管理
-
-**重要な実行手順:**
-- 要件分析とDRAFT生成
-- DRAFTセクションの手動レビュー・調整
-- 重複チェック実行
-- 承認されたDRAFTのGitHub登録
-- 最新状態での同期完了
-
----
-
-## 🧠 Context Memory Management
-
-### セッション情報の追跡
-```markdown
-## Current Session Context
-- **Task Type**: [上記の分析から特定されたタスクタイプ]
-- **Technology Stack**: [関連する主要技術]
-- **Loaded Rules**: [参照したルールファイルのリスト]
-- **Special Considerations**: [特別な要件や制約]
-- **Dependencies**: [関連ファイル、外部サービスなど]
-```
-
-### 学習統合
-- 類似タスクに効果的なルール組み合わせを記録
-- 現在のルールカバレッジのギャップを記録
-- 共通パターンとエッジケースを追跡
-- 結果に基づいてルール選択ロジックを更新
-- すでに登録済みの記録を参照し重複していない情報のみ厳選して追加
 
 ---
 
@@ -275,24 +135,14 @@ alwaysApply: true
 - **PR作成作業**
   → github_integration.md + core_rules.md
   → ドキュメント反映（仕様書・設計書の更新）
-  → 注意: ドキュメント更新と学習記録の完了を確認後にPR作成
+  → 注意: ドキュメント更新の完了を確認後にPR作成
 
 - **新しいReactコンポーネント実装**
-  → implementation_principles.md + core_rules.md
-  → 詳細: 一般的なReactコンポーネントの実装
+  → coding.md + components.md + implementation_principles.md + core_rules.md
 
 - **ページコンポーネント生成（scaffdog使用）**
   → ページコンポーネント生成カテゴリのルールを適用
-  → 詳細: `_llm-docs/operation/generate-component.md`参照
-
-- **API開発**
-  → implementation_principles.md + core_rules.md
-
-- **テスト作成**
-  → test_rule.md + core_rules.md
-
-- **フル機能実装**
-  → implementation_principles.md + test_rule.md + core_rules.md
+  → 詳細: `_llm-docs/generate-component.md`参照
 
 - **要件定義書作成（詳細設計からの抽出）**
   → core_rules.md
@@ -311,44 +161,3 @@ alwaysApply: true
 - 選択した専門ルールを最初に読み込み
 - 実行開始前にALWAYS core_rules.mdを読み込み
 - 一貫した品質のためにcore_rules.mdのプロセスに従う
-
----
-
-## 🔄 継続的改善
-
-### セッションフィードバックループ
-各セッション終了時に評価:
-- 選択したルールは適切だったか？
-- ルール間の競合は発生したか？
-- ルールカバレッジにギャップはあったか？
-- ルール選択をどう改善できるか？
-
-### Update Protocol
-- セッションメモリに学習内容を記録
-- ルール選択ロジックの更新を提案
-- 必要に応じて新しいルールカテゴリを提案
-- ルール効果メトリクスを維持
-
----
-
-## 💡 実践的なヒント
-
-### セッション開始時の推奨ワークフロー
-作業を開始する際、以下のコマンドで環境を最新化できます：
-
-```bash
-# 作業リポジトリでDRAFT→GitHub同期（例: adminリポジトリ）
-mcp__ai-spec-driven-document__sync_with_github repo="admin"
-
-# 必要に応じて学習記録の確認
-mcp__ai-spec-driven-document__manage_memory action=check
-```
-
-これにより、DRAFTの同期忘れを防ぎ、最新状態から作業を開始できます。
-
-### 効率的な実行について
-MCPツールは直接実行が推奨されます（Taskツール経由より高速）。
-
----
-
-**⚠️ IMPORTANT**: このファイルはセッションフローの制御のみ。実際のタスク実行はすべてcore_rules.mdのプロセスに従います。
