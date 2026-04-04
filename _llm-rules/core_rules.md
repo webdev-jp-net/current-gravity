@@ -1,6 +1,5 @@
 ---
 description: Core rule
-globs: **/*
 alwaysApply: true
 ---
 
