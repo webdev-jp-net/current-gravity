@@ -36,8 +36,9 @@ export const useHome = () => {
 
       initialLoadHadParams.current = true
       const personalPlotList: PersonalPlot[] = plotParams.map((p, index) => {
+        const parts = p.split(',')
         const [displayName, ownership, consensus, diversity, identityFusion] =
-          p.split(',')
+          parts
         return {
           id: `url-${index}-${Date.now()}`,
           displayName: displayName || '',
@@ -45,6 +46,7 @@ export const useHome = () => {
           consensus: parseInt(consensus) || 0,
           diversity: parseInt(diversity) || 0,
           identityFusion: parseInt(identityFusion) || 0,
+          focus: parts[5] === 'focus',
         }
       })
 
@@ -67,14 +69,17 @@ export const useHome = () => {
     }
 
     group.personalPlotList.forEach((p) => {
-      const pData = [
+      const parts = [
         p.displayName,
         p.ownership,
         p.consensus,
         p.diversity,
         p.identityFusion,
-      ].join(',')
-      params.append('p', pData)
+      ]
+      if (p.focus) {
+        parts.push('focus')
+      }
+      params.append('p', parts.join(','))
     })
 
     const newQuery = params.toString()
@@ -126,7 +131,7 @@ export const useHome = () => {
   const updatePerson = (
     id: string,
     field: keyof PersonalPlot,
-    value: string | number
+    value: string | number | boolean
   ) => {
     setGroup({
       ...group,

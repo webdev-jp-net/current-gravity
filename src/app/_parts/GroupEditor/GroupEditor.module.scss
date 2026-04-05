@@ -147,6 +147,66 @@
   }
 }
 
+.switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.switchInput {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.switchTrack {
+  @include emboss;
+
+  position: relative;
+  width: rem(106);
+  height: rem(28);
+  border-radius: rem(999);
+  transition: background-color var(--transition-ease);
+
+  &::before {
+    @include rect(100%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    color: var(--txt-disabled);
+    content: 'focus';
+    transition: color var(--transition-ease);
+  }
+
+  &::after {
+    @include rect(rem(20));
+
+    position: absolute;
+    inset: rem(4) auto auto rem(4);
+    content: '';
+    background-color: var(--bg-primary);
+    border-radius: 50%;
+    box-shadow:
+      rem(1) rem(1) 0 rgb(0 0 0 / 5%),
+      rem(-1) rem(-1) 0 #fff;
+    transition: transform var(--transition-ease);
+  }
+
+  .switchInput:checked + & {
+    background-color: var(--txt-accent);
+
+    &::after {
+      transform: translateX(rem(77));
+    }
+
+    &::before {
+      color: var(--txt-on-fill);
+    }
+  }
+}
+
 [class].linkToForm {
   font-size: var(--font-size-sm);
   color: var(--txt-link);

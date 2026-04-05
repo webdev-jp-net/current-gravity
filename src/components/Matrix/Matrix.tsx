@@ -115,29 +115,38 @@ const MatrixContent: FC<{
           </text>
         </Group>
 
-        {pointsWithLayout.map(person => {
-          const isDimmed = hoveredId !== null && hoveredId !== person.id
-          return (
-            <Group
-              key={person.id}
-              onMouseEnter={() => setHoveredId(person.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              onTouchStart={() => setHoveredId(person.id)}
-              opacity={isDimmed ? 0.2 : 1}
-            >
-              <circle cx={person.x} cy={person.y} r={8} className={styles.plotPoint} />
-              <text
-                x={person.x + person.offsetX}
-                y={person.y + person.offsetY}
-                textAnchor={person.textAnchor}
-                dominantBaseline="central"
-                className={styles.plotLabel}
+        {(() => {
+          const hasFocused = personalPlotList.some(p => p.focus)
+          return pointsWithLayout.map(person => {
+            const isHovered = hoveredId === person.id
+            const isUnfocused = hasFocused && !person.focus
+            const isDimmed = hoveredId !== null && !isHovered
+            const opacity = isHovered ? 1 : isUnfocused ? 0.2 : isDimmed ? 0.2 : 1
+            const showLabel = !isUnfocused || isHovered
+            return (
+              <Group
+                key={person.id}
+                onMouseEnter={() => setHoveredId(person.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                onTouchStart={() => setHoveredId(person.id)}
+                opacity={opacity}
               >
-                {person.displayName}
-              </text>
-            </Group>
-          )
-        })}
+                <circle cx={person.x} cy={person.y} r={8} className={styles.plotPoint} />
+                {showLabel && (
+                  <text
+                    x={person.x + person.offsetX}
+                    y={person.y + person.offsetY}
+                    textAnchor={person.textAnchor}
+                    dominantBaseline="central"
+                    className={styles.plotLabel}
+                  >
+                    {person.displayName}
+                  </text>
+                )}
+              </Group>
+            )
+          })
+        })()}
       </Group>
     </svg>
   )

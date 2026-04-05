@@ -123,6 +123,7 @@ export function commitPlotToGroup(params: {
               ? {
                   ...p,
                   ...metrics,
+                  focus: true,
                   displayName: p.displayName.trim() === '' ? DEFAULT_DISPLAY_NAME : p.displayName,
                 }
               : p
@@ -132,6 +133,7 @@ export function commitPlotToGroup(params: {
       const newPlot: PersonalPlot = {
         id: targetId,
         displayName: DEFAULT_DISPLAY_NAME,
+        focus: true,
         ...metrics,
       }
       return {
@@ -151,6 +153,7 @@ export function commitPlotToGroup(params: {
     const newPlot: PersonalPlot = {
       id: newId,
       displayName: DEFAULT_DISPLAY_NAME,
+      focus: true,
       ...metrics,
     }
     setGroup(prev => ({
