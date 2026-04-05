@@ -131,7 +131,7 @@ export const useHome = () => {
   const updatePerson = (
     id: string,
     field: keyof PersonalPlot,
-    value: string | number
+    value: string | number | boolean
   ) => {
     setGroup({
       ...group,
