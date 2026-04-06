@@ -1,6 +1,6 @@
 {
   "name": "current-gravity",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,9 +8,11 @@
     "start": "next start",
     "scaffold": "scaffdog generate",
     "lint:script": "eslint .",
-    "lint:style": "stylelint src/**/*.scss",
-    "lint:fix": "eslint . --fix && stylelint src/**/*.scss --fix",
-    "lint": "pnpm run lint:script && pnpm run lint:style"
+    "lint:style": "stylelint \"**/*.scss\"",
+    "lint:fix": "eslint . --fix && stylelint \"**/*.scss\" --fix",
+    "format": "stylelint \"**/*.scss\" --fix && prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "lint": "pnpm run lint:script && pnpm run lint:style",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@visx/group": "^3.12.0",

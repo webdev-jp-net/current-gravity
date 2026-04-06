@@ -33,6 +33,7 @@ AIエージェントは、あらゆる実装・提案の前に、プロジェク
 - **[model_definition.md](./spec/model_definition.md)**:軸の定義およびスコア算出ロジック。
 - **[personal_plot.md](./spec/personal_plot.md)**:データ構造および入力・インポート仕様。
 - **[matrix_drawing.md](./spec/matrix_drawing.md)**:マトリクス描画および表示制御仕様。
+- **[url_serialization.md](./spec/url_serialization.md)**:URL共有形式仕様。
 - **[questionList.json](../src/data/questionList.json)**:設問定義・コンセプト・評価ラベル。
 
 ## Design Guidelines

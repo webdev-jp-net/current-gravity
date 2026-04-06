@@ -18,7 +18,7 @@ export interface GroupEditorProps {
   personalPlotList: PersonalPlot[]
   onGroupNameChange: (name: string) => void
   onAddPerson: () => void
-  onUpdatePerson: (id: string, field: keyof PersonalPlot, value: string | number) => void
+  onUpdatePerson: (id: string, field: keyof PersonalPlot, value: string | number | boolean) => void
   onDeletePerson: (id: string) => void
   onImport: (id: string, csvValue: string) => void
 }
@@ -88,6 +88,15 @@ export const GroupEditor: FC<GroupEditorProps> = ({
                     </td>
                     <td className={styles.td}>
                       <div className={styles.cellActions}>
+                        <label className={styles.switch}>
+                          <input
+                            type="checkbox"
+                            checked={!!person.focus}
+                            onChange={e => onUpdatePerson(person.id, 'focus', e.target.checked)}
+                            className={styles.switchInput}
+                          />
+                          <span className={styles.switchTrack} />
+                        </label>
                         <Button
                           variant="link"
                           className={styles.linkToForm}

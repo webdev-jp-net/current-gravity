@@ -1,12 +1,14 @@
 ---
 description: Implementation principle
-globs:
-alwaysApply: true
+alwaysApply: false
 ---
 
 # 実装原則ガイドライン
 
 ## 実装前の調査と準備
+
+設計・実装・レビューは
+YANGI、DRYの原則にしたがってください。
 
 ### 既存コードの変更原則
 
@@ -149,7 +151,7 @@ alwaysApply: true
 
 ### テストコードの必要性確認
 
-- 実装完了時は`_llm-rules/test_rule.md`を参照し、テストコードが必要かどうかを判断する
+- テストコードが必要かどうかは、実装の複雑さとリスクに応じて判断する
 - 必要と判断された場合は、テストコードの作成を提案する
 
 ---

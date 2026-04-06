@@ -5,4 +5,5 @@ export type PersonalPlot = {
   consensus: number
   diversity: number
   identityFusion: number
+  focus?: boolean
 }
