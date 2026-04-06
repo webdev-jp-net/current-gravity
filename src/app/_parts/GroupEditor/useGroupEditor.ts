@@ -18,8 +18,11 @@ function buildHomeShareUrlFromGroup(group: PersonalPlotGroup): string {
     params.set('name', group.name)
   }
   group.personalPlotList.forEach(p => {
-    const pData = [p.displayName, p.ownership, p.consensus, p.diversity, p.identityFusion].join(',')
-    params.append('p', pData)
+    const parts: (string | number)[] = [p.displayName, p.ownership, p.consensus, p.diversity, p.identityFusion]
+    if (p.focus) {
+      parts.push('f')
+    }
+    params.append('p', parts.join(','))
   })
   const qs = params.toString()
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
