@@ -46,7 +46,7 @@ export const useHome = () => {
           consensus: parseInt(consensus) || 0,
           diversity: parseInt(diversity) || 0,
           identityFusion: parseInt(identityFusion) || 0,
-          focus: parts[5] === 'focus',
+          focus: parts[5] === 'f',
         }
       })
 
@@ -77,7 +77,7 @@ export const useHome = () => {
         p.identityFusion,
       ]
       if (p.focus) {
-        parts.push('focus')
+        parts.push('f')
       }
       params.append('p', parts.join(','))
     })
