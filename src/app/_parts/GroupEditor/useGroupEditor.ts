@@ -18,7 +18,13 @@ function buildHomeShareUrlFromGroup(group: PersonalPlotGroup): string {
     params.set('name', group.name)
   }
   group.personalPlotList.forEach(p => {
-    const parts: (string | number)[] = [p.displayName, p.ownership, p.consensus, p.diversity, p.identityFusion]
+    const parts: (string | number)[] = [
+      p.displayName,
+      p.ownership,
+      p.consensus,
+      p.diversity,
+      p.identityFusion,
+    ]
     if (p.focus) {
       parts.push('f')
     }

@@ -47,6 +47,7 @@ export const Button: React.FC<ButtonProps> = ({
 ### 3. ファイル構造とコンポーネント配置規約
 
 #### 基本的なファイル構造
+
 ```
 src/components/
 └── Hoge/
@@ -70,7 +71,8 @@ src/components/
    - ページ固有の複雑なレイアウトコンポーネント
 
 例：
-```
+
+````
 src/
 ├── components/              # 共通コンポーネント
 │   ├── PopInView/          # アニメーション用の汎用コンポーネント
@@ -103,16 +105,18 @@ src/
   background-color: gray;
   color: white;
 }
-```
+````
 
 ## Server Components vs Client Components
 
 ### Server Components（デフォルト）
+
 - データフェッチング
 - 静的コンテンツ
 - SEOが重要なコンテンツ
 
 ### Client Components
+
 - インタラクティブな機能
 - ブラウザのAPIを使用
 - ファイルの先頭に`'use client'`を追加
@@ -138,6 +142,7 @@ export const InteractiveButton: React.FC = () => {
 ### React.memo使用基準
 
 **React.memoを使用する場合：**
+
 - propsが頻繁に変更されない（毎秒1回未満）
 - レンダリングコストが高い（100ms以上）
 - 子コンポーネントが10個以上存在する
@@ -154,6 +159,7 @@ const ExpensiveListItem = React.memo<{item: Item}>(({item}) => {
 ### 動的インポート基準
 
 **動的インポートを使用する場合：**
+
 - コンポーネントサイズが50KB以上
 - 初期表示に不要なコンポーネント
 - 特定の条件下でのみ表示されるコンポーネント
@@ -180,6 +186,7 @@ const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
 ### ARIA属性追加基準
 
 **ARIA属性を追加する場合：**
+
 - カスタムインタラクティブ要素（ボタン、リンク以外）
 - 視覚的に隠された説明テキストが必要な場合
 - フォーム要素のエラー状態表示

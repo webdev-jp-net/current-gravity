@@ -6,9 +6,11 @@ alwaysApply: true
 # Session Control Rules
 
 ## 🎉 Session Initialization Confirmed
+
 セッション制御を開始します。
 
 ## MANDATORY PROCESS
+
 **品質優先の原則**: 急ぐ必要はありません。関連する仕様書のすべての記載内容を読み飛ばさずに確認してから開始してください。
 
 0. **CHECK** current branch: `git status && git branch --show-current`
@@ -30,14 +32,17 @@ alwaysApply: true
 ## 🔍 タスク分析フレームワーク
 
 ### タスクタイプの特定
+
 以下の質問に答えて、タスクの性質を特定してください：
 
 **主要な技術スタック:**
+
 - Documentation - ドキュメント作成
 - Configuration/Setup - 設定・セットアップ
 - development - 開発
 
 **主要なアクションタイプ:**
+
 - New implementation - 新規実装
 - Bug fix/debugging - バグ修正・デバッグ
 - Refactoring/optimization - リファクタリング・最適化
@@ -46,6 +51,7 @@ alwaysApply: true
 - Planning/architecture - 計画・アーキテクチャ
 
 **GitHub Integration Required:**
+
 - Yes: Repository operations, PR creation, issue management - リポジトリ操作、PR作成、issue管理
 - No: Local development only - ローカル開発のみ
 
@@ -54,7 +60,9 @@ alwaysApply: true
 ## 🎯 ルール選択ロジック
 
 ### GitHub実行・運用作業
+
 **conditions:**
+
 - 日常的なIssue作成・管理
 - PR作成・レビュー・マージ
 - GitHub CLI（`gh`コマンド）の使用
@@ -63,17 +71,21 @@ alwaysApply: true
 - GitHub Actions/Workflows
 
 **読み込むルール:**
+
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/implementation_principles.md`（コード関連の場合・確認済み）
 - `_llm-rules/github_integration.md`（メイン）
 
 **PR作成時の推奨フロー:**
+
 - ドキュメント反映の確認: 実装に伴う仕様書・設計書の更新確認
   - 未反映の場合: **PR作成前に必ずドキュメントを更新**
 - PR作成: `gh pr create`（ドキュメント更新の完了を確認後）
 
 ### タスク戦略・分解作業
+
 **conditions:**
+
 - 要件からのタスク分解
 - プロジェクト開始時のタスク抽出
 - 新スプリント開始時のタスク計画
@@ -82,16 +94,20 @@ alwaysApply: true
 - アジャイル×ウォーターフォールハイブリッドアプローチでの計画策定
 
 **読み込むルール:**
+
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/github_integration.md`（GitHub連携前提）
 
 ### 開発
+
 **conditions:**
+
 - フロントエンド実装
 - コンポーネント開発
 - スタイリング作業
 
 **読み込むルール:**
+
 - `_llm-rules/core_rules.md`（必須・確認済み）
 - `_llm-rules/implementation_principles.md`（必須・確認済み）
 - `_llm-rules/coding.md`（コーディング標準）
@@ -99,13 +115,16 @@ alwaysApply: true
 - `_llm-rules/github_integration.md`（リポジトリ作業が含まれる場合）
 
 ### ドキュメント・計画作業
+
 **conditions:**
+
 - ドキュメント作成
 - アーキテクチャ計画
 - 要件分析
 - プロジェクトセットアップ
 
 **読み込むルール:**
+
 - `_llm-rules/core_rules.md`（必須・確認済み）
 
 ---
@@ -113,6 +132,7 @@ alwaysApply: true
 ## ⚡ クイックリファレンスガイド
 
 ### よくあるタスクパターン
+
 ```markdown
 - **プロジェクト開始時のタスク分解**
   → github_integration.md + core_rules.md
@@ -146,7 +166,6 @@ alwaysApply: true
 
 - **要件定義書作成（詳細設計からの抽出）**
   → core_rules.md
-
 ```
 
 ---
@@ -158,6 +177,7 @@ alwaysApply: true
 **PROCEED TO**: `_llm-rules/core_rules.md`
 
 **REMEMBER**:
+
 - 選択した専門ルールを最初に読み込み
 - 実行開始前にALWAYS core_rules.mdを読み込み
 - 一貫した品質のためにcore_rules.mdのプロセスに従う

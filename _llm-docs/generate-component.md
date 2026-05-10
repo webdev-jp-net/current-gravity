@@ -64,6 +64,7 @@ npx scaffdog generate page-component --output "(unauthenticated)" --answer "name
 ```
 
 **重要**:
+
 - `--output`は`src/app`からの相対パスを指定します。グループディレクトリ（例: `(authenticated)`）の命名ルールを維持してください。
 - 生成される`page.tsx`はサーバーコンポーネントとしてデータ取得やリダイレクトなどを担当します。表示ロジックや状態管理は`_parts/view.tsx`と`use*.ts`に閉じ込めます。
 - テンプレートには装飾を含めないため、スタイルは`_parts/page.module.scss`に必要最低限だけ定義し、追加装飾は別タスクで行います。
@@ -79,6 +80,7 @@ npx scaffdog generate page-component --output "(authenticated)" --answer "name:A
 ```
 
 **命名規則**:
+
 - `{Resource}{Action}` (例: NewsIndex, AccountDetail)。ディレクトリ名は自動的にケバブケース化されます。
 
 ### 生成後の確認事項
@@ -134,7 +136,7 @@ npx scaffdog generate parts-component --answer "name:Card"
 
 ## 設問回答ページとクエリ連携（実装時の共通メモ）
 
-テンプレート生成の対象外だが、`personal-plot`のように**検索パラメータで状態を持つページ**を拡張する際の指針。詳細仕様・優先順位の確定はIssueや[_llm-docs/spec/personal_plot.md](./spec/personal_plot.md)と併せて参照する。
+テンプレート生成の対象外だが、`personal-plot`のように**検索パラメータで状態を持つページ**を拡張する際の指針。詳細仕様・優先順位の確定はIssueや[\_llm-docs/spec/personal_plot.md](./spec/personal_plot.md)と併せて参照する。
 
 ### `targetId`と`question`の併用
 
