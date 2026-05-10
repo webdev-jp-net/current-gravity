@@ -75,14 +75,6 @@ export const usePersonalPlot = () => {
     void router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }, [isMounted, parsedFromUrl, pathname, questionFromUrl, router, searchParams])
 
-  /** Group Editor からの `targetId` 付き遷移時、先頭設問付近へスクロール */
-  useEffect(() => {
-    if (!isMounted || !targetIdFromUrl) return
-    requestAnimationFrame(() => {
-      document.getElementById('question-0')?.scrollIntoView({ behavior: 'smooth' })
-    })
-  }, [isMounted, targetIdFromUrl])
-
   const syncFormValid = useCallback(() => {
     const el = formRef.current
     if (!el) return
@@ -94,7 +86,7 @@ export const usePersonalPlot = () => {
     syncFormValid()
   }, [isMounted, syncFormValid])
 
-  /** URL シード直後など、20 問そろったあと submit 活性を合わせる */
+  /** URL からの事前選択直後など、20 問そろったあと submit 活性を合わせる */
   useEffect(() => {
     if (!isMounted || !isCompleteAnswersRecord(effectiveDefaults)) return
     requestAnimationFrame(() => syncFormValid())
