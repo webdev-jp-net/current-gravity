@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { groupAtom } from '@/data/store'
 
 import type { PersonalPlot } from '@/type/personalPlot'
 
 export const useHome = () => {
+  const router = useRouter()
   const pathname = usePathname()
   const [group, setGroup] = useAtom(groupAtom)
   const [isMounted, setIsMounted] = useState(false)
@@ -177,6 +178,10 @@ export const useHome = () => {
 
   const completePersonList = group.personalPlotList.filter(isPersonComplete)
 
+  const handleStartMeasurement = () => {
+    router.push('/personal-plot')
+  }
+
   return {
     isMounted,
     group,
@@ -186,5 +191,6 @@ export const useHome = () => {
     updatePerson,
     handleImport,
     deletePerson,
+    handleStartMeasurement,
   }
 }

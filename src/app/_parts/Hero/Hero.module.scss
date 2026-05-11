@@ -7,16 +7,6 @@
 .title {
   display: flex;
   place-items: center;
-  background: var(--bg-primary)
-    linear-gradient(
-      to top,
-      #fff,
-      rgb(0 0 0 / 10%) 1px,
-      rgb(0 0 0 / 5%) rem(2),
-      rgb(0 0 0 / 2.5%) rem(8),
-      transparent rem(32)
-    );
-  border-bottom: 1px solid #fff6;
 
   @include mq(fromWide) {
     height: min(40svh, rem(420));
@@ -37,11 +27,11 @@
   gap: var(--spacing-lg);
 
   @include mq(narrow) {
-    padding-top: var(--spacing-2xl);
+    padding-top: var(--spacing-md);
   }
 
   @include mq(fromWide) {
-    padding-top: var(--spacing-3xl);
+    padding-top: var(--spacing-xl);
   }
 
   p {
@@ -52,5 +42,18 @@
     @include mq(fromWide) {
       @include txt-paragraph;
     }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+
+  @include mq(narrow) {
+    margin: var(--spacing-sm) 0 0;
+  }
+
+  @include mq(fromWide) {
+    margin: var(--spacing-md) 0 0;
   }
 }

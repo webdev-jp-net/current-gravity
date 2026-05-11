@@ -35,7 +35,7 @@ export const PersonalPlotView: FC = () => {
   return (
     <main className={styles.personalPlot} data-testid="personal-plot">
       <div className={styles.intro}>
-        <h1 className={styles.pageTitle}>いまのちょうどいい重心を測る</h1>
+        <h1 className={styles.pageTitle}>いまの重心を測定</h1>
         <p>
           これから測るのは、あなたの重心（コンフォートゾーン）です。
           <br />
@@ -47,7 +47,7 @@ export const PersonalPlotView: FC = () => {
           最初の10問は南北の軸、後半の10問は東西の軸での重心を測っています。
         </p>
         <p>
-          それぞれの質問について、「こう思うだろうけど実際に見せる行動はこちらだろうな…」と思い当たるものがあるかもしれません。
+          それぞれの質問について、「こう思うだろうけど実際にとる行動はこちらだろう…」と思い当たるものがあるかもしれません。
           <br />
           この20問は、なにを選んでも正解不正解はありません。なるべく本音を選ぶほうが重心をありのまま測れます。
         </p>

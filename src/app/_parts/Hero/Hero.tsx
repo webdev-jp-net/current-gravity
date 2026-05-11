@@ -1,12 +1,15 @@
 import type { FC } from 'react'
 
+import { Button } from '@/components/Button'
+
 import styles from './Hero.module.scss'
 
 type HeroProps = {
   className?: React.HTMLAttributes<HTMLDivElement>['className']
+  onStartMeasurement: () => void
 }
 
-export const Hero: FC<HeroProps> = ({ className = '' }) => {
+export const Hero: FC<HeroProps> = ({ className = '', onStartMeasurement }) => {
   const customClass = [className]
   return (
     <header className={[styles.hero, ...customClass].join(' ')}>
@@ -31,6 +34,11 @@ export const Hero: FC<HeroProps> = ({ className = '' }) => {
           そして、他の人の「いまの重心」も可視化し同じ地図に置いてみると、チーム全体の特長やメンバーどうしの棲み分けを知る手がかりにもなります。これはチームダイナミクスを考える材料になるでしょう。
         </p>
         <p>なお、このモデルは評価の正しさ・能力・成果の大小を測るものではありません。</p>
+        <div className={styles.footer}>
+          <Button size="full" onClick={onStartMeasurement}>
+            いまの重心を測定
+          </Button>
+        </div>
       </div>
     </header>
   )
