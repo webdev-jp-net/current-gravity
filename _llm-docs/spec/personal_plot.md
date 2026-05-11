@@ -31,17 +31,17 @@
 
 #### 入力ルート（`/personal-plot`）
 
-- 単一の HTML `<form>` に20問をまとめ、**操作中は URL やグローバルストアに回答進捗を同期しない**。各設問はネイティブの `radio`（非制御）とし、**すべてのグループに `required`** を付与する。送信ボタン等の活性は **`form.checkValidity()` に基づく**（フォームの `input` / `change` で再評価）。
-- **「結果を見る」**（`submit`）時にのみ `FormData` で20問を読み取り、**クエリは `question` のみ**付けて `/personal-plot/result` へ遷移する。Group Editor 経由などで `/personal-plot` に **`targetId` クエリ**がある場合は、送信時に **`sessionStorage` に退避**し、結果側で読み取って `groupAtom` 反映に使う（**共有 URL には載せない**）。
-- `/personal-plot` ロード時に URL に `targetId` がある場合は、**先頭の質問ブロック付近へスクロール**して入力開始しやすくする。マウント時に前回の `sessionStorage` の target はクリアし、**今回の送信で改めて書く**。
-- `/personal-plot` の URL に **`question` が付いた状態**（結果ページの「結果を編集する」からの戻りなど）では、**その値でフォームをシード**する。
+- 単一のHTML `<form>` に20問をまとめ、**操作中はURLやグローバルストアに回答進捗を同期しない**。各設問はネイティブの `radio`（非制御）とし、**すべてのグループに `required`** を付与する。送信ボタン等の活性は **`form.checkValidity()` に基づく**（フォームの `input` / `change` で再評価）。
+- **「結果を見る」**（`submit`）時にのみ `FormData` で20問を読み取り、**クエリは `question` のみ**付けて `/personal-plot/result` へ遷移する。グループエディター経由などで `/personal-plot` に **`targetId` クエリ**がある場合は、送信時に **`sessionStorage` に退避**し、結果側で読み取って `groupAtom` 反映に使う（**共有URLには載せない**）。
+- `/personal-plot` マウント時に前回の `sessionStorage` のtargetはクリアし、**今回の送信で改めて書く**。
+- `/personal-plot` の URL に `?question=` が付いて到達するのは、**結果ページの「結果を編集する」を押したときの1経路のみ**。マウント直後にその値を読み取り、**20問それぞれの `defaultChecked` に反映して、事前選択済みの状態でフォームを開く**。同時に `router.replace` により **URL から `?question=` を即座に剥がす**ため、アドレスバー上に `/personal-plot?question=…` の形は残らず、共有・ブックマークの対象にもならない（**事前選択された値はマウント時に内部 state へ固定保持される**）。
 
 #### 結果ページ（`/personal-plot/result`）
 
-- **URL の `question` で20問分が揃っている場合**に、共有 `Matrix` で位置を表示する。マウント時に **同一内容の `groupAtom` 反映を1回**行う（共有 URL の直リンク・リロードに対応）。Strict Mode 等での二重実行は **sessionStorage キー**で抑止する。
-- **`targetId` の解決**: 主に入力フォームから結果へ遷移した直後の **`sessionStorage`**。旧ブックマーク用に結果 URL に **`targetId` クエリ**が残っている場合は初回マウントで読み取り、**`replace` でクエリから外す**（共有に id が混ざらないようにする）。
-- Matrix 直下に「みんなのいまの重心に追加」と「この結果のURLをコピー」を置く。「みんなのいまの重心に追加」は、未反映の場合は `groupAtom` を更新したうえでトップの `/#matrix` へ遷移する。**コピーする URL は `question` のみ**（`/personal-plot/result` のパス＋クエリ）。`targetId` は含めない。
-- 各質問ブロックは **読み取り専用表示**（操作感は変更不可）。**「結果を編集する」**は同一 `<form>` 内の `submit` とし、結果ページで既に保持している回答（**URL の `question` から復元したデータ**）をシリアライズして **`/personal-plot` へ遷移**する（必要なら **`targetId` をクエリに含め**、入力側でスクロール・更新文脈を維持する）。
+- **URL の `question` で20問分が揃っている場合**に、共有 `Matrix` で位置を表示する。マウント時に **同一内容の `groupAtom` 反映を1回**行う（共有URLの直リンク・リロードに対応）。Strict Mode等での二重実行は **sessionStorage キー**で抑止する。
+- **`targetId` の解決**: 主に入力フォームから結果へ遷移した直後の **`sessionStorage`**。旧ブックマーク用に結果URLに **`targetId` クエリ**が残っている場合は初回マウントで読み取り、**`replace` でクエリから外す**（共有にidが混ざらないようにする）。
+- マトリクス直下に「みんなのいまの重心に追加」と「この結果のURLをコピー」を置く。「みんなのいまの重心に追加」は、未反映の場合は `groupAtom` を更新したうえでトップの `/#matrix` へ遷移する。**コピーするURLは `question` のみ**（`/personal-plot/result` のパス＋クエリ）。`targetId` は含めない。
+- 各質問ブロックは **読み取り専用表示**（操作感は変更不可）。**「結果を編集する」**は同一 `<form>` 内の `submit` とし、結果ページですでに保持している回答（**URL の `question` から復元したデータ**）をシリアライズして **`/personal-plot` へ遷移**する（必要なら **`targetId` をクエリに含め**、入力側で更新文脈を維持する）。
 
 ### 直接入力およびインポート (Import UI)
 

@@ -21,13 +21,14 @@ export const HomeView: FC = () => {
     updatePerson,
     handleImport,
     deletePerson,
+    handleStartMeasurement,
   } = useHome()
 
   if (!isMounted) return null
 
   return (
     <main className={styles.home} data-testid="home">
-      <Hero />
+      <Hero onStartMeasurement={handleStartMeasurement} />
       <div className={styles.matrix}>
         <Matrix personalPlotList={completePersonList} />
       </div>

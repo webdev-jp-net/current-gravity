@@ -45,14 +45,9 @@ function isOverlapping(rectA: LabelRect, rectB: LabelRect): boolean {
   return !(aRight < bLeft || aLeft > bRight || aBottom < bTop || aTop > bBottom)
 }
 
-export type PointWithLayout = LabelRect &
-  PersonalPlot & { textAnchor: 'middle' | 'start' | 'end' }
+export type PointWithLayout = LabelRect & PersonalPlot & { textAnchor: 'middle' | 'start' | 'end' }
 
-export function useMatrix(
-  personalPlotList: PersonalPlot[],
-  width: number,
-  height: number
-) {
+export function useMatrix(personalPlotList: PersonalPlot[], width: number, height: number) {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   const innerWidth = width - MARGIN.left - MARGIN.right
@@ -76,19 +71,15 @@ export function useMatrix(
     [innerHeight]
   )
 
-  const center = useMemo(
-    () => ({ x: xScale(0), y: yScale(0) }),
-    [xScale, yScale]
-  )
+  const center = useMemo(() => ({ x: xScale(0), y: yScale(0) }), [xScale, yScale])
 
   const pointsWithLayout = useMemo((): PointWithLayout[] => {
-    const layouts: LabelRect[] = personalPlotList.map((person) => {
+    const layouts: LabelRect[] = personalPlotList.map(person => {
       const valueLocus = person.ownership - person.consensus
       const boundary = person.identityFusion - person.diversity
       const x = xScale(boundary)
       const y = yScale(valueLocus)
-      const estimatedWidth =
-        person.displayName.length * (FONT_SIZE * 0.8) + PADDING * 2
+      const estimatedWidth = person.displayName.length * (FONT_SIZE * 0.8) + PADDING * 2
       return {
         id: person.id,
         x,
@@ -134,9 +125,8 @@ export function useMatrix(
       ...personalPlotList[i],
       ...layout,
       textAnchor:
-        SEARCH_PATTERNS.find(
-          (p) => p.ox === layout.offsetX && p.oy === layout.offsetY
-        )?.align ?? 'middle',
+        SEARCH_PATTERNS.find(p => p.ox === layout.offsetX && p.oy === layout.offsetY)?.align ??
+        'middle',
     }))
   }, [personalPlotList, xScale, yScale])
 

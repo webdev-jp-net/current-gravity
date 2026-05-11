@@ -4,12 +4,7 @@ import type { FC } from 'react'
 
 import styles from './Guide.module.scss'
 
-import {
-  AXIS_DESCRIPTION,
-  AXIS_LABEL,
-  POLE_DESCRIPTION,
-  POLE_LABEL,
-} from '@/constants/model'
+import { AXIS_DESCRIPTION, AXIS_LABEL, POLE_DESCRIPTION, POLE_LABEL } from '@/constants/model'
 
 export const Guide: FC = () => {
   return (
