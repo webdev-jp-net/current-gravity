@@ -20,7 +20,12 @@ type PoleLabelProps = ComponentProps<'span'> & {
   withDescription?: boolean
 }
 
-export const PoleLabel: FC<PoleLabelProps> = ({ pole, icon = true, withDescription = false, ...props }) => {
+export const PoleLabel: FC<PoleLabelProps> = ({
+  pole,
+  icon = true,
+  withDescription = false,
+  ...props
+}) => {
   const uid = useId()
   const anchorName = `--pole-label-${uid.replace(/:/g, '')}`
   const popoverId = `pole-description-${uid.replace(/:/g, '')}`

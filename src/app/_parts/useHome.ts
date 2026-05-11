@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useAtom } from 'jotai'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { groupAtom } from '@/data/store'
 
 import type { PersonalPlot } from '@/type/personalPlot'
 
 export const useHome = () => {
+  const router = useRouter()
   const pathname = usePathname()
   const [group, setGroup] = useAtom(groupAtom)
   const [isMounted, setIsMounted] = useState(false)
@@ -37,8 +38,7 @@ export const useHome = () => {
       initialLoadHadParams.current = true
       const personalPlotList: PersonalPlot[] = plotParams.map((p, index) => {
         const parts = p.split(',')
-        const [displayName, ownership, consensus, diversity, identityFusion] =
-          parts
+        const [displayName, ownership, consensus, diversity, identityFusion] = parts
         return {
           id: `url-${index}-${Date.now()}`,
           displayName: displayName || '',
@@ -68,14 +68,8 @@ export const useHome = () => {
       params.set('name', group.name)
     }
 
-    group.personalPlotList.forEach((p) => {
-      const parts = [
-        p.displayName,
-        p.ownership,
-        p.consensus,
-        p.diversity,
-        p.identityFusion,
-      ]
+    group.personalPlotList.forEach(p => {
+      const parts = [p.displayName, p.ownership, p.consensus, p.diversity, p.identityFusion]
       if (p.focus) {
         parts.push('f')
       }
@@ -135,18 +129,18 @@ export const useHome = () => {
   ) => {
     setGroup({
       ...group,
-      personalPlotList: group.personalPlotList.map((p) =>
+      personalPlotList: group.personalPlotList.map(p =>
         p.id === id ? { ...p, [field]: value } : p
       ),
     })
   }
 
   const handleImport = (id: string, csvValue: string) => {
-    const values = csvValue.split(',').map((v) => parseInt(v.trim()))
-    if (values.length === 4 && values.every((v) => !isNaN(v))) {
+    const values = csvValue.split(',').map(v => parseInt(v.trim()))
+    if (values.length === 4 && values.every(v => !isNaN(v))) {
       setGroup({
         ...group,
-        personalPlotList: group.personalPlotList.map((p) =>
+        personalPlotList: group.personalPlotList.map(p =>
           p.id === id
             ? {
                 ...p,
@@ -164,7 +158,7 @@ export const useHome = () => {
   const deletePerson = (id: string) => {
     setGroup({
       ...group,
-      personalPlotList: group.personalPlotList.filter((p) => p.id !== id),
+      personalPlotList: group.personalPlotList.filter(p => p.id !== id),
     })
   }
 
@@ -184,6 +178,10 @@ export const useHome = () => {
 
   const completePersonList = group.personalPlotList.filter(isPersonComplete)
 
+  const handleStartMeasurement = () => {
+    router.push('/personal-plot')
+  }
+
   return {
     isMounted,
     group,
@@ -193,5 +191,6 @@ export const useHome = () => {
     updatePerson,
     handleImport,
     deletePerson,
+    handleStartMeasurement,
   }
 }

@@ -60,7 +60,7 @@
 ### SCSS実装原則
 
 すべての`*.module.scss`は、rem関数、templateのmixin、レスポンシブ対応のmqを必ず利用します。
-したがって、ファイル先頭での_variable読み込みが必須です。
+したがって、ファイル先頭での\_variable読み込みが必須です。
 
 ```scss
 @use '@/style/_variable' as *;
