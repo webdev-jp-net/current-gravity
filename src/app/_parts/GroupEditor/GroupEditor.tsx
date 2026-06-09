@@ -81,7 +81,6 @@ export const GroupEditor: FC<GroupEditorProps> = ({
                       draggable
                       onDragStart={e => handleDragStart(e, index)}
                       onDragEnd={handleDragEnd}
-                      aria-label="ドラッグして並べ替え"
                     >
                       <GripVertical size={18} aria-hidden />
                     </td>
