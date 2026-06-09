@@ -32,6 +32,9 @@ const FONT_SIZE = 12
 const LABEL_HEIGHT = 18
 const PADDING = 4
 const MARGIN = { top: 60, right: 60, bottom: 60, left: 60 }
+// 対向する素点が相殺して矩形の辺が潰れる（width/height が 0 になる）のを防ぐための最小ハーフサイズ。
+// 合成スケール（domain [-20, 20]）の単位で、1 は素点 0.5 に相当する。
+const MIN_AREA_HALF = 1
 
 function isOverlapping(rectA: LabelRect, rectB: LabelRect): boolean {
   const aLeft = rectA.x + rectA.offsetX - rectA.width / 2
@@ -45,7 +48,14 @@ function isOverlapping(rectA: LabelRect, rectB: LabelRect): boolean {
   return !(aRight < bLeft || aLeft > bRight || aBottom < bTop || aTop > bBottom)
 }
 
-export type PointWithLayout = LabelRect & PersonalPlot & { textAnchor: 'middle' | 'start' | 'end' }
+export type PointWithLayout = LabelRect &
+  PersonalPlot & {
+    textAnchor: 'middle' | 'start' | 'end'
+    rectX: number
+    rectY: number
+    rectWidth: number
+    rectHeight: number
+  }
 
 export function useMatrix(personalPlotList: PersonalPlot[], width: number, height: number) {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
@@ -121,13 +131,34 @@ export function useMatrix(personalPlotList: PersonalPlot[], width: number, heigh
       current.offsetY = bestPattern.oy
     })
 
-    return layouts.map((layout, i) => ({
-      ...personalPlotList[i],
-      ...layout,
-      textAnchor:
-        SEARCH_PATTERNS.find(p => p.ox === layout.offsetX && p.oy === layout.offsetY)?.align ??
-        'middle',
-    }))
+    return layouts.map((layout, i) => {
+      const person = personalPlotList[i]
+      // 矩形の中心はプロット点（valueLocus, boundary）に一致させる。
+      // 半高・半幅は対向する素点の和の絶対値（|ownership+consensus| / |identityFusion+diversity|）に等しいが、
+      // 既存の合成スケール（domain [-20, 20]）に通すことで素点スケール（-10〜10）を実現する（DRY）。
+      // 和が0に潰れると矩形が描画されないため、MIN_AREA_HALF を下限とする。
+      // 下限は中心対称に適用するため、矩形の中心はプロット点に一致したまま保たれる。
+      const valueLocus = person.ownership - person.consensus
+      const boundary = person.identityFusion - person.diversity
+      const halfHeight = Math.max(Math.abs(person.ownership + person.consensus), MIN_AREA_HALF)
+      const halfWidth = Math.max(Math.abs(person.identityFusion + person.diversity), MIN_AREA_HALF)
+      const topY = yScale(valueLocus + halfHeight)
+      const bottomY = yScale(valueLocus - halfHeight)
+      const rightX = xScale(boundary + halfWidth)
+      const leftX = xScale(boundary - halfWidth)
+      return {
+        ...person,
+        ...layout,
+        textAnchor:
+          SEARCH_PATTERNS.find(p => p.ox === layout.offsetX && p.oy === layout.offsetY)?.align ??
+          'middle',
+        // 負の素点でも破綻しないよう絶対値で算出する。
+        rectX: Math.min(leftX, rightX),
+        rectY: Math.min(topY, bottomY),
+        rectWidth: Math.abs(rightX - leftX),
+        rectHeight: Math.abs(bottomY - topY),
+      }
+    })
   }, [personalPlotList, xScale, yScale])
 
   return {
