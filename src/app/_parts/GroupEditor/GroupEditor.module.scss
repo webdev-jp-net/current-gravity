@@ -75,7 +75,7 @@
   line-height: 1.8;
   color: var(--txt-description);
 
-  &:first-child {
+  &:nth-child(2) {
     width: 25%;
   }
 
@@ -86,6 +86,16 @@
 
   .theadRow & {
     padding-block: var(--spacing-sm);
+  }
+}
+
+.handleCell {
+  width: rem(36);
+  color: var(--txt-description);
+  cursor: grab;
+
+  @include mq(narrow) {
+    display: none !important;
   }
 }
 
@@ -110,7 +120,7 @@
   @include mq(fromWide) {
     padding-block: var(--spacing-md);
 
-    &:first-child {
+    &:nth-child(2) {
       padding-right: var(--spacing-md);
     }
   }
