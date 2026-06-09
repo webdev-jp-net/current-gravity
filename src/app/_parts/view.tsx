@@ -21,6 +21,7 @@ export const HomeView: FC = () => {
     updatePerson,
     handleImport,
     deletePerson,
+    movePerson,
     handleStartMeasurement,
   } = useHome()
 
@@ -39,6 +40,7 @@ export const HomeView: FC = () => {
         onAddPerson={addPerson}
         onUpdatePerson={updatePerson}
         onDeletePerson={deletePerson}
+        onMovePerson={movePerson}
         onImport={handleImport}
       />
       <Guide />

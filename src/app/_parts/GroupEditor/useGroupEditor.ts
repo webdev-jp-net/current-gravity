@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, type DragEvent } from 'react'
 
 import { useAtomValue } from 'jotai'
 
@@ -35,8 +35,9 @@ function buildHomeShareUrlFromGroup(group: PersonalPlotGroup): string {
   return qs ? `${origin}/?${qs}` : `${origin}/`
 }
 
-export const useGroupEditor = () => {
+export const useGroupEditor = (onMovePerson: (fromIndex: number, toIndex: number) => void) => {
   const [isShared, setIsShared] = useState(false)
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null)
   const group = useAtomValue(groupAtom)
 
   const handleShare = useCallback(() => {
@@ -50,5 +51,32 @@ export const useGroupEditor = () => {
     })
   }, [group])
 
-  return { isShared, handleShare }
+  const handleDragStart = useCallback((e: DragEvent<HTMLElement>, index: number) => {
+    // 既定のドラッグ画像はハンドル要素（グリップアイコン）だけになるため、行全体に差し替える
+    const row = e.currentTarget.closest('tr')
+    if (row) {
+      e.dataTransfer.setDragImage(row, 0, 0)
+    }
+    setDraggingIndex(index)
+  }, [])
+
+  const handleDragOver = useCallback((e: DragEvent<HTMLElement>) => {
+    e.preventDefault()
+  }, [])
+
+  const handleDrop = useCallback(
+    (index: number) => {
+      if (draggingIndex !== null) {
+        onMovePerson(draggingIndex, index)
+      }
+      setDraggingIndex(null)
+    },
+    [draggingIndex, onMovePerson]
+  )
+
+  const handleDragEnd = useCallback(() => {
+    setDraggingIndex(null)
+  }, [])
+
+  return { isShared, handleShare, handleDragStart, handleDragOver, handleDrop, handleDragEnd }
 }

@@ -162,6 +162,17 @@ export const useHome = () => {
     })
   }
 
+  const movePerson = (fromIndex: number, toIndex: number) => {
+    if (fromIndex === toIndex) return
+    const personalPlotList = [...group.personalPlotList]
+    const [moved] = personalPlotList.splice(fromIndex, 1)
+    personalPlotList.splice(toIndex, 0, moved)
+    setGroup({
+      ...group,
+      personalPlotList,
+    })
+  }
+
   const isPersonComplete = (person: PersonalPlot): boolean => {
     return (
       person.displayName.trim() !== '' &&
@@ -191,6 +202,7 @@ export const useHome = () => {
     updatePerson,
     handleImport,
     deletePerson,
+    movePerson,
     handleStartMeasurement,
   }
 }
