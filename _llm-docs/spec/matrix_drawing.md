@@ -11,7 +11,7 @@ CURRENT GRAVITYのマトリクス（分布図）を描画するための技術�
 
 ## 実装リソース
 
-- **主要コンポーネント**: `src/components/Matrix/`
+- **主要コンポーネント**: `src/components/Matrix/Matrix.tsx`
 - **技術スタック**:
   - **ライブラリ**: VisX（Airbnb製Reactビジュアライゼーションライブラリ）
     - 使用パッケージ: `@visx/group`, `@visx/shape`, `@visx/scale`, `@visx/responsive`
