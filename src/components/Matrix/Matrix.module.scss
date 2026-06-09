@@ -52,6 +52,15 @@
   @include txt-description;
 }
 
+.plotArea {
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  fill: var(--txt-muted);
+  fill-opacity: 0.125;
+  rx: 50%;
+  ry: 50%;
+}
+
 .plotPoint {
   filter: drop-shadow(0 0 rem(2) var(--txt-accent));
   fill: var(--txt-accent);
