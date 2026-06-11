@@ -2,7 +2,7 @@
 
 import type { FC } from 'react'
 
-import { Trash2, ClipboardList, Share2, Check, UserPlus } from 'lucide-react'
+import { Trash2, ClipboardList, Share2, Check, UserPlus, GripVertical } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/Button'
@@ -20,6 +20,7 @@ export interface GroupEditorProps {
   onAddPerson: () => void
   onUpdatePerson: (id: string, field: keyof PersonalPlot, value: string | number | boolean) => void
   onDeletePerson: (id: string) => void
+  onMovePerson: (fromIndex: number, toIndex: number) => void
   onImport: (id: string, csvValue: string) => void
 }
 
@@ -30,10 +31,12 @@ export const GroupEditor: FC<GroupEditorProps> = ({
   onAddPerson,
   onUpdatePerson,
   onDeletePerson,
+  onMovePerson,
   onImport,
 }) => {
   const router = useRouter()
-  const { isShared, handleShare } = useGroupEditor()
+  const { isShared, handleShare, handleDragStart, handleDragOver, handleDrop, handleDragEnd } =
+    useGroupEditor(onMovePerson)
 
   return (
     <div id="group-editor" className={styles.groupEditor}>
@@ -52,6 +55,7 @@ export const GroupEditor: FC<GroupEditorProps> = ({
           <table className={styles.table}>
             <thead>
               <tr className={styles.theadRow}>
+                <th className={`${styles.th} ${styles.handleCell}`} aria-hidden />
                 <th className={styles.th}>名前</th>
                 <th className={styles.th}>オーナーシップ, コンセンサス, 自立, 融合</th>
                 <th className={styles.th}></th>
@@ -60,13 +64,26 @@ export const GroupEditor: FC<GroupEditorProps> = ({
             <tbody>
               {personalPlotList.length === 0 ? (
                 <tr>
-                  <td colSpan={3} className={styles.emptyCell}>
+                  <td colSpan={4} className={styles.emptyCell}>
                     「人物を追加」ボタンをクリックしてデータを入力してください
                   </td>
                 </tr>
               ) : (
-                personalPlotList.map(person => (
-                  <tr key={person.id} className={styles.tbodyRow}>
+                personalPlotList.map((person, index) => (
+                  <tr
+                    key={person.id}
+                    className={styles.tbodyRow}
+                    onDragOver={handleDragOver}
+                    onDrop={() => handleDrop(index)}
+                  >
+                    <td
+                      className={`${styles.td} ${styles.handleCell}`}
+                      draggable
+                      onDragStart={e => handleDragStart(e, index)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <GripVertical size={18} aria-hidden />
+                    </td>
                     <td className={styles.td}>
                       <input
                         type="text"
