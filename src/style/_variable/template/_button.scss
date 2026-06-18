@@ -78,6 +78,7 @@
       inset rem(-1) rem(-1) rem(2) rgb(0 0 0 / 5%),
       inset rem(1) rem(1) rem(3) rem(1) #fff;
     transition:
+      color var(--transition-ease),
       box-shadow var(--transition-ease),
       border-color var(--transition-ease),
       background-color var(--transition-ease),
@@ -100,16 +101,17 @@
     }
 
     &:hover:not(:disabled) {
+      color: var(--txt-hover);
       text-shadow: 0 0 0 #fff0;
-      border: 1px solid transparent;
+      border: 1px solid rgb(242 242 242);
       box-shadow:
-        0 0 rem(16) rgb(0 0 0 / 0%),
-        rem(-3) rem(-3) rem(4) #fff6,
-        rem(3) rem(3) rem(4) rgb(0 0 0 / 0%),
-        rem(-1) rem(-1) rem(2) #fff0,
-        rem(1) rem(1) rem(2) rgb(0 0 0 / 5%),
-        inset rem(-1) rem(-1) rem(1) rgb(0 0 0 / 5%),
-        inset rem(1) rem(1) rem(1) rem(1) #fff;
+        0 0 rem(12) rgb(0 0 0 / 10%),
+        rem(-6) rem(-6) rem(12) rgb(255 255 255 / 50%),
+        rem(6) rem(6) rem(12) rgb(0 0 0 / 5%),
+        rem(-3) rem(-3) rem(6) rgb(255 255 255 / 80%),
+        rem(3) rem(3) rem(6) rgb(0 0 0 / 5%),
+        inset rem(-1) rem(-1) rem(2) rgb(0 0 0 / 5%),
+        inset rem(1) rem(1) rem(4) rem(1) rgb(255 255 255 / 100%);
     }
   }
 
