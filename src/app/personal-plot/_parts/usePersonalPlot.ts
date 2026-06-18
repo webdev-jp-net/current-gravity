@@ -35,6 +35,7 @@ export const usePersonalPlot = () => {
 
   const formRef = useRef<HTMLFormElement>(null)
   const [formValid, setFormValid] = useState(false)
+  const [answeredCount, setAnsweredCount] = useState(0)
 
   const [orderedQuestionList, setOrderedQuestionList] = useState<
     (typeof questionListData)[number][]
@@ -75,26 +76,27 @@ export const usePersonalPlot = () => {
     void router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }, [isMounted, parsedFromUrl, pathname, questionFromUrl, router, searchParams])
 
-  const syncFormValid = useCallback(() => {
+  const syncFormState = useCallback(() => {
     const el = formRef.current
     if (!el) return
     setFormValid(el.checkValidity())
+    setAnsweredCount(Object.keys(readAnswersFromForm(el)).length)
   }, [])
 
   useEffect(() => {
     if (!isMounted) return
-    syncFormValid()
-  }, [isMounted, syncFormValid])
+    syncFormState()
+  }, [isMounted, syncFormState])
 
-  /** URL からの事前選択直後など、20 問そろったあと submit 活性を合わせる */
+  /** URLからの事前選択直後など、20問そろったあとsubmit活性を合わせる */
   useEffect(() => {
     if (!isMounted || !isCompleteAnswersRecord(effectiveDefaults)) return
-    requestAnimationFrame(() => syncFormValid())
-  }, [effectiveDefaults, isMounted, syncFormValid])
+    requestAnimationFrame(() => syncFormState())
+  }, [effectiveDefaults, isMounted, syncFormState])
 
   const handleFormInput = useCallback(() => {
-    syncFormValid()
-  }, [syncFormValid])
+    syncFormState()
+  }, [syncFormState])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -131,6 +133,7 @@ export const usePersonalPlot = () => {
     isMounted,
     formRef,
     formValid,
+    answeredCount,
     handleFormInput,
     effectiveDefaults,
     valueLocusQuestionList,
