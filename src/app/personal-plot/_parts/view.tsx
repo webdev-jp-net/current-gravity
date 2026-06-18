@@ -16,6 +16,7 @@ export const PersonalPlotView: FC = () => {
     isMounted,
     formRef,
     formValid,
+    answeredCount,
     handleFormInput,
     effectiveDefaults,
     valueLocusQuestionList,
@@ -93,11 +94,22 @@ export const PersonalPlotView: FC = () => {
             variant="basic"
             size="full"
             type="button"
-            className={styles.submitButton}
+            className={styles.backButton}
             onClick={handleBack}
           >
             測定をやめて戻る
           </Button>
+          <div className={styles.progress}>
+            <p className={styles.progressCount}>
+              {answeredCount} / {totalCount}問
+            </p>
+            <div className={styles.progressBar}>
+              <div
+                className={styles.done}
+                style={{ width: `${totalCount ? (answeredCount / totalCount) * 100 : 0}%` }}
+              ></div>
+            </div>
+          </div>
           <Button
             variant="basic"
             size="full"
