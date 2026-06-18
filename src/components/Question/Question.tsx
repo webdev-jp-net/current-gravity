@@ -12,7 +12,7 @@ import { useQuestion } from './useQuestion'
 
 import type { QuestionItem } from '@/type/question'
 
-import { STEP_LIST, AXIS_DESCRIPTION, POLE_LABEL, OPPOSITE_POLE } from '@/constants/model'
+import { STEP_LIST, AXIS_LABEL, POLE_LABEL, OPPOSITE_POLE } from '@/constants/model'
 
 type QuestionProps = {
   item: QuestionItem
@@ -45,8 +45,10 @@ export const Question: FC<QuestionProps> = ({
     <section id={`question-${index}`} className={styles.question}>
       <header className={styles.header}>
         <div className={styles.headerCategory}>
-          <p className={styles.headerLabel}>{AXIS_DESCRIPTION[axis]}</p>
-          <PoleLabel pole={pole} className={styles.headerPoleLabel} />
+          <p className={styles.headerLabel}>
+            {AXIS_LABEL[axis]}&nbsp;/&nbsp;
+            <PoleLabel pole={pole} className={styles.headerPoleLabel} />
+          </p>
         </div>
         <span className={styles.index}>Q{index + 1}</span>
         <h3 className={styles.title}>

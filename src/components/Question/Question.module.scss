@@ -10,7 +10,7 @@
   @include mq(narrow) {
     gap: var(--spacing-xl);
     padding: var(--spacing-xl) var(--spacing-lg);
-    scroll-margin-top: var(--spacing-xl);
+    scroll-margin-top: var(--spacing-sm);
   }
 
   @include mq(fromWide) {
