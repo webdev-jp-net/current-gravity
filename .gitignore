@@ -34,3 +34,6 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# Claude Code (作業用の一時生成物)
+.claude/plans/

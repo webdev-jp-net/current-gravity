@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 概要
 
-チャットでユーザーが伝えた概要クラスの情報をもとに、`gh-issue`スキルへ渡すためのIssue原稿を作成し、`.claude/tmp/issue/`に保存する。
+チャットでユーザーが伝えた概要クラスの情報をもとに、`gh-issue`スキルへ渡すためのIssue原稿を作成し、`.claude/plans/issue/`に保存する。
 
 ## ワークフロー
 
@@ -100,8 +100,8 @@ ExitPlanModeツールで計画の承認を得た後、`.claude/plans/issue/[slug
 保存後、以下をユーザーに提示する：
 
 ```
-保存しました: .claude/tmp/issue/[slug]-[timestamp].md
+保存しました: .claude/plans/issue/[slug]-[timestamp].md
 
 Issue を作成するには:
-/gh-issue .claude/tmp/issue/[slug]-[timestamp].md
+/gh-issue .claude/plans/issue/[slug]-[timestamp].md
 ```

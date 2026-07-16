@@ -1,77 +1,35 @@
-# プロジェクト指示
+# 🤖 Claude Code セッション制御
 
-このファイルには、Claude Codeがこのプロジェクトで作業する際の最重要指示が含まれています。
+## 初回セッション時のみ
 
-**PROTOCOL**
-セッションを開始したとき、タスクを実行するときは必ず`/_llm-rules/session_control.md`を参照します。
-ルールチェーンにしたがって必要な仕様書を省略なく読み込み、必要なタスクを実行してください。
+1. Serena確認: `/mcp__serena__check_onboarding_performed`
+2. 必要ならオンボーディング実行
 
-## 開発ワークフロー
+## ルール読み込み手順
 
-このプロジェクトでは**pnpm**を使用します。npmやyarnは使用しないでください。
+- セッション開始時に`_llm-rules/`配下のすべてのルールファイルを読み込む。core_rules.mdを確認せずにタスクを進めてはいけない
+- 「必要に応じて選んで読む」は禁止
 
-### 利用可能なコマンド
+## タスク実行ワークフロー
 
-#### 開発
+セッション中の各タスクについて:
 
-```bash
-# 開発サーバーを起動
-pnpm dev
+1. タスクが関連する`_llm-docs/`配下の仕様書・運用ドキュメントを読み込み
+2. core_rules.mdのプロセスにしたがって実行開始
+3. 状態記録・検証ループ・実行履歴の記録は`_llm-rules/self_improvement.md`に従う（記録の正本はSerena memories）
 
-# 本番ビルド
-pnpm build
+## 用語統一システム
 
-# 本番サーバーを起動
-pnpm start
-```
+- 用語の正式な情報源として`_llm-docs/dictionary.md`を使用
 
-#### コード品質
+## 厳守事項
 
-```bash
-# ESLintでJavaScript/TypeScriptをチェック
-pnpm lint
+- 仕様書の全文を読み、書かれた通りに実装（解釈・要約禁止）
+- 仕様の空白を一般論で補完しない
+- 仕様に不明点・空白がある場合は必ずユーザに質問
+- 既存コードのパターンを最優先（ベストプラクティスより優先）
+- コミットは明示的な承認後のみ
 
-# StylelintでSCSSをチェック
-pnpm lint:style
+---
 
-# Lint結果に応じてコードを自動修正
-pnpm lint:fix
-
-# 全てのコードをフォーマット（Stylelint + Prettier）
-pnpm format
-
-# TypeScriptの型チェック
-pnpm typecheck
-```
-
-### 開発フロー
-
-1. **機能開発前**
-   - `pnpm typecheck`で型エラーがないことを確認
-   - `pnpm lint`でリンティングエラーがないことを確認
-
-2. **開発中**
-   - `pnpm dev`で開発サーバーを起動
-   - コンポーネントは`src/components/`に配置
-   - ページは`src/app/`に配置
-   - スタイルは`src/styles/`に配置
-
-3. **開発完了後**
-   - `pnpm format`でコードをフォーマット
-   - `pnpm lint`と`pnpm lint:style`でエラーがないことを確認
-   - `pnpm typecheck`で型エラーがないことを確認
-   - `pnpm build`でビルドが成功することを確認
-
-### 設定ファイル
-
-- `eslint.config.mjs` - ESLint設定
-- `stylelint.config.cjs` - Stylelint設定
-- `prettier.config.js` - Prettier設定
-- `tsconfig.json` - TypeScript設定
-- `next.config.js` - Next.js設定
-
-### プロジェクト構造
-
-- `src/app/` - Next.js App Router用のページとレイアウト
-- `src/components/` - 再利用可能なReactコンポーネント
-- `src/styles/` - SCSSファイルとスタイル関連のファイル
+**⚠️ このファイルはClaude Codeのエントリーポイント。すべてのロジックは\_llm-rules/ディレクトリにあります。**
