@@ -34,22 +34,22 @@
   font-weight: var(--font-weight-normal);
   color: var(--txt-paragraph);
   background-color: rgb(255 255 255 / 80%);
-  backdrop-filter: blur(rem(4));
   border: 1px solid var(--txt-on-fill);
   border-radius: rem(8);
   box-shadow: 0 rem(4) rem(16) rgb(0 0 0 / 10%);
+  backdrop-filter: blur(rem(4));
 
   @include mq(narrow) {
     inset: 0;
     width: calc(100vw - var(--spacing-md) - var(--spacing-md));
-    position-area: top left;
     margin: var(--spacing-md) var(--spacing-md);
+    position-area: top left;
   }
 
   @include mq(fromWide) {
     inset: unset;
-    position-area: top center;
     width: rem(360);
     margin: var(--spacing-sm);
+    position-area: top center;
   }
 }
