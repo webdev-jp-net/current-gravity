@@ -19,10 +19,10 @@
     "@visx/responsive": "^3.12.0",
     "@visx/scale": "^3.12.0",
     "@visx/shape": "^3.12.0",
-    "budoux": "^0.8.1",
+    "budoux": "^0.10.0",
     "jotai": "^2.16.2",
     "lucide-react": "^0.408.0",
-    "next": "^15.5.18",
+    "next": "^15.5.28",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -39,7 +39,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.14.0",
     "modern-css-reset": "^1.4.0",
-    "postcss": "^8.4.32",
+    "postcss": "^8.5.31",
     "postcss-scss": "^4.0.0",
     "prettier": "^3.4.2",
     "sass": "^1.97.3",
@@ -50,8 +50,5 @@
     "stylelint-order": "^6.0.0",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.18.0"
-  },
-  "pnpm": {
-    "minimumReleaseAge": 10080
   }
 }
