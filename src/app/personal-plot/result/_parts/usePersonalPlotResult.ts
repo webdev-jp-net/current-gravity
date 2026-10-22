@@ -1,7 +1,14 @@
 'use client'
 
 import type { FormEvent } from 'react'
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 
 import { useAtom } from 'jotai'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -27,6 +34,9 @@ const RESULT_COMMIT_STORAGE_PREFIX = 'pp-result-commit:'
 
 const noopSetMatrixPreview = (() => {}) as (list: PersonalPlot[]) => void
 
+/** useSyncExternalStore 用。値は変化しないので購読は何もしない */
+const subscribeNoop = () => () => {}
+
 export const usePersonalPlotResult = () => {
   const router = useRouter()
   const pathname = usePathname()
@@ -43,9 +53,16 @@ export const usePersonalPlotResult = () => {
 
   const [group, setGroup] = useAtom(groupAtom)
   const groupRef = useRef(group)
-  groupRef.current = group
+  useLayoutEffect(() => {
+    groupRef.current = group
+  }, [group])
 
-  const [isMounted, setIsMounted] = useState(false)
+  /** サーバーでは false、クライアントでは true */
+  const isMounted = useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false
+  )
   const lastSubmittedSnapshotRef = useRef<string | null>(null)
   const [isShareCopied, setIsShareCopied] = useState(false)
 
@@ -69,10 +86,6 @@ export const usePersonalPlotResult = () => {
       }),
     ]
   }, [answersForCommit, group, resolvedTargetId])
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   /**
    * URL が20問完備のとき、groupAtom へ1回だけ反映する。

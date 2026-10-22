@@ -56,6 +56,9 @@ export const useHome = () => {
       }
     })
 
+    // URL 復元を1レンダー挟んでから URL 書き戻しを走らせるための意図的な順序制御。
+    // 即時に true にすると、復元前の空の group で共有URLを上書きしてしまう。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true)
   }, [setGroup])
 

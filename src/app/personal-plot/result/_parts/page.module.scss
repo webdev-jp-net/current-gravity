@@ -85,13 +85,12 @@
   z-index: 1;
   display: flex;
   place-content: center;
-  justify-content: center;
   background-color: #f7f7f733;
-  backdrop-filter: blur(rem(8));
   border-top: 1px solid var(--border-color);
   box-shadow:
     inset 0 1px 0 #fff6,
     0 0 rem(24) rgb(0 0 0 / 5%);
+  backdrop-filter: blur(rem(8));
 
   @include mq(narrow) {
     gap: var(--spacing-sm);
