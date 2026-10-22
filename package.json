@@ -50,11 +50,5 @@
     "stylelint-order": "^6.0.0",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.18.0"
-  },
-  "pnpm": {
-    "minimumReleaseAge": 10080,
-    "overrides": {
-      "next>postcss": "^8.5.31"
-    }
   }
 }
