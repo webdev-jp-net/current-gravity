@@ -89,7 +89,6 @@
       text-shadow: none;
       cursor: not-allowed;
       background-color: var(--bg-light);
-      filter: blur(rem(1));
       box-shadow:
         0 0 rem(16) rgb(0 0 0 / 0%),
         rem(-3) rem(-3) rem(6) #fff6,
@@ -98,6 +97,7 @@
         rem(1) rem(1) rem(2) rgb(0 0 0 / 10%),
         inset rem(-1) rem(-1) rem(1) rgb(0 0 0 / 5%),
         inset rem(1) rem(1) rem(2) rem(1) #fff;
+      filter: blur(rem(1));
     }
 
     &:hover:not(:disabled) {
