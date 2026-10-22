@@ -15,14 +15,22 @@ package.jsonのバージョン更新 → リリースブランチ作成 → main
 
 ```bash
 git fetch origin
-gh pr list --base main --head "release/*" --state open
+gh pr list --base main --state open --json number,title,headRefName \
+  --jq '[.[] | select(.headRefName | startswith("release/"))]'
 gh pr list --base main --state merged --limit 1 --json headRefName,mergedAt
 git tag | sort -V | tail -1
+git show origin/main:package.json | grep '"version"'
+git show origin/develop:package.json | grep '"version"'
 ```
 
-- **openなリリースPRがない、かつ最新タグ = package.jsonのversion** → フェーズ1（リリース準備）
-- **リリースPRがマージ済み、かつそのバージョンのタグが未作成** → フェーズ2（リリース発行）
+判定は上から順に評価し、最初に合致したものを採用する。
+
 - **openなリリースPRがある** → ユーザーに状況を報告し、マージを待つか確認する
+- **リリースPRがマージ済み、かつそのバージョンのタグが未作成** → フェーズ2（リリース発行 / Step 5から）
+- **最新タグ = origin/mainのversion、かつ origin/developのversionがそれと不一致** → back-merge未完了。フェーズ2の残り（Step 7から）を実行する
+- **上記いずれでもなく、最新タグ = origin/developのversion** → フェーズ1（リリース準備）
+
+versionの比較対象はローカルの作業ファイルではなく `origin/develop` と `origin/main` を用いる。ローカルのdevelopは直pushできない未push状態を抱えている場合があり、判定を誤らせる。
 
 ---
 
@@ -116,30 +124,74 @@ gh release create v[新バージョン] --target main --title "v[新バージョ
 
 bumpコミットをdevelopへ反映する。この検証まで完了してリリース完了とする。
 
+**developは直pushできない**（ruleset `protect` によりPR必須。詳細は「注意事項」）。
+back-mergeもmain向けリリースPRと同様にPR経由で行う。
+
+まずmainの内容を載せたブランチを作成してpushする。
+
 ```bash
-git checkout develop && git pull --ff-only
-git merge main
-# 検証: developとmainでpackage.jsonのversionが一致すること
-git show main:package.json | grep '"version"'
-grep '"version"' package.json
+git fetch origin
+git checkout -b backmerge/v[新バージョン] origin/main
+git push -u origin backmerge/v[新バージョン]
 ```
 
-一致を確認したら、push実行の承認を得て `git push` する。
+PR作成内容をユーザーに提示し、**承認後に**作成・マージする。
+
+- タイトル: `Back-merge: v[新バージョン]`
+- base: `develop` / head: `backmerge/v[新バージョン]`
+
+```bash
+printf '%s' $'リリース v[新バージョン] のバージョン更新をdevelopへ反映します。\n' \
+  | gh pr create --base develop --head backmerge/v[新バージョン] \
+      --title "Back-merge: v[新バージョン]" --body-file -
+gh pr merge backmerge/v[新バージョン] --merge
+```
+
+マージ後、origin/developとorigin/mainでversionが一致することを検証する。
+
+```bash
+git fetch origin
+git checkout develop && git pull --ff-only
+git show origin/main:package.json | grep '"version"'
+git show origin/develop:package.json | grep '"version"'
+```
+
+一致しない場合はリリース未完了として扱い、原因を報告する。
 
 ### Step 8: 後始末
 
-ローカルのリリースブランチ削除をユーザーに確認してから実行する。
+ローカルの作業ブランチ削除をユーザーに確認してから実行する。
+リモート側はリポジトリ設定 `delete_branch_on_merge: true` によりマージ時に自動削除される。
 
 ```bash
 git branch -d release/v[新バージョン]
+git branch -d backmerge/v[新バージョン]
 ```
 
-完了報告: バージョン / PR / Release URL / back-merge検証結果を提示する。
+完了報告: バージョン / リリースPR / Release URL / back-merge PR / version一致の検証結果を提示する。
 
 ---
 
 ## 注意事項
 
-- バージョン番号の確定、PR作成、リリース発行、push、ブランチ削除は**必ずユーザーの承認を得てから**実行する
+- バージョン番号の確定、PR作成、PRマージ、リリース発行、ブランチ削除は**必ずユーザーの承認を得てから**実行する
 - package.jsonのversion以外のファイルをbumpコミットに含めない
 - フェーズ2を実行せずに放置するとdevelopとmainのversionが不一致のままになる。フェーズ判定で検知した場合は必ず案内する
+
+### リポジトリ制約（2026-07-17時点の実測値）
+
+- ruleset `protect`（ID 16164280）が **develop と main の両方**に適用されている（`~DEFAULT_BRANCH` と `refs/heads/main` が対象。デフォルトブランチはdevelop）
+- ルール内容: `deletion` 禁止 / `non_fast_forward` 禁止 / `pull_request` 必須
+- `bypass_actors` は空、`current_user_can_bypass` は `never`。**管理者を含め誰も直pushできない**。developへの反映は例外なくPR経由
+- `required_approving_review_count` は 0、必須ステータスチェックもなし。したがって `gh pr create` 直後の `gh pr merge` が承認者なしで成立する
+- `allow_auto_merge` は false。**`gh pr merge --auto` は使用不可**（通常の `gh pr merge` を使う）
+- `delete_branch_on_merge` は true。マージ済みリモートブランチは自動削除される
+
+### このスキルを変更する際の必須確認
+
+コマンドを追加・変更するときは、**実際のリポジトリ設定に対して実行可能かを確認してから記載する**。
+
+このスキルは当初、Step 7に `git checkout develop && git merge main && git push` と記載していた。
+developがPR必須である事実を確認しないまま「pushできる」前提で書かれたため、この手順は一度も成功せず、
+v1.1.3〜v1.3.1のback-mergeがすべてorigin/developへ未到達のまま積み上がった。
+「動くはずの手順」を検証せずに書くと、失敗が検知されないまま蓄積する。

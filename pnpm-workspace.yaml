@@ -1,0 +1,5 @@
+minimumReleaseAge: 10080
+
+overrides:
+  # next が固定依存する postcss 8.4.31 を脆弱性修正版へ引き上げる
+  'next>postcss': '^8.5.31'
